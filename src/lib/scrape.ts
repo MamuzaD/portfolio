@@ -1,38 +1,89 @@
 import chromium from "@sparticuz/chromium"
-import puppeteer from "puppeteer-core"
+import puppeteer, { Browser, Page } from "puppeteer-core"
+
+let browserInstance: Browser | null = null
+
+async function getBrowser() {
+  if (browserInstance) return browserInstance
+
+  console.log("Starting browser launch...")
+  if (process.env.NODE_ENV === "development") {
+    console.log("Launching in development mode...")
+    browserInstance = await puppeteer.launch({
+      headless: true,
+      dumpio: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage", "--single-process", "--no-zygote"],
+    })
+  } else {
+    console.log("Launching in production mode with Chromium...")
+    chromium.setHeadlessMode = true
+    browserInstance = await puppeteer.launch({
+      args: [
+        ...chromium.args,
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--single-process",
+        "--no-zygote",
+      ],
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+    })
+  }
+  console.log("Browser launched successfully.")
+
+  return browserInstance
+}
+
+export async function closeBrowser() {
+  if (browserInstance) {
+    console.log("Closing browser instance...")
+    await browserInstance.close()
+    browserInstance = null
+    console.log("Browser closed")
+  }
+}
 
 export async function scrapeFilmDetails(url: string) {
-  let browser
+  let browser: Browser | null = null
+  let page: Page | null = null
+
   try {
-    console.log("Starting browser launch...")
+    browser = await getBrowser()
 
-    if (process.env.NODE_ENV === "development") {
-      console.log("Launching in development mode...")
-      browser = await puppeteer.launch({ headless: true })
-    } else {
-      console.log("Launching in production mode with Chromium...")
-      chromium.setHeadlessMode = true
-      browser = await puppeteer.launch({
-        args: chromium.args,
-        defaultViewport: chromium.defaultViewport,
-        executablePath: await chromium.executablePath(),
-      })
-    }
+    page = await browser.newPage()
+    await page.setViewport({ width: 1280, height: 800 })
+    await page.setRequestInterception(true)
+    page.on("request", (req) => {
+      const resourceType = req.resourceType()
+      if (["document", "xhr", "fetch", "script", "image"].includes(resourceType)) {
+        req.continue()
+      } else {
+        req.abort()
+      }
+    })
 
-    console.log("Browser launched successfully.")
-
-    const page = await browser.newPage()
     console.log(`Navigating to URL: ${url}`)
-    await page.goto(url, { waitUntil: "load", timeout: 20000 })
-    console.log("Page loaded successfully.")
+    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 20000 })
+    console.log("Initial page load completed.")
 
     console.log("Waiting for the .td-film-details selector...")
     await page.waitForSelector(".td-film-details", { timeout: 10000 })
     console.log("Element .td-film-details found.")
 
-    const filmDetails = await page.evaluate(() => {
-      console.log("Scraping film details...")
+    // Wait for the real image to load by checking its src attribute
+    await page.waitForFunction(
+      () => {
+        const imgElement = document.querySelector(".td-film-details img")
+        if (!imgElement) return false
+        const src = imgElement.getAttribute("src")
+        return src && !src.includes("empty-poster")
+      },
+      { timeout: 10000, polling: 500 }
+    )
+    console.log("Film poster received.")
 
+    const filmDetails = await page.evaluate(() => {
       const filmElement = document.querySelector(".td-film-details")
       if (!filmElement) return null
 
@@ -50,16 +101,15 @@ export async function scrapeFilmDetails(url: string) {
     })
 
     console.log("Scraping completed.")
-    console.log("Film details:", filmDetails)
+    console.log(filmDetails?.imageUrl)
     return filmDetails
   } catch (error) {
     console.error("Error occurred while scraping:", error)
     return null
   } finally {
-    if (browser) {
-      console.log("Closing browser...")
-      await browser.close()
-      console.log("Browser closed")
+    if (page) {
+      await page.close()
+      console.log("Page closed")
     }
   }
 }
