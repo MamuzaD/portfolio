@@ -105,7 +105,13 @@ const Movies = () => {
               <p className="text-primary text-center text-lg tracking-widest md:mt-1">{filmDetails.stars}</p>
             </div>
           </div>
-          <Button variant="ghost" size="icon" onClick={retry} className="absolute right-1 bottom-1 rounded-full">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={retry}
+            className="absolute right-1 bottom-1 rounded-full"
+            aria-label="Refresh?"
+          >
             <RotateCcw className="size-5" />
           </Button>
         </>
@@ -113,7 +119,7 @@ const Movies = () => {
       {!filmDetails && !loading && (
         <div className="animate-fadeIn flex flex-col flex-wrap items-center justify-center gap-6 transition-opacity duration-500 ease-in-out">
           <span className="mt-2 font-medium text-red-600">{"error :("}</span>
-          <Button variant="default" size="sm" onClick={retry}>
+          <Button variant="default" size="sm" onClick={retry} aria-label="Retry?">
             retry?
           </Button>
         </div>

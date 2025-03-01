@@ -98,6 +98,7 @@ export const LinkPreview = ({
           })}
           target={target}
           {...(noUrl ? {} : { href: url })}
+          asChild={noUrl}
         >
           {children}
         </HoverCardPrimitive.Trigger>
@@ -129,20 +130,35 @@ export const LinkPreview = ({
                   x: translateX,
                 }}
               >
-                <a
-                  {...(noUrl ? {} : { href: url })}
-                  target={target}
-                  className="block rounded-xl border-2 bg-background/80 p-0.5 backdrop-blur-lg"
-                  style={{ fontSize: 0 }}
-                >
-                  <img
-                    src={isStatic ? imageSrc : src}
-                    width={width}
-                    height={height}
-                    className="rounded-lg"
-                    alt="preview image z-999"
-                  />
-                </a>
+                {noUrl || !url ? (
+                  <div
+                    className="bg-background/80 block rounded-xl border-2 p-0.5 backdrop-blur-lg"
+                    style={{ fontSize: 0 }}
+                  >
+                    <img
+                      src={isStatic ? imageSrc : src}
+                      width={width}
+                      height={height}
+                      className="rounded-lg"
+                      alt="preview image z-999"
+                    />
+                  </div>
+                ) : (
+                  <a
+                    href={url}
+                    target={target}
+                    className="bg-background/80 block rounded-xl border-2 p-0.5 backdrop-blur-lg"
+                    style={{ fontSize: 0 }}
+                  >
+                    <img
+                      src={isStatic ? imageSrc : src}
+                      width={width}
+                      height={height}
+                      className="rounded-lg"
+                      alt="preview image z-999"
+                    />
+                  </a>
+                )}
               </motion.div>
             )}
           </AnimatePresence>

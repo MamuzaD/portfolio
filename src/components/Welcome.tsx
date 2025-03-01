@@ -81,7 +81,7 @@ export default function Welcome() {
             align="center"
             alignOffset={0}
           >
-            unlv
+            <span>unlv</span>
           </LinkPreview>
         </motion.h2>
       </div>

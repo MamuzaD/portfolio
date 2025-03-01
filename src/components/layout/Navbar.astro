@@ -22,7 +22,7 @@ import { Icon } from "astro-icon/components"
   <div class="hidden place-items-center gap-2 md:flex md:gap-6">
     {
       socials.map((social, index) => (
-        <LinkPreview imageSrc={social.src} url={social.href} target="_blank" isStatic client:load>
+        <LinkPreview imageSrc={social.src} url={social.href} target="_blank" isStatic client:load aria-label={social.name}> 
           <Icon
             name={social.icon}
             class={`transition-all hover:scale-110 hover:text-primary md:h-7 md:w-7 ${index % 2 === 0 ? "hover:rotate-12" : "hover:-rotate-12"}`}
@@ -54,7 +54,7 @@ import { Icon } from "astro-icon/components"
     <div class="flex items-center gap-4">
       {
         socials.map((social) => (
-          <a href={social.href}>
+          <a href={social.href} aria-label={social.name}>
             <Icon name={social.icon} class="size-7 transition-all hover:scale-110 hover:text-primary" />
           </a>
         ))
