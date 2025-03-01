@@ -64,17 +64,27 @@ const Movies = () => {
 
   return (
     <div
-      className={`justifify-center row-span-1 flex h-full flex-col items-center gap-0.5 rounded-xl bg-muted/60 py-4 backdrop-blur-lg md:p-2 ${loading && "gap-10"}`}
+      className={`bg-muted/60 row-span-1 flex h-full flex-col items-center gap-0.5 rounded-xl py-4 backdrop-blur-lg md:p-2`}
     >
       <span className="text-base font-medium">recently watched</span>
-      {loading && <Loader2 className="h-10 w-10 animate-spin" />}
+      {loading && (
+        <>
+          <div className="flex h-full animate-pulse flex-wrap items-center justify-center gap-2 ease-in-out md:gap-1 md:pb-8">
+            <div className="bg-muted block h-[72px] w-12 rounded-lg" />
+            <div className="flex flex-col justify-center">
+              <div className="text-md bg-muted h-[22px] w-32 rounded-md text-center" />
+              <p className="text-muted h-5 justify-start text-center text-lg tracking-widest">★★★★★</p>
+            </div>
+          </div>
+        </>
+      )}
       {filmDetails && !loading && (
         <>
-          <div className="flex h-full animate-fadeIn flex-wrap items-center justify-center gap-2 transition-opacity duration-500 ease-in-out md:gap-1 md:pb-8">
+          <div className="animate-fadeIn flex h-full flex-wrap items-center justify-center gap-2 transition-opacity duration-500 ease-in-out md:gap-1 md:pb-8">
             <motion.img
               src={filmDetails.imageUrl || ""}
               alt={filmDetails.title || "Film image"}
-              className="w-12 rounded-lg bg-muted-foreground/30 text-[8px]"
+              className="bg-muted-foreground/30 w-12 rounded-lg text-[8px]"
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
               transition={{
@@ -92,16 +102,16 @@ const Movies = () => {
                       : filmDetails.title
                   : ""}
               </h2>
-              <p className="text-center text-lg tracking-widest text-primary md:mt-1">{filmDetails.stars}</p>
+              <p className="text-primary text-center text-lg tracking-widest md:mt-1">{filmDetails.stars}</p>
             </div>
           </div>
-          <Button variant="ghost" size="icon" onClick={retry} className="absolute bottom-1 right-1 rounded-full">
+          <Button variant="ghost" size="icon" onClick={retry} className="absolute right-1 bottom-1 rounded-full">
             <RotateCcw className="size-5" />
           </Button>
         </>
       )}
       {!filmDetails && !loading && (
-        <div className="flex animate-fadeIn flex-col flex-wrap items-center justify-center gap-6 transition-opacity duration-500 ease-in-out">
+        <div className="animate-fadeIn flex flex-col flex-wrap items-center justify-center gap-6 transition-opacity duration-500 ease-in-out">
           <span className="mt-2 font-medium text-red-600">{"error :("}</span>
           <Button variant="default" size="sm" onClick={retry}>
             retry?
