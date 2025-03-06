@@ -1,12 +1,10 @@
 import type { CollectionEntry } from "astro:content"
 import { motion } from "framer-motion"
 import { ArrowRight, ArrowRightCircle } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card"
-import { Button } from "@/components/ui/button"
-
-import { LinkPreview } from "../ui/link-preview"
+import { LinkPreview } from "@/components/ui/link-preview"
 
 interface RecentWorkProps {
   projects: CollectionEntry<"work">[]
@@ -16,11 +14,14 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
   const [highlightedProject, setHighlightedProject] = useState<any | null>(null)
 
   return (
-    <section className="z-50 flex flex-col items-center justify-center gap-12">
+    <section
+      className="z-50 flex scroll-mt-32 flex-col items-center justify-center gap-12 md:scroll-mt-48"
+      id="recent-work"
+    >
       <h3 className="block text-3xl font-semibold md:hidden">recent work</h3>
       <div className="flex gap-8">
         {/* image */}
-        <div className="z-50 hidden h-[500px] w-[500px] shrink-0 items-center justify-center rounded-3xl bg-primary-foreground/50 p-5 shadow-experiencard-card-light backdrop-blur-sm dark:shadow-experiencard-card-dark md:flex">
+        <div className="bg-primary-foreground/50 shadow-experiencard-card-light dark:shadow-experiencard-card-dark z-50 hidden h-[500px] w-[500px] shrink-0 items-center justify-center rounded-3xl p-5 backdrop-blur-sm md:flex">
           {highlightedProject ? (
             <CardContainer className="rounded-lg p-4">
               <CardBody>
@@ -30,7 +31,7 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
                       key={highlightedProject?.data.card.img.src}
                       src={highlightedProject.data.card.img.src}
                       alt={highlightedProject.data.card.alt || highlightedProject.data.title}
-                      className="duration-250 h-full w-full rounded-lg object-cover shadow-mac-md transition-[box-shadow] hover:shadow-mac-lg"
+                      className="shadow-mac-md hover:shadow-mac-lg h-full w-full rounded-lg object-cover transition-[box-shadow] duration-250"
                       initial={{ opacity: 0, translateY: 25 }}
                       animate={{ opacity: 1, translateY: 0 }}
                       exit={{ opacity: 0 }}
@@ -63,7 +64,7 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
               <li key={project.id} onMouseEnter={() => setHighlightedProject(project)}>
                 <a
                   href={`/work/${project.id}`}
-                  className={`group mt-4 block cursor-pointer rounded-[2.5rem] px-10 py-5 backdrop-blur-xs transition-[background_color] duration-300 hover:bg-muted/50 md:mt-0 md:rounded-xl md:hover:bg-primary/30 ${highlightedProject && highlightedProject.id === project.id ? "bg-muted/70 md:bg-primary/40 md:dark:bg-primary/20" : "bg-muted/70 md:bg-transparent"}`}
+                  className={`group hover:bg-muted/50 md:hover:bg-primary/30 mt-4 block cursor-pointer rounded-[2.5rem] px-10 py-5 backdrop-blur-xs transition-[background_color] duration-300 md:mt-0 md:rounded-xl ${highlightedProject && highlightedProject.id === project.id ? "bg-muted/70 md:bg-primary/40 md:dark:bg-primary/20" : "bg-muted/70 md:bg-transparent"}`}
                 >
                   <div className="mt-4 block rounded-lg shadow-md md:hidden">
                     <img
@@ -74,10 +75,10 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
                   </div>
                   <span className="mt-4 flex w-full flex-row justify-between gap-6 md:mt-0">
                     <span className="">
-                      <h3 className="text-base font-medium text-neutral-950 transition-none dark:text-neutral-50 md:text-lg">
+                      <h3 className="text-base font-medium text-neutral-950 transition-none md:text-lg dark:text-neutral-50">
                         {project.data.title}
                       </h3>
-                      <p className="text-sm text-neutral-500 dark:text-neutral-600 md:text-base">
+                      <p className="text-sm text-neutral-500 md:text-base dark:text-neutral-600">
                         {project.data.caption}
                       </p>
                     </span>
@@ -103,7 +104,7 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
         imageSrc="/socials/work.jpg"
         side="bottom"
         sideOffset={25}
-        className="rounded-lg bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
+        className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-4 py-2"
       >
         view all
       </LinkPreview>

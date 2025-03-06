@@ -1,14 +1,12 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @plugin 'tailwindcss-animate';
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --shadow-experiencard-card-light: rgba(0, 0, 0, 0.08) 0px 12px 24px 4px,
-    rgba(0, 0, 0, 0.3) 0px 20px 50px 30px;
-  --shadow-experiencard-card-dark: rgba(0, 0, 0, 0.06) 0px 12px 24px 4px,
-    rgba(0, 0, 0, 0.9) 0px 20px 50px 30px;
+  --shadow-experiencard-card-light: rgba(0, 0, 0, 0.08) 0px 12px 24px 4px, rgba(0, 0, 0, 0.3) 0px 20px 50px 30px;
+  --shadow-experiencard-card-dark: rgba(0, 0, 0, 0.06) 0px 12px 24px 4px, rgba(0, 0, 0, 0.9) 0px 20px 50px 30px;
   --shadow-aboutcard: rgba(0, 0, 0, 0.2) 0px 0px 50px 50px;
   --shadow-mac-lg: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
   --shadow-mac-md: rgba(0, 0, 0, 0.2) 0px 20px 30px;
@@ -98,8 +96,8 @@
   @apply relative inline-block;
 
   &::after {
-    content: '';
-    @apply absolute bottom-0 left-0 h-0.5 w-full bg-primary;
+    content: "";
+    @apply bg-primary absolute bottom-0 left-0 h-0.5 w-full;
     transform: scaleX(0);
     transition: transform 0.25s ease-out;
     transform-origin: bottom center;
@@ -177,6 +175,9 @@
 @layer base {
   * {
     @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
   }
   body {
     @apply bg-background text-foreground;

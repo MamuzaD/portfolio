@@ -3,6 +3,7 @@ type Recent = {
   links?: {
     where: string
     href: string
+    internal?: boolean
   }[]
 }
 
@@ -12,7 +13,8 @@ const recents: Recent[] = [
     links: [
       {
         where: "Fate",
-        href: "/work/fate",
+        href: "#recent-work",
+        internal: true,
       },
     ],
   },

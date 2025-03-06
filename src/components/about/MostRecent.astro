@@ -4,7 +4,7 @@ import recents from "@/content/recents"
 
 <section class="bg-muted/60 z-10 col-span-1 row-span-2 flex w-full flex-col gap-4 rounded-xl p-2 backdrop-blur-lg">
   <h3 class="text-center font-medium">recent highlights</h3>
-  <div class="ml-6 flex">
+  <div class="ml-12 md:ml-6 flex">
     <ul class="list-disc space-y-2">
       {
         recents.length > 0 ? (
@@ -19,8 +19,8 @@ import recents from "@/content/recents"
                       return link ? (
                         <a
                           href={link.href}
-                          class="text-primary hover:underline underline-offset-2"
-                          target="_blank"
+                          class="text-primary underline-offset-2 hover:underline"
+                          target={!link.internal ? "_blank" : "_self"}
                           rel="noopener noreferrer"
                         >
                           {part}
