@@ -41,7 +41,7 @@ export default function Contact() {
         <DropdownMenu modal={false} open={dropdownOpen}>
           <DropdownMenuTrigger
             onClick={() => setDropdownOpen((val) => !val)}
-            className={`min-h-26 z-50 text-4xl font-bold ${!copied && "pb-5"} hover-underline-animation`}
+            className={`min-h-26 z-50 text-4xl font-bold ${!copied && "pb-5"} hover-underline-animation cursor-pointer`}
           >
             contact me
           </DropdownMenuTrigger>

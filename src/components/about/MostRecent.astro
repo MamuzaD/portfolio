@@ -2,15 +2,41 @@
 import recents from "@/content/recents"
 ---
 
-<section class="z-10 col-span-1 row-span-2 flex w-full flex-col gap-4 rounded-xl bg-muted/60 p-2 backdrop-blur-lg">
+<section class="bg-muted/60 z-10 col-span-1 row-span-2 flex w-full flex-col gap-4 rounded-xl p-2 backdrop-blur-lg">
   <h3 class="text-center font-medium">recent highlights</h3>
   <div class="ml-6 flex">
     <ul class="list-disc space-y-2">
       {
         recents.length > 0 ? (
-          recents.map((recent, index) => <li class="text-sm text-muted-foreground">{recent.content}</li>)
+          recents.map((recent) => (
+            <li class="text-muted-foreground text-sm">
+              {recent.links ? (
+                <>
+                  {recent.content
+                    .split(new RegExp(`(${recent.links.map((link) => link.where).join("|")})`))
+                    .map((part, i) => {
+                      const link = recent.links?.find((link) => link.where === part)
+                      return link ? (
+                        <a
+                          href={link.href}
+                          class="text-primary hover:underline underline-offset-2"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {part}
+                        </a>
+                      ) : (
+                        part
+                      )
+                    })}
+                </>
+              ) : (
+                recent.content
+              )}
+            </li>
+          ))
         ) : (
-          <li class="text-sm text-muted-foreground">No recent highlights to display.</li>
+          <li class="text-muted-foreground text-sm">No recent highlights to display.</li>
         )
       }
     </ul>

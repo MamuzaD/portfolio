@@ -1,4 +1,30 @@
-const recents = [
+type Recent = {
+  content: string
+  links?: {
+    where: string
+    href: string
+  }[]
+}
+
+const recents: Recent[] = [
+  {
+    content: "began work on Fate",
+    links: [
+      {
+        where: "Fate",
+        href: "/work/fate",
+      },
+    ],
+  },
+  {
+    content: "created & hosted portfolio workshop for ACM",
+    links: [
+      {
+        where: "portfolio workshop",
+        href: "https://github.com/mamuzad/portfolio-workshop",
+      },
+    ],
+  },
   {
     content: "updated portfolio to v3",
   },
