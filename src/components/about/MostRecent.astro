@@ -4,7 +4,7 @@ import recents from "@/content/recents"
 
 <section class="bg-muted/60 z-10 col-span-1 row-span-2 flex w-full flex-col gap-4 rounded-xl p-2 backdrop-blur-lg">
   <h3 class="text-center font-medium">recent highlights</h3>
-  <div class="ml-12 md:ml-6 flex">
+  <div class="ml-12 flex md:ml-6">
     <ul class="list-disc space-y-2">
       {
         recents.length > 0 ? (
@@ -42,3 +42,21 @@ import recents from "@/content/recents"
     </ul>
   </div>
 </section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.body.addEventListener("click", (event) => {
+      const target = event.target as HTMLElement
+      const link = target.closest("a") as HTMLAnchorElement | null
+
+      if (link && link.hash && link.origin === window.location.origin) {
+        const targetElement = document.querySelector(link.hash)
+
+        if (targetElement) {
+          event.preventDefault()
+          targetElement.scrollIntoView({ behavior: "smooth" })
+        }
+      }
+    })
+  })
+</script>
