@@ -88,7 +88,7 @@ export default function ContactForm({ setViewForm, setDropdownOpen }: ContactFor
                   <FormItem>
                     <FormLabel>name</FormLabel>
                     <FormControl>
-                      <Input type="text" placeholder="name" {...field} className="bg-background/80 backdrop-blur-sm" />
+                      <Input type="text" placeholder="name" {...field} className="bg-background/80 backdrop-blur" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -105,7 +105,7 @@ export default function ContactForm({ setViewForm, setDropdownOpen }: ContactFor
                         type="email"
                         placeholder="name@example.com"
                         {...field}
-                        className="bg-background/80 backdrop-blur-sm"
+                        className="bg-background/80 backdrop-blur"
                       />
                     </FormControl>
                     <FormMessage />
@@ -122,7 +122,7 @@ export default function ContactForm({ setViewForm, setDropdownOpen }: ContactFor
                       <Textarea
                         placeholder="hey i saw your portfolio..."
                         {...field}
-                        className="w-[22rem] bg-background/80 backdrop-blur-sm md:w-96"
+                        className="w-[22rem] bg-background/80 backdrop-blur md:w-96"
                       />
                     </FormControl>
                     <FormMessage />

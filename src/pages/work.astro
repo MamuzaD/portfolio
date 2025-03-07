@@ -21,7 +21,7 @@ projects.forEach((project: Work, index: number) => {
     <div class="hidden gap-4 px-8 sm:grid sm:grid-cols-2 lg:grid-cols-3">
       {
         columns.map((column) => (
-          <div class="flex shrink-0 flex-col gap-6">
+          <div class="flex flex-shrink-0 flex-col gap-6">
             {column.map((project) => (
               <div class="z-10">
                 <ProjectCard {project} />

@@ -1,7 +1,8 @@
 // @ts-check
 import react from "@astrojs/react"
 import sitemap from "@astrojs/sitemap"
-import tailwindcss from "@tailwindcss/vite";
+// import tailwindcss from "@tailwindcss/vite"; // tailwind v4
+import tailwind from "@astrojs/tailwind"
 import vercel from "@astrojs/vercel"
 import compressor from "astro-compressor"
 import icon from "astro-icon"
@@ -19,6 +20,9 @@ export default defineConfig({
     react(),
     icon(),
     sitemap(),
+    tailwind({
+      applyBaseStyles: false,
+    }),
     compressor(),
     sitemapCopier(),
   ],
@@ -32,7 +36,7 @@ export default defineConfig({
     remotePatterns: [{ protocol: "https" }],
     domains: ["api.microlink.io"],
   },
-  vite: {
-    plugins: [tailwindcss()],
-  },
+  // vite: {
+  //   plugins: [tailwindcss()],
+  // },
 })

@@ -13,7 +13,7 @@ const { experience, index, size } = Astro.props
 ---
 
 <div
-  class={`flex h-80 max-h-80 w-full flex-col place-items-center rounded-[2.5rem] bg-muted/70 backdrop-blur-sm pt-7 transition-all ease-in-out ${index < size / 2 ? "md:hover:rotate-3" : "md:hover:-rotate-3"} shadow-experiencard-card-light dark:shadow-experiencard-card-dark`}
+  class={`flex h-80 max-h-80 w-full flex-col place-items-center rounded-[2.5rem] bg-muted/70 backdrop-blur pt-7 transition-all ease-in-out ${index < size / 2 ? "md:hover:rotate-3" : "md:hover:-rotate-3"} shadow-experiencard-card-light dark:shadow-experiencard-card-dark`}
 >
   <div class="w-full px-8 pb-2">
     <a href={experience.href} target="_blank" rel="noopener noreferrer">

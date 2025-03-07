@@ -1,109 +1,21 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@plugin 'tailwindcss-animate';
-
-@custom-variant dark (&:is(.dark *));
-
-@theme {
-  --shadow-experiencard-card-light: rgba(0, 0, 0, 0.08) 0px 12px 24px 4px, rgba(0, 0, 0, 0.3) 0px 20px 50px 30px;
-  --shadow-experiencard-card-dark: rgba(0, 0, 0, 0.06) 0px 12px 24px 4px, rgba(0, 0, 0, 0.9) 0px 20px 50px 30px;
-  --shadow-aboutcard: rgba(0, 0, 0, 0.2) 0px 0px 50px 50px;
-  --shadow-mac-lg: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
-  --shadow-mac-md: rgba(0, 0, 0, 0.2) 0px 20px 30px;
-
-  --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-sm: calc(var(--radius) - 4px);
-
-  --color-background: hsl(var(--background));
-  --color-foreground: hsl(var(--foreground));
-
-  --color-card: hsl(var(--card));
-  --color-card-foreground: hsl(var(--card-foreground));
-
-  --color-popover: hsl(var(--popover));
-  --color-popover-foreground: hsl(var(--popover-foreground));
-
-  --color-primary: hsl(var(--primary));
-  --color-primary-foreground: hsl(var(--primary-foreground));
-
-  --color-secondary: hsl(var(--secondary));
-  --color-secondary-foreground: hsl(var(--secondary-foreground));
-
-  --color-muted: hsl(var(--muted));
-  --color-muted-foreground: hsl(var(--muted-foreground));
-
-  --color-accent: hsl(var(--accent));
-  --color-accent-foreground: hsl(var(--accent-foreground));
-
-  --color-destructive: hsl(var(--destructive));
-  --color-destructive-foreground: hsl(var(--destructive-foreground));
-
-  --color-border: hsl(var(--border));
-  --color-input: hsl(var(--input));
-  --color-ring: hsl(var(--ring));
-
-  --color-chart-1: hsl(var(--chart-1));
-  --color-chart-2: hsl(var(--chart-2));
-  --color-chart-3: hsl(var(--chart-3));
-  --color-chart-4: hsl(var(--chart-4));
-  --color-chart-5: hsl(var(--chart-5));
-
-  --animate-fade-in: fadeIn 1s ease-in-out;
-  --animate-slide-down: slideDown 1s ease-in-out;
-
-  --transition-duration-1500: 1500ms;
-
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
+@layer components {
+  .hover-underline-animation {
+    @apply relative inline-block;
   }
-  @keyframes slideDown {
-    0% {
-      opacity: 0;
-      transform: translateY(-50px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0px);
-    }
-  }
-}
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-}
-
-@utility hover-underline-animation {
-  @apply relative inline-block;
-
-  &::after {
+  .hover-underline-animation::after {
     content: "";
-    @apply bg-primary absolute bottom-0 left-0 h-0.5 w-full;
+    @apply absolute bottom-0 left-0 h-0.5 w-full bg-primary;
     transform: scaleX(0);
     transition: transform 0.25s ease-out;
     transform-origin: bottom center;
   }
 
-  &:hover::after {
+  .hover-underline-animation:hover::after {
     transform: scaleX(1);
     transform-origin: bottom center;
   }

@@ -18,9 +18,9 @@ const titles = [
 
 <nav
   transition:persist
-  class="animate-slideDown fixed top-0 z-100 flex max-h-24 w-full items-center justify-between gap-6 bg-linear-to-b from-neutral-200/80 from-40% to-transparent px-2 pt-4 pb-6 font-semibold md:px-8 md:backdrop-blur-xs dark:from-neutral-950/80"
+  class="animate-slideDown fixed top-0 z-[100] flex max-h-24 w-full items-center justify-between gap-6 bg-gradient-to-b from-neutral-200/80 from-40% to-transparent px-2 pt-4 pb-6 font-semibold md:px-8 md:backdrop-blur-sm dark:from-neutral-950/80"
 >
-  <div class="z-70 flex items-center justify-between gap-4">
+  <div class="z-[70] flex items-center justify-between gap-4">
     <ProfilePic height="300px" width="300px" small />
     <a href="/" class="hover-underline-animation"> Daniel Mamuza </a>
   </div>
@@ -54,7 +54,7 @@ const titles = [
     <template>
       <button
         aria-expanded="false"
-        class="hover:bg-accent hover:text-accent-foreground z-100 flex size-10 items-center rounded-full p-2"
+        class="hover:bg-accent hover:text-accent-foreground z-[100] flex size-10 items-center rounded-full p-2"
       >
         <span class="sr-only">Menu</span>
         <Icon name="mdi--menu" class="size-8" />
@@ -65,7 +65,7 @@ const titles = [
 
   <div
     id="menu-content"
-    class="bg-background/50 fixed top-0 left-0 z-50 flex w-full -translate-y-full transform justify-between gap-4 rounded-b-3xl border-b px-10 pt-28 pb-10 shadow-lg backdrop-blur-xs transition-transform duration-500 ease-in-out md:hidden"
+    class="bg-background/50 fixed top-0 left-0 z-50 flex w-full -translate-y-full transform justify-between gap-4 rounded-b-3xl border-b px-10 pt-28 pb-10 shadow-lg backdrop-blur-sm transition-transform duration-500 ease-in-out md:hidden"
   >
     <a href="/work" class="hover-underline-animation text-center text-base font-medium">Work</a>
     <div class="flex items-center gap-4">
@@ -98,11 +98,11 @@ const titles = [
 
         if (expand) {
           menu.classList.remove("hidden")
-          setTimeout(() => nav.classList.remove("backdrop-blur-xs"), 200)
+          setTimeout(() => nav.classList.remove("backdrop-blur-sm"), 200)
           setTimeout(() => menu.classList.remove("-translate-y-full"), 0)
         } else {
           menu.classList.add("-translate-y-full")
-          setTimeout(() => nav.classList.add("backdrop-blur-xs"), 200)
+          setTimeout(() => nav.classList.add("backdrop-blur-sm"), 200)
           setTimeout(() => menu.classList.add("hidden"), 500)
         }
       }
