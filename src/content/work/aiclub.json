@@ -16,7 +16,7 @@
     "img": "public/work/aiclub/aiclub.jpg",
     "alt": "AIClub Card"
   },
-  "tags": ["React", "Tailwind CSS", "Google Analytics"],
+  "tags": ["React", "Tailwind CSS", "Vite", "TypeScript", "Google Analytics"],
   "links": [
     { "name": "github", "url": "https://github.com/aiunlv/website" },
     { "name": "live", "url": "https://aiclub.cs.unlv.edu" }
