@@ -14,6 +14,10 @@ interface Props {
 }
 
 const { title, OGimg, description } = Astro.props
+// Get the current URL for canonical link if not provided
+const currentPath = Astro.url.pathname
+const siteURL = "https://danielmamuza.com"
+const canonical = currentPath === "/" ? siteURL : `${siteURL}${currentPath}`
 ---
 
 <!doctype html>
@@ -25,12 +29,13 @@ const { title, OGimg, description } = Astro.props
       title={title === "Home" ? "Daniel Mamuza" : title}
       titleTemplate={title === "Home" ? undefined : "%s - Daniel Mamuza"}
       description={description}
+      canonical={canonical}
       openGraph={{
         basic: {
           title: title,
           type: "website",
           image: OGimg ?? "https://danielmamuza.com/preview.jpg",
-          url: "https://danielmamuza.com",
+          url: canonical,
         },
         optional: {
           description: description.split(".")[0] + ".",
@@ -46,15 +51,37 @@ const { title, OGimg, description } = Astro.props
       extend={{
         link: [
           { rel: "icon", href: "/favicon.ico" },
+          { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon/favicon-32x32.png" },
+          { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon/favicon-16x16.png" },
+          { rel: "apple-touch-icon", sizes: "180x180", href: "/favicon/apple-touch-icon.png" },
+          { rel: "manifest", href: "/favicon/site.webmanifest" },
           { rel: "sitemap", href: "/sitemap-index.xml" },
         ],
-        meta: [],
+        meta: [
+          { name: "theme-color", content: "#ffffff" },
+          { name: "msapplication-TileColor", content: "#ffffff" },
+          { name: "apple-mobile-web-app-capable", content: "yes" },
+          { name: "apple-mobile-web-app-status-bar-style", content: "default" },
+        ],
       }}
     />
 
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <ClientRouter />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: "Daniel Mamuza",
+        url: "https://danielmamuza.com",
+        jobTitle: "Software Engineer",
+        sameAs: ["https://github.com/mamuzad", "https://linkedin.com/in/danielmamuza"],
+        knowsAbout: ["Full-stack Development", "Software Engineering", "User Interface Design"],
+      })}
+    />
   </head>
   <body>
     <ParticlesBG client:load />

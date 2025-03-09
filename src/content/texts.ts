@@ -6,7 +6,8 @@ const texts = {
   },
   notFound: {
     title: "404",
-    description: "The page you are looking for could not be found. Please check the URL or return to the homepage.",
+    description:
+      "Page not found. The URL you requested doesn't exist on danielmamuza.com. Please check the address or navigate back to the homepage to explore my software engineering portfolio.",
   },
   work: {
     title: "Work",
