@@ -14,7 +14,6 @@ interface Props {
 }
 
 const { title, OGimg, description } = Astro.props
-// Get the current URL for canonical link if not provided
 const currentPath = Astro.url.pathname
 const siteURL = "https://danielmamuza.com"
 const canonical = currentPath === "/" ? siteURL : `${siteURL}${currentPath}`
@@ -57,12 +56,7 @@ const canonical = currentPath === "/" ? siteURL : `${siteURL}${currentPath}`
           { rel: "manifest", href: "/favicon/site.webmanifest" },
           { rel: "sitemap", href: "/sitemap-index.xml" },
         ],
-        meta: [
-          { name: "theme-color", content: "#ffffff" },
-          { name: "msapplication-TileColor", content: "#ffffff" },
-          { name: "apple-mobile-web-app-capable", content: "yes" },
-          { name: "apple-mobile-web-app-status-bar-style", content: "default" },
-        ],
+        meta: [],
       }}
     />
 
