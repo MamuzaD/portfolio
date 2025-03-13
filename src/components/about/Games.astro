@@ -48,12 +48,12 @@ try {
         "DAVE THE DIVER",
       ]
       // get fav games from all games response
-      const favoriteGames = allGamesData.response.games.filter((game) =>
-        favorites.some((fav) => game.name && game.name.toLowerCase().includes(fav.toLowerCase()))
+      const favoriteGames = allGamesData.response.games.filter((game: Game) =>
+        favorites.some((fav) => game.name && game.name.toLowerCase() == (fav.toLowerCase()))
       )
 
       // filter out possible games alr in recent
-      const newGames = favoriteGames.filter((fav) => !games.some((recentGame) => recentGame.appid === fav.appid))
+      const newGames = favoriteGames.filter((fav: Game) => !games.some((recentGame) => recentGame.appid === fav.appid))
 
       // shuffle
       const shuffledFavorites = newGames.sort(() => 0.5 - Math.random())

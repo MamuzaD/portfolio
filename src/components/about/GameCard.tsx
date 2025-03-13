@@ -14,7 +14,7 @@ const GameCard = ({ game }: GameCardProps) => {
 
   return (
     <HoverCard openDelay={500} closeDelay={50}>
-      <HoverCardTrigger>
+      <HoverCardTrigger asChild>
         <img
           width={80}
           height={80}
