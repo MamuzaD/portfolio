@@ -12,7 +12,13 @@ const { height, width, small } = Astro.props
   {
     small ? (
       <button class="profile-picture-small glow-on-hover" aria-label="Change profile picture">
-        <img decoding="async" alt="" loading="eager" class="animate-fadeIn bg-muted-foreground/50" />
+        <img
+          decoding="async"
+          alt=""
+          id="profile-picture-img"
+          loading="eager"
+          class="animate-fadeIn bg-muted-foreground/50"
+        />
       </button>
     ) : (
       <button class="profile-picture" aria-label="Change profile picture">
@@ -21,6 +27,13 @@ const { height, width, small } = Astro.props
     )
   }
 </profile-pic>
+
+<script is:inline>
+  document.addEventListener("astro:after-swap", () => {
+    const img = document.getElementById("profile-picture-img")
+    img.classList.remove("animate-fadeIn")
+  })
+</script>
 
 <script>
   import { profiles } from "@/content/profiles"

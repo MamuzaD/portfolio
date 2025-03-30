@@ -18,6 +18,7 @@ const titles = [
 
 <nav
   transition:persist
+  id="main-navbar"
   class="animate-slideDown fixed top-0 z-[100] flex max-h-24 w-full items-center justify-between gap-6 bg-gradient-to-b from-neutral-200/80 from-40% to-transparent px-2 pt-4 pb-6 font-semibold md:px-8 md:backdrop-blur-sm dark:from-neutral-950/80"
 >
   <div class="z-[70] flex items-center justify-between gap-4">
@@ -25,7 +26,7 @@ const titles = [
     <a href="/" class="hover-underline-animation"> Daniel Mamuza </a>
   </div>
   <div class="hidden items-center justify-center md:flex">
-    <WordRotate words={titles} duration={8000} className="min-w-[180px] text-right" client:load />
+    <WordRotate words={titles} duration={6000} className="min-w-[180px] text-right" client:load transition:persist transition:name="wordRotate"/>
     <span class="mx-1"> • </span>
     <a href="/work" class="hover-underline-animation"> Work </a>
   </div>
@@ -80,6 +81,13 @@ const titles = [
     <ModeToggle client:load />
   </div>
 </nav>
+
+<script is:inline>
+  document.addEventListener("astro:after-swap", () => {
+    const navbar = document.getElementById("main-navbar")
+    navbar.classList.remove("animate-slideDown")
+  })
+</script>
 
 <script>
   class MenuButton extends HTMLElement {
