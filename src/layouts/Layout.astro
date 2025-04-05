@@ -5,6 +5,7 @@ import { ClientRouter } from "astro:transitions"
 import Footer from "@/components/layout/Footer.astro"
 import Navbar from "@/components/layout/Navbar.astro"
 import ParticlesBG from "@/components/layout/Particles"
+import PostHog from "@/components/PostHog.astro"
 import { SEO } from "astro-seo"
 
 interface Props {
@@ -75,6 +76,7 @@ const canonical = currentPath === "/" ? siteURL : `${siteURL}${currentPath}`
         knowsAbout: ["Full-stack Development", "Software Engineering", "User Interface Design"],
       })}
     />
+    <PostHog />
   </head>
   <body>
     <ParticlesBG client:load />
