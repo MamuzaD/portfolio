@@ -44,8 +44,9 @@ const canonical = currentPath === "/" ? siteURL : `${siteURL}${currentPath}`
       }}
       twitter={{
         card: "summary_large_image",
-        title: "Daniel Mamuza – Software Engineer",
-        image: "https://danielmamuza.com/preview.jpg",
+        title: title === "Home" ? "Daniel Mamuza - Software Engineer" : `${title} - Daniel Mamuza`,
+        image: OGimg ?? "https://danielmamuza.com/preview.jpg",
+        imageAlt: "Daniel Mamuza Portfolio Preview",
         description: description,
       }}
       extend={{
