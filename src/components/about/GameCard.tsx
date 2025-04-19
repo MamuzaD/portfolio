@@ -1,14 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react"
 
-import type { Game } from "@/components/about/Games.astro";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import type { Game } from "@/components/about/Games.astro"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 
 interface GameCardProps {
   game: Game
 }
 
 const GameCard = ({ game }: GameCardProps) => {
-  const [imageUrl, setImageUrl] = useState<string | null>(null)
+  const [heroImg, setHeroImg] = useState<string | null>(null)
+  const [bannerImg, setBannerImg] = useState<string | null>(null)
 
   const text = game.playtime_2weeks
     ? `i've played ${
@@ -27,29 +28,36 @@ const GameCard = ({ game }: GameCardProps) => {
 
   useEffect(() => {
     // ac3
-    if (game.appid === 911400)
-      game.appid = 208480
-    
-    const heroCapsuleUrl = `https://images.weserv.nl/?url=https://cdn.cloudflare.steamstatic.com/steam/apps/${game.appid}/hero_capsule.jpg&w=300&h=300&fit=cover`
-    const capsule231x87Url = `https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/${game.appid}/capsule_231x87.jpg`
-    const library600x900Url = `https://images.weserv.nl/?url=https://cdn.cloudflare.steamstatic.com/steam/apps/${game.appid}/library_600x900.jpg&w=300&h=300&fit=cover`
+    const appid = game.appid === 911400 ? 208480 : game.appid
 
-    Promise.any([checkImageExists(heroCapsuleUrl), checkImageExists(library600x900Url)])
-      .then((url) => setImageUrl(url))
-      .catch(() => {
-        // If all images fail, use the capsule URL
-        setImageUrl(capsule231x87Url)
-      })
+    const heroCapsuleUrl = `https://images.weserv.nl/?url=https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/hero_capsule.jpg&w=300&h=300&fit=cover`
+    const capsule231x87Url = `https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/${appid}/capsule_231x87.jpg`
+    const library600x900Url = `https://images.weserv.nl/?url=https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/library_600x900.jpg&w=300&h=300&fit=cover`
+    const headerUrl = `https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/${appid}/header.jpg`
+
+    checkImageExists(heroCapsuleUrl)
+      .catch(() => null)
+      .then((result) => result || checkImageExists(library600x900Url).catch(() => null))
+      .then((result) => result || checkImageExists(headerUrl).catch(() => null))
+      .then((result) => result || checkImageExists(capsule231x87Url).catch(() => null))
+      .then((result) => setHeroImg(result || null))
+
+    checkImageExists(capsule231x87Url)
+      .catch(() => null)
+      .then((result) => result || checkImageExists(headerUrl).catch(() => null))
+      .then((result) => result || checkImageExists(library600x900Url).catch(() => null))
+      .then((result) => result || checkImageExists(heroCapsuleUrl).catch(() => null))
+      .then((result) => setBannerImg(result || null))
   }, [game.appid, checkImageExists])
 
   return (
     <HoverCard openDelay={500} closeDelay={50}>
       <HoverCardTrigger asChild>
-        {imageUrl ? (
+        {heroImg ? (
           <img
             width={80}
             height={80}
-            src={imageUrl}
+            src={heroImg}
             alt={`${game.name}'s Picture`}
             style={{ imageRendering: "crisp-edges" }}
             className="no-sound h-16 w-16 rounded-lg object-cover transition-transform duration-300 ease-in-out hover:scale-110 md:h-[4.75rem] md:w-[4.75rem]"
@@ -62,14 +70,18 @@ const GameCard = ({ game }: GameCardProps) => {
         className="bg-primary-foreground/80 z-[999] flex h-40 w-full flex-col place-items-center justify-between backdrop-blur-xl"
         side="top"
       >
-        <img
-          width={374}
-          height={488}
-          src={`https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/${game.appid}/capsule_231x87.jpg`}
-          alt={`${game.name}'s Picture`}
-          style={{ imageRendering: "crisp-edges" }}
-          className="w-full rounded-lg object-cover transition-transform duration-300 ease-in-out hover:scale-110"
-        />
+        {bannerImg ? (
+          <img
+            width={374}
+            height={488}
+            src={bannerImg}
+            alt={`${game.name}'s Picture`}
+            style={{ imageRendering: "crisp-edges" }}
+            className="h-[87px] w-[231px] rounded-lg object-cover transition-transform duration-300 ease-in-out hover:scale-110"
+          />
+        ) : (
+          <div className="h-[87px] w-[231px] rounded-lg bg-neutral-200 dark:bg-neutral-700 object-cover transition-transform duration-300 ease-in-out hover:scale-110" />
+        )}
         <span className="font-semibold">{text}</span>
       </HoverCardContent>
     </HoverCard>
