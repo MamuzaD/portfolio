@@ -14,7 +14,7 @@ const { data, id } = Astro.props.project
     data.card.type === "video" ? (
       <video
         src={data.card.src}
-        class="h-auto max-h-[50vh] w-auto animate-fadeIn rounded-lg opacity-100 transition-opacity duration-300 hover:opacity-70 mx-auto"
+        class="mx-auto h-auto max-h-[50vh] w-auto animate-fadeIn rounded-lg opacity-100 transition-opacity duration-300 hover:opacity-70"
         autoplay
         muted
         loop

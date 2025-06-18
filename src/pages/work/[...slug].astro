@@ -29,25 +29,27 @@ const { data: project } = entry
     <div class="w-full md:px-24">
       {/* Banner Image */}
       <div class="mb-16 flex justify-center overflow-hidden">
-        {project.banner.type === "video" ? (
-          <video
-            src={project.banner.src}
-            class="h-full w-auto max-h-[50vh] rounded-2xl border"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="metadata"
-          />
-        ) : (
-          <Image
-            src={project.banner.img}
-            alt={project.banner.alt || ""}
-            class={`h-full w-auto max-h-[50vh] rounded-2xl border`}
-            transition:name={project.card.alt}
-            transition:animate="fade"
-          />
-        )}
+        {
+          project.banner.type === "video" ? (
+            <video
+              src={project.banner.src}
+              class="h-full max-h-[50vh] w-auto rounded-2xl border"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+            />
+          ) : (
+            <Image
+              src={project.banner.img}
+              alt={project.banner.alt || ""}
+              class={`h-full max-h-[50vh] w-auto rounded-2xl border`}
+              transition:name={project.card.alt}
+              transition:animate="fade"
+            />
+          )
+        }
       </div>
 
       <div class="grid grid-cols-12 gap-8">
@@ -139,7 +141,7 @@ const { data: project } = entry
                 {img.type === "video" ? (
                   <video
                     src={img.src}
-                    class="w-auto mx-auto rounded-lg shadow-mac-md transition-[box-shadow] duration-300 hover:shadow-mac-lg max-h-[70vh]"
+                    class="mx-auto max-h-[70vh] w-auto rounded-lg shadow-mac-md transition-[box-shadow] duration-300 hover:shadow-mac-lg"
                     autoplay
                     muted
                     loop
@@ -152,7 +154,7 @@ const { data: project } = entry
                     alt={img.alt || ""}
                     width={1200}
                     height={675}
-                    class="w-auto mx-auto rounded-lg shadow-mac-md transition-[box-shadow] duration-300 hover:shadow-mac-lg max-h-[70vh]"
+                    class="mx-auto max-h-[70vh] w-auto rounded-lg shadow-mac-md transition-[box-shadow] duration-300 hover:shadow-mac-lg"
                   />
                 )}
               </div>

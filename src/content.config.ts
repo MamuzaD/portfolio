@@ -14,8 +14,7 @@ const videoSchema = z.object({
   alt: z.string().optional(),
 })
 
-const mediaSchema = (image: ImageFunction) =>
-  z.union([imageSchema(image), videoSchema])
+const mediaSchema = (image: ImageFunction) => z.union([imageSchema(image), videoSchema])
 
 const linkSchema = z.object({ url: z.string(), name: z.string() })
 const durationSchema = z.object({

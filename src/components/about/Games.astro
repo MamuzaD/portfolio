@@ -51,7 +51,7 @@ try {
       ]
       // get fav games from all games response
       const favoriteGames = allGamesData.response.games.filter((game: Game) =>
-        favorites.some((fav) => game.name && game.name.toLowerCase() == (fav.toLowerCase()))
+        favorites.some((fav) => game.name && game.name.toLowerCase() == fav.toLowerCase())
       )
 
       // filter out possible games alr in recent
@@ -70,7 +70,7 @@ try {
 ---
 
 <div
-  class="bg-muted/60 z-50 col-span-1 row-span-1 grid h-full w-full grid-cols-4 place-items-center gap-2 rounded-xl p-2 py-4 backdrop-blur-lg md:max-w-56 md:grid-cols-2 md:py-2"
+  class="z-50 col-span-1 row-span-1 grid h-full w-full grid-cols-4 place-items-center gap-2 rounded-xl bg-muted/60 p-2 py-4 backdrop-blur-lg md:max-w-56 md:grid-cols-2 md:py-2"
 >
   {games.map((game) => <GameCard {game} client:idle />)}
 
@@ -78,7 +78,7 @@ try {
   {
     games.length < 4 &&
       Array.from({ length: 4 - games.length }).map((_, index) => (
-        <div class="h-16 w-16 rounded-lg bg-neutral-200 transition-transform duration-300 ease-in-out hover:scale-110 md:h-[4.75rem] md:w-[4.75rem] dark:bg-neutral-700" />
+        <div class="h-16 w-16 rounded-lg bg-neutral-200 transition-transform duration-300 ease-in-out hover:scale-110 dark:bg-neutral-700 md:h-[4.75rem] md:w-[4.75rem]" />
       ))
   }
 </div>

@@ -31,7 +31,7 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
                       <motion.video
                         key={highlightedProject?.data.card.src}
                         src={highlightedProject.data.card.src}
-                        className="duration-250 h-full w-full max-h-[450px] max-w-[450px] rounded-lg object-cover shadow-mac-md transition-[box-shadow] hover:shadow-mac-lg"
+                        className="duration-250 h-full max-h-[450px] w-full max-w-[450px] rounded-lg object-cover shadow-mac-md transition-[box-shadow] hover:shadow-mac-lg"
                         initial={{ opacity: 0, translateY: 25 }}
                         animate={{ opacity: 1, translateY: 0 }}
                         exit={{ opacity: 0 }}
@@ -56,7 +56,7 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
                         key={highlightedProject?.data.card.img.src}
                         src={highlightedProject.data.card.img.src}
                         alt={highlightedProject.data.card.alt || highlightedProject.data.title}
-                        className="duration-250 h-full w-full max-h-[450px] max-w-[450px] rounded-lg object-cover shadow-mac-md transition-[box-shadow] hover:shadow-mac-lg"
+                        className="duration-250 h-full max-h-[450px] w-full max-w-[450px] rounded-lg object-cover shadow-mac-md transition-[box-shadow] hover:shadow-mac-lg"
                         initial={{ opacity: 0, translateY: 25 }}
                         animate={{ opacity: 1, translateY: 0 }}
                         exit={{ opacity: 0 }}

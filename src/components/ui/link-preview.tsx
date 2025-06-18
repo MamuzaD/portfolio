@@ -132,7 +132,7 @@ export const LinkPreview = ({
               >
                 {noUrl || !url ? (
                   <div
-                    className="bg-background/80 block rounded-xl border-2 p-0.5 backdrop-blur-lg"
+                    className="block rounded-xl border-2 bg-background/80 p-0.5 backdrop-blur-lg"
                     style={{ fontSize: 0 }}
                   >
                     <img
@@ -147,7 +147,7 @@ export const LinkPreview = ({
                   <a
                     href={url}
                     target={target}
-                    className="bg-background/80 block rounded-xl border-2 p-0.5 backdrop-blur-lg"
+                    className="block rounded-xl border-2 bg-background/80 p-0.5 backdrop-blur-lg"
                     style={{ fontSize: 0 }}
                   >
                     <img

@@ -11,9 +11,7 @@ const Skills = () => {
   const animatedCategories = useRef<Set<string>>(new Set())
 
   return (
-    <section
-      className="z-10 rounded-3xl bg-primary-foreground/80 px-4 pb-10 pt-5 shadow-aboutcard backdrop-blur-md md:px-16"
-    >
+    <section className="z-10 rounded-3xl bg-primary-foreground/80 px-4 pb-10 pt-5 shadow-aboutcard backdrop-blur-md md:px-16">
       <div
         className={`no-visible-scrollbar relative mb-4 flex w-full max-w-full flex-row items-center justify-center overflow-auto sm:overflow-visible`}
       >
@@ -23,10 +21,10 @@ const Skills = () => {
               <motion.div
                 layoutId="activeTab"
                 transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
-                className={`absolute inset-0 rounded-full bg-neutral-200 dark:bg-neutral-800 z-0`}
+                className={`absolute inset-0 z-0 rounded-full bg-neutral-200 dark:bg-neutral-800`}
               />
             )}
-            <span className="relative block text-black dark:text-white z-10">{tab}</span>
+            <span className="relative z-10 block text-black dark:text-white">{tab}</span>
           </button>
         ))}
       </div>

@@ -67,7 +67,7 @@ const GameCard = ({ game }: GameCardProps) => {
         )}
       </HoverCardTrigger>
       <HoverCardContent
-        className="bg-primary-foreground/80 z-[999] flex h-40 w-full flex-col place-items-center justify-between backdrop-blur-xl"
+        className="z-[999] flex h-40 w-full flex-col place-items-center justify-between bg-primary-foreground/80 backdrop-blur-xl"
         side="top"
       >
         {bannerImg ? (
@@ -80,7 +80,7 @@ const GameCard = ({ game }: GameCardProps) => {
             className="h-[87px] w-[231px] rounded-lg object-cover transition-transform duration-300 ease-in-out hover:scale-110"
           />
         ) : (
-          <div className="h-[87px] w-[231px] rounded-lg bg-neutral-200 dark:bg-neutral-700 object-cover transition-transform duration-300 ease-in-out hover:scale-110" />
+          <div className="h-[87px] w-[231px] rounded-lg bg-neutral-200 object-cover transition-transform duration-300 ease-in-out hover:scale-110 dark:bg-neutral-700" />
         )}
         <span className="font-semibold">{text}</span>
       </HoverCardContent>
