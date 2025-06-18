@@ -7,13 +7,15 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "format": "prettier --write ."
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx,astro}\" --cache",
+    "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx,astro}\" --cache",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@astrojs/react": "^4.2.1",
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^6.0.0",
-    "@astrojs/vercel": "^8.1.3",
+    "@astrojs/vercel": "^8.1.5",
     "@emailjs/browser": "^4.4.1",
     "@hookform/resolvers": "^3.9.1",
     "@nanostores/persistent": "^0.10.2",

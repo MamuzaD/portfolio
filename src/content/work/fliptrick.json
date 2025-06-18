@@ -1,0 +1,40 @@
+{
+  "title": "Flip Trick",
+  "caption": "Motion-Based iOS Game",
+  "description": [
+    "FlipTrick is a motion-based iOS game designed to turn everyday phone movements into a fun, competitive experience. Flip, spin, and rotate their phone to perform tricks, earning real-time scores with a combo/multiplier system for chaining unique moves.",
+    "The game offers 'Endless Mode' for continuous play and 'Timed Mode' for a high-score race. It features move and score history tracking, a score decay mechanism for inactivity, and an in-app tutorial. Built with Swift, UIKit, and CoreMotion, FlipTrick was developed as the final project for CodePath's Intro to iOS Course, focusing on creating a quick, active, and engaging game."
+  ],
+  "seoDescription": "Flip Trick is a motion-oriented iOS arcade game built with Swift, UIKit, and CoreMotion. Features include real-time scoring, combo system, multiple game modes, and score history.",
+  "ogImg": "https://danielmamuza.com/work/fliptrick/fliptrick_og.webp",
+  "duration": { "start": "2025-04-22", "end": "2025-05-25" },
+  "links": [{ "name": "github", "url": "https://github.com/MamuzaD/fliptrick" }],
+  "tags": ["iOS", "Swift", "UIKit", "CoreMotion"],
+  "banner": {
+    "img": "public/work/fliptrick/icon.png",
+    "alt": "FlipTrick Banner",
+    "type": "image"
+  },
+  "card": {
+    "src": "/work/fliptrick/card.mp4",
+    "alt": "FlipTrick Card",
+    "type": "video"
+  },
+  "imgs": [
+    {
+      "src": "/work/fliptrick/card.mp4",
+      "alt": "FlipTrick Video",
+      "type": "video"
+    },
+    {
+      "img": "public/work/fliptrick/icon.png",
+      "alt": "FlipTrick App Icon",
+      "type": "image"
+    },
+    {
+      "img": "public/work/fliptrick/loading.png",
+      "alt": "FlipTrick Loading Screen",
+      "type": "image"
+    }
+  ]
+}

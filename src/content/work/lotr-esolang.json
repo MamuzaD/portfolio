@@ -10,11 +10,13 @@
   "duration": { "start": "2024-02-14T00:00:00Z" },
   "banner": {
     "img": "public/work/lotr-esolang/lotr-esolang.webp",
-    "alt": "Esolang Banner"
+    "alt": "Esolang Banner",
+    "type": "image"
   },
   "card": {
     "img": "public/work/lotr-esolang/lotr-esolang.webp",
-    "alt": "Esolang Card"
+    "alt": "Esolang Card",
+    "type": "image"
   },
   "tags": ["TypeScript", "Interpreter Design", "Parser", "Lexer", "Evaluater"],
   "links": [{ "name": "github", "url": "//github.com/MamuzaD/Lord-of-The-Rings-Esolang" }]

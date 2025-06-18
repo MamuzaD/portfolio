@@ -10,11 +10,13 @@
   "duration": { "start": "2024-05-28T00:00:00Z" },
   "banner": {
     "img": "public/work/jerald-bot/banner.jpg",
-    "alt": "Jerald Bot Banner"
+    "alt": "Jerald Bot Banner",
+    "type": "image"
   },
   "card": {
     "img": "public/work/jerald-bot/jerald-bot.webp",
-    "alt": "Jerald Bot Card"
+    "alt": "Jerald Bot Card",
+    "type": "image"
   },
   "tags": ["Python", "Discord", "OpenAI"],
   "links": [

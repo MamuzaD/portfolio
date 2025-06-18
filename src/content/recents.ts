@@ -9,12 +9,29 @@ type Recent = {
 
 const recents: Recent[] = [
   {
+    content: "created and released Vidlogd",
+    links: [
+      {
+        where: "Vidlogd",
+        href: "/work/vidlogd",
+      },
+    ],
+  },
+  {
+    content: "built FlipTrick through CodePath iOS course",
+    links: [
+      {
+        where: "FlipTrick",
+        href: "/work/fliptrick",
+      },
+    ],
+  },
+  {
     content: "began work on Fate",
     links: [
       {
         where: "Fate",
-        href: "#recent-work",
-        internal: true,
+        href: "/work/fate",
       },
     ],
   },
@@ -30,12 +47,12 @@ const recents: Recent[] = [
   {
     content: "updated portfolio to v3",
   },
-  {
-    content: "started position at Intellimind as software engineer intern",
-  },
-  {
-    content: "competed at South California's ICPC for UNLV",
-  },
+  // {
+  //   content: "started position at Intellimind as software engineer intern",
+  // },
+  // {
+  //   content: "competed at South California's ICPC for UNLV",
+  // },
 ]
 
 export default recents

@@ -10,16 +10,18 @@
   "duration": { "start": "2025-03-06", "end": "Present" },
   "banner": {
     "img": "public/work/fate/fate.png",
-    "alt": "Fate Banner"
+    "alt": "Fate Banner",
+    "type": "image"
   },
   "card": {
     "img": "public/work/fate/fate.png",
-    "alt": "Fate Card"
+    "alt": "Fate Card",
+    "type": "image"
   },
   "tags": ["Next.js", "Shadcn UI", "Tailwind CSS", "Redis", "Resend", "Machine Learning"],
   "links": [{ "name": "live", "url": "https://fateapp.dev" }],
   "imgs": [
-    { "img": "public/work/fate/fate-canvas.png", "alt": "Fate Hero" },
-    { "img": "public/work/fate/features.png", "alt": "Fate Features" }
+    { "img": "public/work/fate/fate-canvas.png", "alt": "Fate Hero", "type": "image" },
+    { "img": "public/work/fate/features.png", "alt": "Fate Features", "type": "image" }
   ]
 }

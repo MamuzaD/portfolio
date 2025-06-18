@@ -1,0 +1,48 @@
+{
+  "title": "Vidlogd",
+  "caption": "Terminal YouTube Logger",
+  "description": [
+    "Vidlogd is my first Go project, a CLI application for logging and managing YouTube videos. Inspired by terminal workflows (Neovim, Tmux) and the concept of 'Letterboxd for YouTube', it uses the Bubble Tea TUI framework.",
+    "The app integrates with the YouTube Data API to prefetch video details, allowing users to rate and review. It features a data view and analytics dashboard with statistics on video logs, ratings, rewatch percentages, and charts for trends and channel insights."
+  ],
+  "seoDescription": "Vidlogd is a terminal-based YouTube video logger built with Go. Features include video logging, ratings, reviews, data management, and an analytics dashboard with interactive charts and channel statistics.",
+  "ogImg": "https://danielmamuza.com/work/vidlogd/vidlogd_og.webp",
+  "duration": { "start": "2025-06-17" },
+  "links": [
+    { "name": "github", "url": "https://github.com/MamuzaD/vidlogd" },
+    { "name": "releases", "url": "https://github.com/MamuzaD/vidlogd/releases" }
+  ],
+  "tags": ["Go", "CLI", "Bubble Tea TUI"],
+  "banner": {
+    "src": "/work/vidlogd/banner.mp4",
+    "alt": "vidlogd banner",
+    "type": "video"
+  },
+  "card": {
+    "src": "/work/vidlogd/banner.mp4",
+    "alt": "vidlogd banner",
+    "type": "video"
+  },
+  "imgs": [
+    {
+      "img": "public/work/vidlogd/form.webp",
+      "alt": "vidlogd form",
+      "type": "image"
+    },
+    {
+      "img": "public/work/vidlogd/ratings.webp",
+      "alt": "vidlogd ratings",
+      "type": "image"
+    },
+    {
+      "img": "public/work/vidlogd/months.webp",
+      "alt": "vidlogd months",
+      "type": "image"
+    },
+    {
+      "img": "public/work/vidlogd/stats.webp",
+      "alt": "vidlogd stats",
+      "type": "image"
+    }
+  ]
+}

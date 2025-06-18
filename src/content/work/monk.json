@@ -25,24 +25,29 @@
   ],
   "banner": {
     "img": "public/work/monk/monk.webp",
-    "alt": "Monk Banner"
+    "alt": "Monk Banner",
+    "type": "image"
   },
   "card": {
     "img": "public/work/monk/monk.webp",
-    "alt": "Monk Card"
+    "alt": "Monk Card",
+    "type": "image"
   },
   "imgs": [
     {
       "img": "public/work/monk/hero.jpg",
-      "alt": "Hero image"
+      "alt": "Hero image",
+      "type": "image"
     },
     {
       "img": "public/work/monk/dashboard.jpg",
-      "alt": "Board animated image"
+      "alt": "Board animated image",
+      "type": "image"
     },
     {
       "img": "public/work/monk/notes.jpg",
-      "alt": "Notes animated image"
+      "alt": "Notes animated image",
+      "type": "image"
     }
   ]
 }

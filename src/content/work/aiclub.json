@@ -10,11 +10,13 @@
   "duration": { "start": "2024-09-28", "end": "2024-11-16" },
   "banner": {
     "img": "public/work/aiclub/aiclub.jpg",
-    "alt": "AIClub Banner"
+    "alt": "AIClub Banner",
+    "type": "image"
   },
   "card": {
     "img": "public/work/aiclub/aiclub.jpg",
-    "alt": "AIClub Card"
+    "alt": "AIClub Card",
+    "type": "image"
   },
   "tags": ["React", "Tailwind CSS", "Vite", "TypeScript", "Google Analytics"],
   "links": [
@@ -24,15 +26,18 @@
   "imgs": [
     {
       "img": "public/work/aiclub/discover.jpg",
-      "alt": "AIClub Discover"
+      "alt": "AIClub Discover",
+      "type": "image"
     },
     {
       "img": "public/work/aiclub/events.jpg",
-      "alt": "AIClub Events"
+      "alt": "AIClub Events",
+      "type": "image"
     },
     {
       "img": "public/work/aiclub/projects.jpg",
-      "alt": "AIClub Projects"
+      "alt": "AIClub Projects",
+      "type": "image"
     }
   ]
 }

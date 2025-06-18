@@ -10,16 +10,18 @@
   "duration": { "start": "2024-07-28", "end": "2024-09-15" },
   "banner": {
     "img": "public/work/acm/acm.jpg",
-    "alt": "ACM Banner"
+    "alt": "ACM Banner",
+    "type": "image"
   },
   "card": {
     "img": "public/work/acm/acm.jpg",
-    "alt": "ACM Card"
+    "alt": "ACM Card",
+    "type": "image"
   },
   "tags": ["Next.js", "Shadcn UI", "Tailwind CSS", "Figma"],
   "links": [
     { "name": "github", "url": "//github.com/acmunlv/www" },
     { "name": "live", "url": "https://acm.cs.unlv.edu" }
   ],
-  "imgs": [{ "img": "public/work/acm/about.jpg", "alt": "ACM About" }]
+  "imgs": [{ "img": "public/work/acm/about.jpg", "alt": "ACM About", "type": "image" }]
 }
