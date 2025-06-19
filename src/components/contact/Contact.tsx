@@ -49,7 +49,12 @@ export default function Contact() {
   }, [dropdownOpen])
 
   return (
-    <section className="z-50 flex flex-col items-center">
+    <section className="z-50 flex flex-col items-center relative">
+      {!dropdownOpen && (
+        <div className="absolute -right-24 bottom-10 z-10">
+          <img src="/particles/arrow.gif" alt="pointer" className="h-24 w-24 object-contain" />
+        </div>
+      )}
       {!viewForm && (
         <div ref={dropdownRef}>
           <DropdownMenu modal={false} open={dropdownOpen}>

@@ -35,7 +35,7 @@ const Skills = () => {
           const handleAnimationComplete = () => animatedCategories.current.add(categoryKey)
 
           return (
-            <div key={categoryKey}>
+            <div key={categoryKey} className="w-full max-w-xl">
               <h4 className="mb-3 text-center font-medium">{title}</h4>
               <div className="flex w-full flex-wrap justify-center gap-2">
                 {skills.map((skill, i) => {
