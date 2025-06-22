@@ -49,7 +49,7 @@ export default function Contact() {
   }, [dropdownOpen])
 
   return (
-    <section className="z-50 flex flex-col items-center relative">
+    <section className="relative z-50 flex flex-col items-center">
       {!dropdownOpen && (
         <div className="absolute -right-24 bottom-10 z-10">
           <img src="/particles/arrow.gif" alt="pointer" className="h-24 w-24 object-contain" />

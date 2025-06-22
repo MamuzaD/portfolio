@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react"
 
-import type { Game } from "@/components/about/Games.astro"
+import type { Game } from "@/lib/games"
+
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 
 interface GameCardProps {
@@ -15,7 +16,9 @@ const GameCard = ({ game }: GameCardProps) => {
     ? `i've played ${
         game.playtime_2weeks < 120 ? `${game.playtime_2weeks} mins` : `${(game.playtime_2weeks / 60.0).toFixed(1)} hrs`
       } recently`
-    : `i've played ${(game.playtime_forever / 60.0).toFixed(1)} hrs total`
+    : game.playtime_forever === 0
+      ? "on the backlog"
+      : `i've played ${(game.playtime_forever / 60.0).toFixed(1)} hrs total`
 
   const checkImageExists = useCallback((url: string): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -30,24 +33,33 @@ const GameCard = ({ game }: GameCardProps) => {
     // ac3
     const appid = game.appid === 911400 ? 208480 : game.appid
 
-    const heroCapsuleUrl = `https://images.weserv.nl/?url=https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/hero_capsule.jpg&w=300&h=300&fit=cover`
-    const capsule231x87Url = `https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/${appid}/capsule_231x87.jpg`
-    const library600x900Url = `https://images.weserv.nl/?url=https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/library_600x900.jpg&w=300&h=300&fit=cover`
-    const headerUrl = `https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/${appid}/header.jpg`
+    const imageUrls = {
+      heroCapsule: `https://images.weserv.nl/?url=https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/hero_capsule.jpg&w=300&h=300&fit=cover`,
+      capsule231x87: `https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/${appid}/capsule_231x87.jpg`,
+      library600x900: `https://images.weserv.nl/?url=https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/library_600x900.jpg&w=300&h=300&fit=cover`,
+      header: `https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/${appid}/header.jpg`,
+    }
 
-    checkImageExists(heroCapsuleUrl)
-      .catch(() => null)
-      .then((result) => result || checkImageExists(library600x900Url).catch(() => null))
-      .then((result) => result || checkImageExists(headerUrl).catch(() => null))
-      .then((result) => result || checkImageExists(capsule231x87Url).catch(() => null))
-      .then((result) => setHeroImg(result || null))
+    // priority order
+    const heroFallbacks = ["heroCapsule", "library600x900", "header", "capsule231x87"]
+    const bannerFallbacks = ["capsule231x87", "header", "library600x900", "heroCapsule"]
 
-    checkImageExists(capsule231x87Url)
-      .catch(() => null)
-      .then((result) => result || checkImageExists(headerUrl).catch(() => null))
-      .then((result) => result || checkImageExists(library600x900Url).catch(() => null))
-      .then((result) => result || checkImageExists(heroCapsuleUrl).catch(() => null))
-      .then((result) => setBannerImg(result || null))
+    async function findWorkingImage(fallbackOrder: string[]): Promise<string | null> {
+      for (const imageType of fallbackOrder) {
+        try {
+          const url = await checkImageExists(imageUrls[imageType as keyof typeof imageUrls])
+          if (url) return url
+        } catch {
+          continue
+        }
+      }
+      return null
+    }
+
+    Promise.all([findWorkingImage(heroFallbacks), findWorkingImage(bannerFallbacks)]).then(([heroUrl, bannerUrl]) => {
+      setHeroImg(heroUrl)
+      setBannerImg(bannerUrl)
+    })
   }, [game.appid, checkImageExists])
 
   return (

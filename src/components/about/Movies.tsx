@@ -18,9 +18,8 @@ const Movies = () => {
 
   const fetchFilmDetails = async () => {
     setLoading(true)
-    const url = "https://letterboxd.com/da_ni/films/diary/"
     try {
-      const response = await fetch(`/api/scrape?url=${url}`)
+      const response = await fetch(`/api/scrape`)
       if (!response.ok) {
         throw new Error("Failed to fetch film details")
       }

@@ -1,72 +1,10 @@
 ---
 import GameCard from "@/components/about/GameCard"
+import { getGames } from "@/lib/games"
 
 export const prerender = false
 
-const api = import.meta.env.STEAM_API_KEY
-const steamId = "76561197989108352"
-const recentGamesUrl = `http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${api}&steamid=${steamId}&format=json&count=4`
-const allGamesUrl = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${api}&steamid=${steamId}&format=json&include_appinfo=1&include_played_free_games=1`
-
-export type Game = {
-  appid: number
-  name: string
-  playtime_2weeks: number
-  playtime_forever: number
-  img_icon_url: string
-  img_logo_url: string
-}
-
-let games: Game[] = []
-try {
-  const recentResponse = await fetch(recentGamesUrl)
-  const recentData = await recentResponse.json()
-
-  if (recentData.response && recentData.response.games && recentData.response.games.length > 0) {
-    games = recentData.response.games
-  }
-
-  if (games.length < 4) {
-    const allGamesResponse = await fetch(allGamesUrl)
-    const allGamesData = await allGamesResponse.json()
-
-    if (allGamesData.response && allGamesData.response.games) {
-      const favorites = [
-        "God of War",
-        "The Witcher 3: Wild Hunt",
-        "Terraria",
-        "HELLDIVERS™ 2",
-        "Hades",
-        "Risk of Rain 2",
-        "Kingdoms and Castles",
-        "ANIMAL WELL",
-        "The Last of Us™ Part I",
-        "Kingdom Come: Deliverance II",
-        "Chivalry 2",
-        "Marvel Rivals",
-        "It Takes Two",
-        "DAVE THE DIVER",
-        "Assassin's Creed II",
-        "Assassin's Creed III Remastered",
-      ]
-      // get fav games from all games response
-      const favoriteGames = allGamesData.response.games.filter((game: Game) =>
-        favorites.some((fav) => game.name && game.name.toLowerCase() == fav.toLowerCase())
-      )
-
-      // filter out possible games alr in recent
-      const newGames = favoriteGames.filter((fav: Game) => !games.some((recentGame) => recentGame.appid === fav.appid))
-
-      // shuffle
-      const shuffledFavorites = newGames.sort(() => 0.5 - Math.random())
-      const needed = Math.floor(Math.random() * 2) + 3 - games.length
-
-      games = [...games, ...shuffledFavorites.slice(0, needed)]
-    }
-  }
-} catch (error) {
-  console.error("failed to fetch games:", error)
-}
+const games = await getGames()
 ---
 
 <div

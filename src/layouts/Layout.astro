@@ -56,6 +56,13 @@ const canonical = currentPath === "/" ? siteURL : `${siteURL}${currentPath}`
           { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon/favicon-16x16.png" },
           { rel: "apple-touch-icon", sizes: "180x180", href: "/favicon/apple-touch-icon.png" },
           { rel: "sitemap", href: "/sitemap-index.xml" },
+          // Preconnect hints for performance optimization
+          { rel: "preconnect", href: "https://images.weserv.nl" },
+          { rel: "preconnect", href: "https://shared.cloudflare.steamstatic.com" },
+          { rel: "preconnect", href: "https://a.ltrbxd.com" },
+          { rel: "dns-prefetch", href: "//weserv.nl" },
+          { rel: "dns-prefetch", href: "//steamstatic.com" },
+          { rel: "dns-prefetch", href: "//ltrbxd.com" },
         ],
         meta: [],
       }}

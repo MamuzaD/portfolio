@@ -1,6 +1,8 @@
 import chromium from "@sparticuz/chromium"
 import puppeteer, { Browser, Page } from "puppeteer-core"
 
+import { cacheData, getCachedData } from "./redis"
+
 let browserInstance: Browser | null = null
 
 async function getBrowser() {
@@ -44,7 +46,14 @@ export async function closeBrowser() {
   }
 }
 
-export async function scrapeFilmDetails(url: string) {
+type FilmDetails = {
+  title: string | null
+  imageUrl: string | null
+  stars: string | null
+}
+
+async function scrapeFilmDetails(): Promise<FilmDetails | null> {
+  const url = "https://letterboxd.com/da_ni/films/diary/"
   let browser: Browser | null = null
   let page: Page | null = null
 
@@ -88,14 +97,16 @@ export async function scrapeFilmDetails(url: string) {
       if (!filmElement) return null
 
       const titleElement = filmElement.parentElement?.querySelector("h3.headline-3 a")
-      const title = titleElement ? titleElement.textContent?.trim() : null
+      const title = titleElement?.textContent?.trim() || null
 
       const imgElement = filmElement.querySelector("img")
-      let imageUrl = imgElement ? imgElement.getAttribute("src")?.replace("35", "100") : null
-      imageUrl = imageUrl?.replace(/-0-(\d+)-0-(\d+)/, "-0-70-0-105")
+      let imageUrl = imgElement?.getAttribute("src")?.replace("35", "100") || null
+      if (imageUrl) {
+        imageUrl = imageUrl.replace(/-0-(\d+)-0-(\d+)/, "-0-70-0-105")
+      }
 
       const starsElement = document.querySelector("span.rating")
-      const stars = starsElement ? starsElement.textContent?.trim() : null
+      const stars = starsElement?.textContent?.trim() || null
 
       return { title, imageUrl, stars }
     })
@@ -112,4 +123,48 @@ export async function scrapeFilmDetails(url: string) {
       console.log("Page closed")
     }
   }
+}
+
+function dataHasChanged(cached: FilmDetails, fresh: FilmDetails): boolean {
+  return cached.title !== fresh.title || cached.imageUrl !== fresh.imageUrl || cached.stars !== fresh.stars
+}
+
+export async function getFilmDetails(): Promise<FilmDetails | null> {
+  const cacheKey = "portfolio_film"
+  const cachedData = await getCachedData<FilmDetails>(cacheKey)
+
+  const scrapePromise = scrapeFilmDetails()
+
+  if (cachedData) {
+    console.log("Returning cached data immediately, scraping in background")
+
+    // background update
+    scrapePromise
+      .then(async (freshData) => {
+        if (freshData) {
+          if (dataHasChanged(cachedData, freshData)) {
+            console.log("Fresh data differs from cache, updating")
+            await cacheData(cacheKey, freshData)
+          } else {
+            console.log("Fresh data matches cache, no update needed")
+          }
+        }
+      })
+      .catch((error) => {
+        console.error("Background scrape failed:", error)
+      })
+
+    return cachedData
+  }
+
+  // no cache available, wait for fresh scrape
+  console.log("No cached data, waiting for fresh scrape")
+  const freshData = await scrapePromise
+
+  if (freshData) {
+    console.log("Caching fresh film details")
+    await cacheData(cacheKey, freshData)
+  }
+
+  return freshData
 }

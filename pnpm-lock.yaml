@@ -16,10 +16,10 @@ importers:
         version: 3.2.1
       '@astrojs/tailwind':
         specifier: ^6.0.0
-        version: 6.0.2(astro@5.6.1(@types/node@22.10.5)(jiti@1.21.7)(rollup@4.40.0)(typescript@5.7.2)(yaml@2.7.0))(tailwindcss@3.4.17)
+        version: 6.0.2(astro@5.6.1(@types/node@22.10.5)(@upstash/redis@1.35.0)(jiti@1.21.7)(rollup@4.40.0)(typescript@5.7.2)(yaml@2.7.0))(tailwindcss@3.4.17)
       '@astrojs/vercel':
         specifier: ^8.1.5
-        version: 8.1.5(astro@5.6.1(@types/node@22.10.5)(jiti@1.21.7)(rollup@4.40.0)(typescript@5.7.2)(yaml@2.7.0))(react@19.0.0)(rollup@4.40.0)
+        version: 8.1.5(astro@5.6.1(@types/node@22.10.5)(@upstash/redis@1.35.0)(jiti@1.21.7)(rollup@4.40.0)(typescript@5.7.2)(yaml@2.7.0))(react@19.0.0)(rollup@4.40.0)
       '@emailjs/browser':
         specifier: ^4.4.1
         version: 4.4.1
@@ -56,9 +56,12 @@ importers:
       '@types/react-dom':
         specifier: ^19.0.2
         version: 19.0.2(@types/react@19.0.2)
+      '@upstash/redis':
+        specifier: ^1.35.0
+        version: 1.35.0
       astro:
         specifier: ^5.4.2
-        version: 5.6.1(@types/node@22.10.5)(jiti@1.21.7)(rollup@4.40.0)(typescript@5.7.2)(yaml@2.7.0)
+        version: 5.6.1(@types/node@22.10.5)(@upstash/redis@1.35.0)(jiti@1.21.7)(rollup@4.40.0)(typescript@5.7.2)(yaml@2.7.0)
       astro-compressor:
         specifier: ^1.0.0
         version: 1.0.0
@@ -1296,6 +1299,9 @@ packages:
 
   '@ungap/structured-clone@1.2.1':
     resolution: {integrity: sha512-fEzPV3hSkSMltkw152tJKNARhOupqbH96MZWyRjNaYZOMIzbrTeQDG+MTc6Mr2pgzFQzFxAfmhGDNP5QK++2ZA==}
+
+  '@upstash/redis@1.35.0':
+    resolution: {integrity: sha512-WUm0Jz1xN4DBDGeJIi2Y0kVsolWRB2tsVds4SExaiLg4wBdHFMB+8IfZtBWr+BP0FvhuBr5G1/VLrJ9xzIWHsg==}
 
   '@vercel/analytics@1.5.0':
     resolution: {integrity: sha512-MYsBzfPki4gthY5HnYN7jgInhAZ7Ac1cYDoRWFomwGHWEX7odTEzbtg9kf/QSo7XEsEAqlQugA6gJ2WS2DEa3g==}
@@ -3798,9 +3804,9 @@ snapshots:
       stream-replace-string: 2.0.0
       zod: 3.24.1
 
-  '@astrojs/tailwind@6.0.2(astro@5.6.1(@types/node@22.10.5)(jiti@1.21.7)(rollup@4.40.0)(typescript@5.7.2)(yaml@2.7.0))(tailwindcss@3.4.17)':
+  '@astrojs/tailwind@6.0.2(astro@5.6.1(@types/node@22.10.5)(@upstash/redis@1.35.0)(jiti@1.21.7)(rollup@4.40.0)(typescript@5.7.2)(yaml@2.7.0))(tailwindcss@3.4.17)':
     dependencies:
-      astro: 5.6.1(@types/node@22.10.5)(jiti@1.21.7)(rollup@4.40.0)(typescript@5.7.2)(yaml@2.7.0)
+      astro: 5.6.1(@types/node@22.10.5)(@upstash/redis@1.35.0)(jiti@1.21.7)(rollup@4.40.0)(typescript@5.7.2)(yaml@2.7.0)
       autoprefixer: 10.4.21(postcss@8.5.3)
       postcss: 8.5.3
       postcss-load-config: 4.0.2(postcss@8.5.3)
@@ -3820,14 +3826,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/vercel@8.1.5(astro@5.6.1(@types/node@22.10.5)(jiti@1.21.7)(rollup@4.40.0)(typescript@5.7.2)(yaml@2.7.0))(react@19.0.0)(rollup@4.40.0)':
+  '@astrojs/vercel@8.1.5(astro@5.6.1(@types/node@22.10.5)(@upstash/redis@1.35.0)(jiti@1.21.7)(rollup@4.40.0)(typescript@5.7.2)(yaml@2.7.0))(react@19.0.0)(rollup@4.40.0)':
     dependencies:
       '@astrojs/internal-helpers': 0.6.1
       '@vercel/analytics': 1.5.0(react@19.0.0)
       '@vercel/edge': 1.2.1
       '@vercel/nft': 0.29.2(rollup@4.40.0)
       '@vercel/routing-utils': 5.0.4
-      astro: 5.6.1(@types/node@22.10.5)(jiti@1.21.7)(rollup@4.40.0)(typescript@5.7.2)(yaml@2.7.0)
+      astro: 5.6.1(@types/node@22.10.5)(@upstash/redis@1.35.0)(jiti@1.21.7)(rollup@4.40.0)(typescript@5.7.2)(yaml@2.7.0)
       esbuild: 0.25.2
       tinyglobby: 0.2.14
     transitivePeerDependencies:
@@ -4909,6 +4915,10 @@ snapshots:
 
   '@ungap/structured-clone@1.2.1': {}
 
+  '@upstash/redis@1.35.0':
+    dependencies:
+      uncrypto: 0.1.3
+
   '@vercel/analytics@1.5.0(react@19.0.0)':
     optionalDependencies:
       react: 19.0.0
@@ -5083,7 +5093,7 @@ snapshots:
       - prettier-plugin-astro
       - typescript
 
-  astro@5.6.1(@types/node@22.10.5)(jiti@1.21.7)(rollup@4.40.0)(typescript@5.7.2)(yaml@2.7.0):
+  astro@5.6.1(@types/node@22.10.5)(@upstash/redis@1.35.0)(jiti@1.21.7)(rollup@4.40.0)(typescript@5.7.2)(yaml@2.7.0):
     dependencies:
       '@astrojs/compiler': 2.11.0
       '@astrojs/internal-helpers': 0.6.1
@@ -5132,7 +5142,7 @@ snapshots:
       tsconfck: 3.1.5(typescript@5.7.2)
       ultrahtml: 1.6.0
       unist-util-visit: 5.0.0
-      unstorage: 1.15.0
+      unstorage: 1.15.0(@upstash/redis@1.35.0)
       vfile: 6.0.3
       vite: 6.2.6(@types/node@22.10.5)(jiti@1.21.7)(yaml@2.7.0)
       vitefu: 1.0.6(vite@6.2.6(@types/node@22.10.5)(jiti@1.21.7)(yaml@2.7.0))
@@ -7302,7 +7312,7 @@ snapshots:
       unist-util-is: 6.0.0
       unist-util-visit-parents: 6.0.1
 
-  unstorage@1.15.0:
+  unstorage@1.15.0(@upstash/redis@1.35.0):
     dependencies:
       anymatch: 3.1.3
       chokidar: 4.0.3
@@ -7312,6 +7322,8 @@ snapshots:
       node-fetch-native: 1.6.6
       ofetch: 1.4.1
       ufo: 1.5.4
+    optionalDependencies:
+      '@upstash/redis': 1.35.0
 
   update-browserslist-db@1.1.1(browserslist@4.24.3):
     dependencies:

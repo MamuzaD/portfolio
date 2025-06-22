@@ -1,18 +1,10 @@
 import type { APIRoute } from "astro"
 
-import { scrapeFilmDetails } from "../../lib/scrape"
+import { getFilmDetails } from "../../lib/scrape"
 
-export const GET: APIRoute = async ({ request }) => {
+export const GET: APIRoute = async () => {
   try {
-    const { searchParams } = new URL(request.url)
-    const filmUrl = searchParams.get("url")
-
-    if (!filmUrl) {
-      console.log("searchParams:", searchParams)
-      return new Response("Missing URL parameter", { status: 400 })
-    }
-
-    const filmDetails = await scrapeFilmDetails(filmUrl)
+    const filmDetails = await getFilmDetails()
 
     if (filmDetails) {
       return new Response(JSON.stringify(filmDetails), {
