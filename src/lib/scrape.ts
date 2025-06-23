@@ -1,5 +1,6 @@
 import chromium from "@sparticuz/chromium"
 import puppeteer, { Browser, Page } from "puppeteer-core"
+import { waitUntil } from "@vercel/functions"
 
 import { cacheData, getCachedData } from "./redis"
 
@@ -139,20 +140,22 @@ export async function getFilmDetails(): Promise<FilmDetails | null> {
     console.log("Returning cached data immediately, scraping in background")
 
     // background update
-    scrapePromise
-      .then(async (freshData) => {
-        if (freshData) {
-          if (dataHasChanged(cachedData, freshData)) {
-            console.log("Fresh data differs from cache, updating")
-            await cacheData(cacheKey, freshData)
-          } else {
-            console.log("Fresh data matches cache, no update needed")
+    waitUntil(
+      scrapePromise
+        .then(async (freshData) => {
+          if (freshData) {
+            if (dataHasChanged(cachedData, freshData)) {
+              console.log("Fresh data differs from cache, updating")
+              await cacheData(cacheKey, freshData)
+            } else {
+              console.log("Fresh data matches cache, no update needed")
+            }
           }
-        }
-      })
-      .catch((error) => {
-        console.error("Background scrape failed:", error)
-      })
+        })
+        .catch((error) => {
+          console.error("Background scrape failed:", error)
+        })
+    )
 
     return cachedData
   }
