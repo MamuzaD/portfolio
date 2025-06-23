@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { Loader2, RotateCcw } from "lucide-react"
+import { RotateCcw } from "lucide-react"
 import { useEffect, useState } from "react"
 
 import { Button } from "@/components/ui/button"
@@ -16,10 +16,11 @@ const Movies = () => {
   const [filmDetails, setFilmDetails] = useState<FilmDetails | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
 
-  const fetchFilmDetails = async () => {
+  const fetchFilmDetails = async (retry: boolean = false) => {
     setLoading(true)
+    const apiUrl = retry ? "/api/scrape?refresh=true" : "/api/scrape"
     try {
-      const response = await fetch(`/api/scrape`)
+      const response = await fetch(apiUrl)
       if (!response.ok) {
         throw new Error("Failed to fetch film details")
       }

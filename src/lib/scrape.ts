@@ -19,7 +19,6 @@ async function getBrowser() {
     })
   } else {
     console.log("Launching in production mode with Chromium...")
-    chromium.setHeadlessMode = true
     browserInstance = await puppeteer.launch({
       args: [
         ...chromium.args,
@@ -29,8 +28,9 @@ async function getBrowser() {
         "--single-process",
         "--no-zygote",
       ],
-      defaultViewport: chromium.defaultViewport,
+      defaultViewport: { width: 1280, height: 800 },
       executablePath: await chromium.executablePath(),
+      headless: true,
     })
   }
   console.log("Browser launched successfully.")
@@ -53,7 +53,7 @@ type FilmDetails = {
   stars: string | null
 }
 
-async function scrapeFilmDetails(): Promise<FilmDetails | null> {
+export async function scrapeFilmDetails(): Promise<FilmDetails | null> {
   const url = "https://letterboxd.com/da_ni/films/diary/"
   let browser: Browser | null = null
   let page: Page | null = null
@@ -97,7 +97,7 @@ async function scrapeFilmDetails(): Promise<FilmDetails | null> {
       const filmElement = document.querySelector(".td-film-details")
       if (!filmElement) return null
 
-      const titleElement = filmElement.parentElement?.querySelector("h3.headline-3 a")
+      const titleElement = filmElement.querySelector("h2.name a")
       const title = titleElement?.textContent?.trim() || null
 
       const imgElement = filmElement.querySelector("img")
@@ -113,7 +113,7 @@ async function scrapeFilmDetails(): Promise<FilmDetails | null> {
     })
 
     console.log("Scraping completed.")
-    console.log(filmDetails?.imageUrl)
+    console.log(filmDetails)
     return filmDetails
   } catch (error) {
     console.error("Error occurred while scraping:", error)
