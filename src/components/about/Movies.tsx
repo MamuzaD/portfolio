@@ -59,7 +59,7 @@ const Movies = () => {
   }, [])
 
   const retry = () => {
-    fetchFilmDetails()
+    fetchFilmDetails(true)
   }
 
   return (
@@ -70,10 +70,12 @@ const Movies = () => {
       {loading && (
         <>
           <div className="flex h-full animate-pulse flex-wrap items-center justify-center gap-2 ease-in-out md:gap-1 md:pb-8">
-            <div className="block h-[72px] w-12 rounded-lg bg-muted" />
+            <div className="block h-[72px] w-12 rounded-lg bg-neutral-200 dark:bg-neutral-700" />
             <div className="flex flex-col justify-center">
-              <div className="text-md h-[22px] w-32 rounded-md bg-muted text-center" />
-              <p className="h-5 justify-start text-center text-lg tracking-widest text-muted">★★★★★</p>
+              <div className="text-md h-[22px] w-32 rounded-md bg-neutral-200 text-center dark:bg-neutral-700" />
+              <p className="h-5 justify-start text-center text-lg tracking-widest text-neutral-200 dark:text-neutral-700">
+                ★★★★★
+              </p>
             </div>
           </div>
         </>

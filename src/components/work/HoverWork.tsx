@@ -90,7 +90,7 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
               <li key={project.id} onMouseEnter={() => setHighlightedProject(project)}>
                 <a
                   href={`/work/${project.id}`}
-                  className={`group mt-4 block cursor-pointer rounded-[2.5rem] px-10 py-5 backdrop-blur-sm transition-[background_color] duration-300 hover:bg-muted/50 md:mt-0 md:rounded-xl md:hover:bg-primary/30 ${highlightedProject && highlightedProject.id === project.id ? "bg-muted/70 md:bg-primary/40 md:dark:bg-primary/20" : "bg-muted/70 md:bg-transparent"}`}
+                  className={`group mt-4 block cursor-pointer rounded-[2.5rem] px-10 py-5 shadow-experiencard-card-light backdrop-blur-sm transition-[background_color] duration-300 hover:bg-muted/50 dark:shadow-experiencard-card-dark md:mt-0 md:rounded-xl md:shadow-none md:hover:bg-primary/30 md:dark:shadow-none ${highlightedProject && highlightedProject.id === project.id ? "bg-muted/70 md:bg-primary/40 md:dark:bg-primary/20" : "bg-muted/70 md:bg-transparent"}`}
                 >
                   <div className="mt-4 block rounded-lg shadow-md md:hidden">
                     {project.data.card.type === "video" ? (
