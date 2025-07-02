@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/resume.pdf",
+      "destination": "https://cdn.danielmamuza.com/resume.pdf"
+    }
+  ]
+}
