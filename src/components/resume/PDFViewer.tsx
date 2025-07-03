@@ -84,8 +84,7 @@ export default function PDFViewer({
             className="flex min-w-fit flex-col items-center"
           >
             <div className="flex min-w-fit flex-col gap-6">
-              {/* Since resume will always have exactly 1 page, hardcode page 1 */}
-              <div key="page_1" ref={pageRef} className="flex min-w-fit justify-center">
+              <div ref={pageRef} className="flex min-w-fit justify-center">
                 <Page
                   pageNumber={1}
                   scale={scale}

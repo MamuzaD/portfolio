@@ -28,6 +28,9 @@ export default function ResumeViewer() {
   const pageRef = useRef<HTMLDivElement | null>(null)
   const pdfContainerRef = useRef<HTMLDivElement>(null)
 
+  // text cache for search
+  const pdfTextCache = useRef<string | null>(null)
+
   useEffect(() => {
     const initializePdf = async () => {
       try {
@@ -84,15 +87,20 @@ export default function ResumeViewer() {
     const results: any[] = []
 
     try {
-      const page = await pdfDocument.getPage(1)
-      const textContent = await page.getTextContent()
-      const textItems = textContent.items
+      // cache text content for search
+      if (!pdfTextCache.current) {
+        const page = await pdfDocument.getPage(1)
+        const textContent = await page.getTextContent()
+        const textItems = textContent.items
 
-      let pageText = ""
-      textItems.forEach((item: any) => {
-        pageText += item.str + " "
-      })
+        let pageText = ""
+        textItems.forEach((item: any) => {
+          pageText += item.str + " "
+        })
+        pdfTextCache.current = pageText
+      }
 
+      const pageText = pdfTextCache.current
       const regex = new RegExp(searchQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi")
       let match
       let matchCount = 0
