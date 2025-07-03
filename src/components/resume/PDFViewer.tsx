@@ -13,7 +13,6 @@ interface PDFViewerProps {
 
 const RESUME_FILE = "/resume.pdf"
 
-// Fixed widths to prevent hydration mismatch (instead of Math.random())
 const SKELETON_WIDTHS = ["94%", "91%", "97%", "99%", "97%", "96%", "93%", "98%", "95%"]
 
 export default function PDFViewer({
@@ -28,6 +27,17 @@ export default function PDFViewer({
 }: PDFViewerProps) {
   return (
     <div ref={pdfContainerRef} className="custom-scrollbar flex-1 overflow-auto bg-muted/50 p-4">
+      <style>{`
+        .react-pdf__Page__textContent span::selection {
+          background: rgba(17, 117, 33, 0.3) !important;
+          color: transparent !important;
+        }
+       
+        .react-pdf__Page__textContent span::-moz-selection {
+          background: rgba(17, 117, 33, 0.3) !important;
+          color: transparent !important;
+        }
+      `}</style>
       {loading && (
         <div className="flex min-w-fit flex-col items-center">
           <div className="min-w-fit overflow-hidden rounded-lg shadow-xl">
@@ -75,11 +85,7 @@ export default function PDFViewer({
           >
             <div className="flex min-w-fit flex-col gap-6">
               {/* Since resume will always have exactly 1 page, hardcode page 1 */}
-              <div
-                key="page_1"
-                ref={pageRef}
-                className="flex min-w-fit justify-center"
-              >
+              <div key="page_1" ref={pageRef} className="flex min-w-fit justify-center">
                 <Page
                   pageNumber={1}
                   scale={scale}
@@ -95,4 +101,3 @@ export default function PDFViewer({
     </div>
   )
 }
-

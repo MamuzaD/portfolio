@@ -185,90 +185,88 @@ export default function ResumeViewer() {
 
       if (!pageElement || !containerElement) return
 
-      setTimeout(() => {
-        try {
-          const textLayer = pageElement.querySelector(".react-pdf__Page__textContent")
-          if (!textLayer) {
-            fallbackScroll(pageElement, containerElement)
-            return
-          }
+      try {
+        const textLayer = pageElement.querySelector(".react-pdf__Page__textContent")
+        if (!textLayer) {
+          fallbackScroll(pageElement, containerElement)
+          return
+        }
 
-          const textSpans = textLayer.querySelectorAll('[role="presentation"]')
-          if (textSpans.length === 0) {
-            fallbackScroll(pageElement, containerElement)
-            return
-          }
+        const textSpans = textLayer.querySelectorAll('[role="presentation"]')
+        if (textSpans.length === 0) {
+          fallbackScroll(pageElement, containerElement)
+          return
+        }
 
-          const searchText = result.text.toLowerCase()
-          const beforeText = result.beforeMatch.toLowerCase()
-          const afterText = result.afterMatch.toLowerCase()
-          let bestMatch: { element: HTMLElement; score: number } | null = null
-          let currentOccurrence = 0
+        const searchText = result.text.toLowerCase()
+        const beforeText = result.beforeMatch.toLowerCase()
+        const afterText = result.afterMatch.toLowerCase()
+        let bestMatch: { element: HTMLElement; score: number } | null = null
+        let currentOccurrence = 0
 
-          const spanArray = Array.from(textSpans)
+        const spanArray = Array.from(textSpans)
 
-          for (let i = 0; i < spanArray.length; i++) {
-            const span = spanArray[i]
-            const spanText = (span.textContent || "").toLowerCase()
+        for (let i = 0; i < spanArray.length; i++) {
+          const span = spanArray[i]
+          const spanText = (span.textContent || "").toLowerCase()
 
-            if (!spanText.includes(searchText)) continue
+          if (!spanText.includes(searchText)) continue
 
-            let score = 0
+          let score = 0
 
-            if (spanText === searchText) {
-              score = 100
-            } else if (spanText.trim() === searchText) {
-              score = 90
-            } else {
-              score = 50
-            }
-
-            if (beforeText.length > 3 || afterText.length > 3) {
-              const context = getSurroundingContext(textSpans, i)
-
-              if (beforeText.length > 3) {
-                const beforeWords = beforeText.split(/\s+/).filter((w: string) => w.length > 2)
-                const contextMatchCount = beforeWords.filter((word: string) =>
-                  context.beforeContext.toLowerCase().includes(word)
-                ).length
-                score += contextMatchCount * 15
-              }
-
-              if (afterText.length > 3) {
-                const afterWords = afterText.split(/\s+/).filter((w: string) => w.length > 2)
-                const contextMatchCount = afterWords.filter((word: string) =>
-                  context.afterContext.toLowerCase().includes(word)
-                ).length
-                score += contextMatchCount * 15
-              }
-            }
-
-            if (currentOccurrence === result.matchCountOnPage) {
-              score += 25
-            }
-
-            const spanRect = span.getBoundingClientRect()
-            if (spanRect.width > 0 && spanRect.height > 0) {
-              score += 5
-            }
-
-            if (!bestMatch || score > bestMatch.score) {
-              bestMatch = { element: span as HTMLElement, score }
-            }
-
-            currentOccurrence++
-          }
-
-          if (bestMatch) {
-            scrollToElement(bestMatch.element, containerElement)
+          if (spanText === searchText) {
+            score = 100
+          } else if (spanText.trim() === searchText) {
+            score = 90
           } else {
-            fallbackScroll(pageElement, containerElement)
+            score = 50
           }
-        } catch (error) {
-          console.error("Error scrolling to search result:", error)
+
+          if (beforeText.length > 3 || afterText.length > 3) {
+            const context = getSurroundingContext(textSpans, i)
+
+            if (beforeText.length > 3) {
+              const beforeWords = beforeText.split(/\s+/).filter((w: string) => w.length > 2)
+              const contextMatchCount = beforeWords.filter((word: string) =>
+                context.beforeContext.toLowerCase().includes(word)
+              ).length
+              score += contextMatchCount * 15
+            }
+
+            if (afterText.length > 3) {
+              const afterWords = afterText.split(/\s+/).filter((w: string) => w.length > 2)
+              const contextMatchCount = afterWords.filter((word: string) =>
+                context.afterContext.toLowerCase().includes(word)
+              ).length
+              score += contextMatchCount * 15
+            }
+          }
+
+          if (currentOccurrence === result.matchCountOnPage) {
+            score += 25
+          }
+
+          const spanRect = span.getBoundingClientRect()
+          if (spanRect.width > 0 && spanRect.height > 0) {
+            score += 5
+          }
+
+          if (!bestMatch || score > bestMatch.score) {
+            bestMatch = { element: span as HTMLElement, score }
+          }
+
+          currentOccurrence++
+        }
+
+        if (bestMatch) {
+          scrollToElement(bestMatch.element, containerElement)
+        } else {
           fallbackScroll(pageElement, containerElement)
         }
-      }, 50)
+      } catch (error) {
+        console.error("Error scrolling to search result:", error)
+        fallbackScroll(pageElement, containerElement)
+      }
     },
     [searchResults, scrollToElement, fallbackScroll, getSurroundingContext]
   )
@@ -295,17 +293,6 @@ export default function ResumeViewer() {
 
   return (
     <div className="relative h-[max(80vh,830px)] overflow-hidden rounded-3xl border shadow-aboutcard backdrop-blur">
-      <style>{`
-        .react-pdf__Page__textContent span::selection {
-          background: rgba(17, 117, 33, 0.3) !important;
-          color: transparent !important;
-        }
-       
-        .react-pdf__Page__textContent span::-moz-selection {
-          background: rgba(17, 117, 33, 0.3) !important;
-          color: transparent !important;
-        }
-      `}</style>
       <div className="flex h-full">
         <PDFViewer
           Document={Document}

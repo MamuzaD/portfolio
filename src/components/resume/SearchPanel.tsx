@@ -38,6 +38,7 @@ export default function SearchPanel({
 }: SearchPanelProps) {
   return (
     <div className="flex w-80 flex-col border-l bg-muted/80 backdrop-blur">
+      {/* download links */}
       <div className="border-b p-4">
         <div className="space-y-2">
           <Button asChild className="w-full bg-primary/90 backdrop-blur hover:bg-primary" title="Download PDF">

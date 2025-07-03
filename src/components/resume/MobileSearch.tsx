@@ -1,14 +1,7 @@
 import { Download, ExternalLink, Minus, Plus, Search, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
+import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer"
 import { Input } from "@/components/ui/input"
 
 import type { SearchResult } from "./index"
@@ -29,6 +22,31 @@ interface MobileSearchProps {
 
 const RESUME_FILE = "/resume.pdf"
 
+// Mobile download handler
+const handleMobileDownload = async (e: React.MouseEvent) => {
+  e.preventDefault() // Always prevent default anchor behavior
+  
+  try {
+    const response = await fetch(RESUME_FILE)
+    const blob = await response.blob()
+    const url = window.URL.createObjectURL(blob)
+    
+    const link = document.createElement('a')
+    link.href = url
+    link.download = 'Daniel Mamuza Resume.pdf'
+    link.style.display = 'none'
+    
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    
+    // cleanup
+    setTimeout(() => window.URL.revokeObjectURL(url), 100)
+  } catch (error) {
+    window.open(RESUME_FILE, '_blank')
+  }
+}
+
 export default function MobileSearch({
   scale,
   searchText,
@@ -44,34 +62,29 @@ export default function MobileSearch({
 }: MobileSearchProps) {
   return (
     <Drawer>
-      {/* Mobile Bottom Toolbar */}
+      {/* mobile toolbar */}
       <div className="absolute bottom-4 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded-full border bg-background/95 p-2 shadow-lg backdrop-blur md:hidden">
+        {/* zoom controls */}
         <Button onClick={zoomOut} variant="ghost" size="icon" className="h-10 w-10 rounded-full" title="Zoom out">
           <Minus className="h-4 w-4" />
         </Button>
-
         <div className="flex min-w-[50px] items-center justify-center rounded-full bg-muted px-3 py-2 text-xs font-medium">
           {Math.round(scale * 100)}%
         </div>
-
         <Button onClick={zoomIn} variant="ghost" size="icon" className="h-10 w-10 rounded-full" title="Zoom in">
           <Plus className="h-4 w-4" />
         </Button>
-
-        <div className="mx-1 h-6 w-px bg-border" />
-
-        <Button asChild variant="ghost" size="icon" className="h-10 w-10 rounded-full" title="Download PDF">
-          <a href={RESUME_FILE} download="Daniel Mamuza Resume.pdf">
+        <div className="mx-1 h-6 w-px bg-border" /> {/* divider */}
+        {/* download links */}
+        <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full" title="Download PDF" onClick={handleMobileDownload}>
             <Download className="h-4 w-4" />
-          </a>
         </Button>
-
         <Button asChild variant="ghost" size="icon" className="h-10 w-10 rounded-full" title="Open PDF in browser">
-          <a href={RESUME_FILE} target="_blank">
+          <a href={RESUME_FILE} target="_blank" rel="noopener noreferrer">
             <ExternalLink className="h-4 w-4" />
           </a>
         </Button>
-
+        {/* search button */}
         <DrawerTrigger asChild>
           <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full" title="Search">
             <Search className="h-4 w-4" />
@@ -79,7 +92,7 @@ export default function MobileSearch({
         </DrawerTrigger>
       </div>
 
-      {/* Mobile Search Drawer */}
+      {/* mobile search drawer */}
       <DrawerContent className="h-[70vh] md:hidden">
         <DrawerHeader className="flex flex-row items-center justify-between border-b pb-4">
           <div className="flex flex-col items-start">
@@ -92,6 +105,7 @@ export default function MobileSearch({
           </DrawerClose>
         </DrawerHeader>
 
+        {/* search box */}
         <div className="border-b p-4">
           <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -118,6 +132,7 @@ export default function MobileSearch({
           </div>
         </div>
 
+        {/* search results */}
         <div className="custom-scrollbar flex-1 overflow-y-auto">
           {searchResults.length > 0 && searchText.trim() ? (
             <div className="p-4">
