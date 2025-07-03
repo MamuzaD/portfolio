@@ -4,6 +4,10 @@ const texts = {
     description:
       "Daniel enjoys creating intuitive interfaces and solving complex challenges in full-stack development, system design, and user experience.",
   },
+  resume: {
+    title: "Resume",
+    description: "",
+  },
   notFound: {
     title: "404",
     description:

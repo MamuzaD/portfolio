@@ -46,7 +46,7 @@ const titles = [
         <LinkPreview
           imageSrc={social.src}
           url={social.href}
-          target="_blank"
+          target={social.name === "Resume" ? "" : "_blank"}
           isStatic
           client:load
           aria-label={social.name}

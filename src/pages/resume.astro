@@ -1,0 +1,11 @@
+---
+import ResumeViewer from "@/components/resume"
+import texts from "@/content/texts"
+import Layout from "@/layouts/Layout.astro"
+---
+
+<Layout title={texts.resume.title} description={texts.resume.description}>
+  <main class="mx-auto min-h-[calc(100vh-8rem)] w-full max-w-6xl pt-24">
+    <ResumeViewer client:load />
+  </main>
+</Layout>
