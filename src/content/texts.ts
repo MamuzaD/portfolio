@@ -4,6 +4,11 @@ const texts = {
     description:
       "Daniel enjoys creating intuitive interfaces and solving complex challenges in full-stack development, system design, and user experience.",
   },
+  resume: {
+    title: "Resume",
+    description:
+      "View and interact with Daniel's professional resume. Download the PDF, search through content, or explore his experience in software engineering and full-stack development.",
+  },
   notFound: {
     title: "404",
     description:

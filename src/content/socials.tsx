@@ -15,7 +15,7 @@ export const socials: social[] = [
   {
     name: "Resume",
     icon: "mdi--file-document-outline",
-    href: "/resume.pdf",
+    href: "/resume",
     src: "/socials/resume.jpg",
   },
   {
