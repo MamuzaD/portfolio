@@ -22,31 +22,6 @@ interface MobileSearchProps {
 
 const RESUME_FILE = "/resume.pdf"
 
-// Mobile download handler
-const handleMobileDownload = async (e: React.MouseEvent) => {
-  e.preventDefault() // Always prevent default anchor behavior
-  
-  try {
-    const response = await fetch(RESUME_FILE)
-    const blob = await response.blob()
-    const url = window.URL.createObjectURL(blob)
-    
-    const link = document.createElement('a')
-    link.href = url
-    link.download = 'Daniel Mamuza Resume.pdf'
-    link.style.display = 'none'
-    
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-    
-    // cleanup
-    setTimeout(() => window.URL.revokeObjectURL(url), 100)
-  } catch (error) {
-    window.open(RESUME_FILE, '_blank')
-  }
-}
-
 export default function MobileSearch({
   scale,
   searchText,
@@ -75,13 +50,10 @@ export default function MobileSearch({
           <Plus className="h-4 w-4" />
         </Button>
         <div className="mx-1 h-6 w-px bg-border" /> {/* divider */}
-        {/* download links */}
-        <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full" title="Download PDF" onClick={handleMobileDownload}>
+        {/* download */}
+        <Button asChild variant="ghost" size="icon" className="h-10 w-10 rounded-full" title="Download PDF">
+          <a href={RESUME_FILE} download="Daniel Mamuza Resume.pdf">
             <Download className="h-4 w-4" />
-        </Button>
-        <Button asChild variant="ghost" size="icon" className="h-10 w-10 rounded-full" title="Open PDF in browser">
-          <a href={RESUME_FILE} target="_blank" rel="noopener noreferrer">
-            <ExternalLink className="h-4 w-4" />
           </a>
         </Button>
         {/* search button */}

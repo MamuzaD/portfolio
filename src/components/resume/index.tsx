@@ -279,7 +279,7 @@ export default function ResumeViewer() {
     return (
       <>
         {before}
-        <mark className="rounded bg-primary/20 px-1 py-0.5 font-semibold text-primary">{match}</mark>
+        <mark className="rounded bg-primary/50 px-1 py-0.5 font-semibold text-primary">{match}</mark>
         {after}
       </>
     )

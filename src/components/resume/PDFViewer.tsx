@@ -29,12 +29,12 @@ export default function PDFViewer({
     <div ref={pdfContainerRef} className="custom-scrollbar flex-1 overflow-auto bg-muted/50 p-4">
       <style>{`
         .react-pdf__Page__textContent span::selection {
-          background: rgba(17, 117, 33, 0.3) !important;
+          background: rgba(34, 197, 94, 0.3) !important;
           color: transparent !important;
         }
        
         .react-pdf__Page__textContent span::-moz-selection {
-          background: rgba(17, 117, 33, 0.3) !important;
+          background: rgba(34, 197, 94, 0.3) !important;
           color: transparent !important;
         }
       `}</style>
