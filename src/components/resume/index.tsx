@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 
+import MobileSearch from "./MobileSearch"
 import PDFViewer from "./PDFViewer"
 import SearchPanel from "./SearchPanel"
 
@@ -27,21 +28,17 @@ export default function ResumeViewer() {
   const pageRef = useRef<HTMLDivElement | null>(null)
   const pdfContainerRef = useRef<HTMLDivElement>(null)
 
-  // initialize PDF.js on client side only
   useEffect(() => {
     const initializePdf = async () => {
       try {
-        // Dynamic import to avoid SSR issues
         const reactPdf = await import("react-pdf")
         Document = reactPdf.Document
         Page = reactPdf.Page
         pdfjs = reactPdf.pdfjs
 
-        // Import CSS files dynamically for react-pdf 10.x
         await import("react-pdf/dist/Page/AnnotationLayer.css")
         await import("react-pdf/dist/Page/TextLayer.css")
 
-        // Use CDN worker URL for better compatibility with Astro/Vite
         pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`
 
         setIsClient(true)
@@ -65,15 +62,15 @@ export default function ResumeViewer() {
     setIsLoading(false)
   }
 
-  const zoomIn = () => {
+  const zoomIn = (): void => {
     setScale((prev) => Math.min(prev + 0.25, 2.0))
   }
 
-  const zoomOut = () => {
+  const zoomOut = (): void => {
     setScale((prev) => Math.max(prev - 0.25, 0.5))
   }
 
-  const resetZoom = () => {
+  const resetZoom = (): void => {
     setScale(1.0)
   }
 
@@ -87,7 +84,6 @@ export default function ResumeViewer() {
     const results: any[] = []
 
     try {
-      // Since there's only 1 page, directly search page 1
       const page = await pdfDocument.getPage(1)
       const textContent = await page.getTextContent()
       const textItems = textContent.items
@@ -97,7 +93,6 @@ export default function ResumeViewer() {
         pageText += item.str + " "
       })
 
-      // Simple text search (case insensitive)
       const regex = new RegExp(searchQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi")
       let match
       let matchCount = 0
@@ -106,7 +101,6 @@ export default function ResumeViewer() {
         const contextEnd = Math.min(pageText.length, match.index + match[0].length + 25)
         const fullContext = pageText.substring(contextStart, contextEnd)
 
-        // Store more context for better identification
         const beforeMatch = pageText.substring(Math.max(0, match.index - 50), match.index)
         const afterMatch = pageText.substring(
           match.index + match[0].length,
@@ -137,7 +131,6 @@ export default function ResumeViewer() {
     const targetRect = targetElement.getBoundingClientRect()
     const scrollTop = containerElement.scrollTop
 
-    // Calculate the target scroll position to center the text
     const targetElementTop = scrollTop + (targetRect.top - containerRect.top)
     const containerHeight = containerElement.clientHeight
     const targetScrollTop = targetElementTop - containerHeight / 2
@@ -147,7 +140,6 @@ export default function ResumeViewer() {
       behavior: "smooth",
     })
 
-    // Highlight the found text temporarily
     targetElement.style.backgroundColor = "rgba(34, 197, 94, 0.3)"
     targetElement.style.transition = "background-color 0.3s ease"
     setTimeout(() => {
@@ -213,7 +205,6 @@ export default function ResumeViewer() {
           let bestMatch: { element: HTMLElement; score: number } | null = null
           let currentOccurrence = 0
 
-          // Convert NodeList to Array for easier indexing
           const spanArray = Array.from(textSpans)
 
           for (let i = 0; i < spanArray.length; i++) {
@@ -224,7 +215,6 @@ export default function ResumeViewer() {
 
             let score = 0
 
-            // Prioritize exact matches
             if (spanText === searchText) {
               score = 100
             } else if (spanText.trim() === searchText) {
@@ -233,11 +223,9 @@ export default function ResumeViewer() {
               score = 50
             }
 
-            // Check if this is the correct occurrence by matching context
             if (beforeText.length > 3 || afterText.length > 3) {
               const context = getSurroundingContext(textSpans, i)
 
-              // Score based on before/after context match
               if (beforeText.length > 3) {
                 const beforeWords = beforeText.split(/\s+/).filter((w: string) => w.length > 2)
                 const contextMatchCount = beforeWords.filter((word: string) =>
@@ -255,12 +243,10 @@ export default function ResumeViewer() {
               }
             }
 
-            // Bonus for matching the occurrence count
             if (currentOccurrence === result.matchCountOnPage) {
               score += 25
             }
 
-            // Visibility bonus
             const spanRect = span.getBoundingClientRect()
             if (spanRect.width > 0 && spanRect.height > 0) {
               score += 5
@@ -301,19 +287,14 @@ export default function ResumeViewer() {
     )
   }
 
-  const clearSearch = () => {
+  const clearSearch = (): void => {
     setSearchText("")
     setSearchResults([])
     setCurrentSearchIndex(-1)
   }
 
-  const openPDFInBrowser = useCallback(() => {
-    window.open("/resume.pdf", "_blank")
-  }, [])
-
   return (
-    <div className="h-[max(80vh,825px)] overflow-hidden rounded-3xl border shadow-aboutcard backdrop-blur">
-      {/* green highlight */}
+    <div className="relative h-[max(80vh,830px)] overflow-hidden rounded-3xl border shadow-aboutcard backdrop-blur">
       <style>{`
         .react-pdf__Page__textContent span::selection {
           background: rgba(17, 117, 33, 0.3) !important;
@@ -336,20 +317,41 @@ export default function ResumeViewer() {
           pageRef={pageRef}
           pdfContainerRef={pdfContainerRef}
         />
-        <SearchPanel
-          scale={scale}
-          searchText={searchText}
-          searchResults={searchResults}
-          currentSearchIndex={currentSearchIndex}
-          zoomIn={zoomIn}
-          zoomOut={zoomOut}
-          resetZoom={resetZoom}
-          setSearchText={setSearchText}
-          searchInPDF={searchInPDF}
-          clearSearch={clearSearch}
-          goToSearchResult={goToSearchResult}
-          highlightSearchText={highlightSearchText}
-        />
+
+        {/* Desktop Search Panel */}
+        <div className="hidden md:flex">
+          <SearchPanel
+            scale={scale}
+            searchText={searchText}
+            searchResults={searchResults}
+            currentSearchIndex={currentSearchIndex}
+            zoomIn={zoomIn}
+            zoomOut={zoomOut}
+            resetZoom={resetZoom}
+            setSearchText={setSearchText}
+            searchInPDF={searchInPDF}
+            clearSearch={clearSearch}
+            goToSearchResult={goToSearchResult}
+            highlightSearchText={highlightSearchText}
+          />
+        </div>
+
+        {/* Mobile Search (Toolbar + Drawer) */}
+        <div className="md:hidden">
+          <MobileSearch
+            scale={scale}
+            searchText={searchText}
+            searchResults={searchResults}
+            currentSearchIndex={currentSearchIndex}
+            zoomIn={zoomIn}
+            zoomOut={zoomOut}
+            setSearchText={setSearchText}
+            searchInPDF={searchInPDF}
+            clearSearch={clearSearch}
+            goToSearchResult={goToSearchResult}
+            highlightSearchText={highlightSearchText}
+          />
+        </div>
       </div>
     </div>
   )

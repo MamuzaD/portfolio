@@ -13,6 +13,9 @@ interface PDFViewerProps {
 
 const RESUME_FILE = "/resume.pdf"
 
+// Fixed widths to prevent hydration mismatch (instead of Math.random())
+const SKELETON_WIDTHS = ["94%", "91%", "97%", "99%", "97%", "96%", "93%", "98%", "95%"]
+
 export default function PDFViewer({
   Document,
   Page,
@@ -41,7 +44,7 @@ export default function PDFViewer({
                   <div key={i} className="space-y-2">
                     <div
                       className="h-3 animate-pulse rounded bg-neutral-200 dark:bg-neutral-700"
-                      style={{ width: `${Math.floor(Math.random() * (100 - 90 + 1)) + 90}%` }}
+                      style={{ width: SKELETON_WIDTHS[i] }}
                     ></div>
                     <div className="h-3 w-4/5 animate-pulse rounded bg-neutral-200 dark:bg-neutral-700"></div>
                     {i % 3 === 0 && (

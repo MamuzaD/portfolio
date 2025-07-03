@@ -2,6 +2,7 @@ import { Download, ExternalLink, Minus, Plus, Search, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+
 import type { SearchResult } from "./index"
 
 interface SearchPanelProps {
@@ -105,7 +106,7 @@ export default function SearchPanel({
           <Search className="pointer-events-none absolute left-3 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             type="text"
-            placeholder="Search in document..."
+            placeholder="Search in resume..."
             value={searchText}
             onChange={(e) => {
               setSearchText(e.target.value)
