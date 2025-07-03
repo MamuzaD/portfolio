@@ -1,12 +1,13 @@
-import { Download, Minus, Plus, Search, X } from "lucide-react"
+import { Download, ExternalLink, Minus, Plus, Search, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import type { SearchResult } from "./index"
 
 interface SearchPanelProps {
   scale: number
   searchText: string
-  searchResults: any[]
+  searchResults: SearchResult[]
   currentSearchIndex: number
   zoomIn: () => void
   zoomOut: () => void
@@ -37,12 +38,24 @@ export default function SearchPanel({
   return (
     <div className="flex w-80 flex-col border-l bg-muted/80 backdrop-blur">
       <div className="border-b p-4">
-        <Button asChild className="w-full bg-primary/90 backdrop-blur hover:bg-primary" title="Download PDF">
-          <a href={RESUME_FILE} download="resume.pdf">
-            <Download className="h-4 w-4" />
-            Download
-          </a>
-        </Button>
+        <div className="space-y-2">
+          <Button asChild className="w-full bg-primary/90 backdrop-blur hover:bg-primary" title="Download PDF">
+            <a href={RESUME_FILE} download="Daniel Mamuza Resume.pdf">
+              <Download className="h-4 w-4" />
+              Download
+            </a>
+          </Button>
+          <Button
+            asChild
+            className="w-full bg-neutral-400/10 text-foreground backdrop-blur hover:bg-neutral-400/20"
+            title="Open PDF in browser"
+          >
+            <a href={RESUME_FILE} target="_blank">
+              <ExternalLink className="h-4 w-4" />
+              Open in Browser
+            </a>
+          </Button>
+        </div>
       </div>
 
       {/* zoom */}
@@ -114,7 +127,7 @@ export default function SearchPanel({
       </div>
 
       {/* search results */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="custom-scrollbar flex-1 overflow-y-auto">
         {searchResults.length > 0 && searchText.trim() ? (
           <div className="p-4">
             <div className="mb-3">
@@ -126,7 +139,7 @@ export default function SearchPanel({
             <div className="space-y-3">
               {searchResults.map((result, index) => (
                 <div
-                  key={`${result.pageNumber}-${result.index}`}
+                  key={index}
                   className={`cursor-pointer rounded-lg border p-3 transition-all hover:bg-accent/50 ${
                     index === currentSearchIndex
                       ? "border-primary bg-primary/10"
@@ -134,11 +147,8 @@ export default function SearchPanel({
                   }`}
                   onClick={() => goToSearchResult(index)}
                 >
-                  <div className="mb-2 flex items-center justify-between text-xs font-semibold text-primary">
-                    <span>
-                      Result {index + 1} of {searchResults.length}
-                    </span>
-                    <span className="text-muted-foreground">Page {result.pageNumber}</span>
+                  <div className="mb-2 text-xs font-semibold text-primary">
+                    Result {index + 1} of {searchResults.length}
                   </div>
                   <div className="text-sm leading-relaxed">
                     {highlightSearchText(result.context, result.matchStart, result.matchEnd)}
@@ -160,4 +170,3 @@ export default function SearchPanel({
     </div>
   )
 }
-

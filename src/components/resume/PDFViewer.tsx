@@ -4,11 +4,10 @@ interface PDFViewerProps {
   Document: any
   Page: any
   loading: boolean
-  numPages: number | null
   scale: number
   onDocumentLoadSuccess: (pdf: any) => void
   onDocumentLoadError: (error: Error) => void
-  pageRefs: RefObject<{ [key: number]: HTMLDivElement | null }>
+  pageRef: RefObject<HTMLDivElement | null>
   pdfContainerRef: RefObject<HTMLDivElement | null>
 }
 
@@ -18,15 +17,14 @@ export default function PDFViewer({
   Document,
   Page,
   loading,
-  numPages,
   scale,
   onDocumentLoadSuccess,
   onDocumentLoadError,
-  pageRefs,
+  pageRef,
   pdfContainerRef,
 }: PDFViewerProps) {
   return (
-    <div ref={pdfContainerRef} className="flex-1 overflow-auto bg-muted/50 p-4">
+    <div ref={pdfContainerRef} className="custom-scrollbar flex-1 overflow-auto bg-muted/50 p-4">
       {loading && (
         <div className="flex min-w-fit flex-col items-center">
           <div className="min-w-fit overflow-hidden rounded-lg shadow-xl">
@@ -73,26 +71,20 @@ export default function PDFViewer({
             className="flex min-w-fit flex-col items-center"
           >
             <div className="flex min-w-fit flex-col gap-6">
-              {Array.from(new Array(numPages || 0), (el, index) => {
-                const pageNum = index + 1
-                return (
-                  <div
-                    key={`page_${pageNum}`}
-                    ref={(el) => {
-                      pageRefs.current[pageNum] = el
-                    }}
-                    className="flex min-w-fit justify-center"
-                  >
-                    <Page
-                      pageNumber={pageNum}
-                      scale={scale}
-                      renderTextLayer={true}
-                      renderAnnotationLayer={true}
-                      className="min-w-fit overflow-hidden rounded-lg bg-white shadow-xl"
-                    />
-                  </div>
-                )
-              })}
+              {/* Since resume will always have exactly 1 page, hardcode page 1 */}
+              <div
+                key="page_1"
+                ref={pageRef}
+                className="flex min-w-fit justify-center"
+              >
+                <Page
+                  pageNumber={1}
+                  scale={scale}
+                  renderTextLayer={true}
+                  renderAnnotationLayer={true}
+                  className="min-w-fit overflow-hidden rounded-lg bg-white shadow-xl"
+                />
+              </div>
             </div>
           </Document>
         </div>

@@ -1,21 +1,30 @@
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 import PDFViewer from "./PDFViewer"
 import SearchPanel from "./SearchPanel"
 
 let Document: any, Page: any, pdfjs: any
 
+export type SearchResult = {
+  text: string
+  context: string
+  matchStart: number
+  matchEnd: number
+  beforeMatch: string
+  afterMatch: string
+  matchCountOnPage: number
+}
+
 export default function ResumeViewer() {
-  const [numPages, setNumPages] = useState<number | null>(null)
   const [scale, setScale] = useState(1.0)
   const [isLoading, setIsLoading] = useState(true)
   const [searchText, setSearchText] = useState("")
   const [isClient, setIsClient] = useState(false)
   const [pdfLoaded, setPdfLoaded] = useState(false)
-  const [searchResults, setSearchResults] = useState<any[]>([])
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([])
   const [currentSearchIndex, setCurrentSearchIndex] = useState(-1)
   const [pdfDocument, setPdfDocument] = useState<any>(null)
-  const pageRefs = useRef<{ [key: number]: HTMLDivElement | null }>({})
+  const pageRef = useRef<HTMLDivElement | null>(null)
   const pdfContainerRef = useRef<HTMLDivElement>(null)
 
   // initialize PDF.js on client side only
@@ -47,7 +56,6 @@ export default function ResumeViewer() {
   }, [])
 
   const onDocumentLoadSuccess = (pdf: any) => {
-    setNumPages(pdf.numPages)
     setPdfDocument(pdf)
     setIsLoading(false)
   }
@@ -69,7 +77,6 @@ export default function ResumeViewer() {
     setScale(1.0)
   }
 
-  // Enhanced search functionality
   const searchInPDF = async (searchQuery: string) => {
     if (!pdfDocument || !searchQuery.trim()) {
       setSearchResults([])
@@ -80,47 +87,42 @@ export default function ResumeViewer() {
     const results: any[] = []
 
     try {
-      for (let pageNum = 1; pageNum <= pdfDocument.numPages; pageNum++) {
-        const page = await pdfDocument.getPage(pageNum)
-        const textContent = await page.getTextContent()
-        const textItems = textContent.items
+      // Since there's only 1 page, directly search page 1
+      const page = await pdfDocument.getPage(1)
+      const textContent = await page.getTextContent()
+      const textItems = textContent.items
 
-        let pageText = ""
-        textItems.forEach((item: any) => {
-          pageText += item.str + " "
+      let pageText = ""
+      textItems.forEach((item: any) => {
+        pageText += item.str + " "
+      })
+
+      // Simple text search (case insensitive)
+      const regex = new RegExp(searchQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi")
+      let match
+      let matchCount = 0
+      while ((match = regex.exec(pageText)) !== null) {
+        const contextStart = Math.max(0, match.index - 25)
+        const contextEnd = Math.min(pageText.length, match.index + match[0].length + 25)
+        const fullContext = pageText.substring(contextStart, contextEnd)
+
+        // Store more context for better identification
+        const beforeMatch = pageText.substring(Math.max(0, match.index - 50), match.index)
+        const afterMatch = pageText.substring(
+          match.index + match[0].length,
+          Math.min(pageText.length, match.index + match[0].length + 50)
+        )
+
+        results.push({
+          text: match[0],
+          context: fullContext,
+          matchStart: match.index - contextStart,
+          matchEnd: match.index - contextStart + match[0].length,
+          beforeMatch: beforeMatch.trim(),
+          afterMatch: afterMatch.trim(),
+          matchCountOnPage: matchCount,
         })
-
-        // Simple text search (case insensitive)
-        const regex = new RegExp(searchQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi")
-        let match
-        let matchCount = 0
-        while ((match = regex.exec(pageText)) !== null) {
-          const contextStart = Math.max(0, match.index - 25)
-          const contextEnd = Math.min(pageText.length, match.index + match[0].length + 25)
-          const fullContext = pageText.substring(contextStart, contextEnd)
-
-          // Store more context for better identification
-          const beforeMatch = pageText.substring(Math.max(0, match.index - 50), match.index)
-          const afterMatch = pageText.substring(
-            match.index + match[0].length,
-            Math.min(pageText.length, match.index + match[0].length + 50)
-          )
-
-          results.push({
-            pageNumber: pageNum,
-            text: match[0],
-            index: match.index,
-            context: fullContext,
-            contextStart: contextStart,
-            matchStart: match.index - contextStart,
-            matchEnd: match.index - contextStart + match[0].length,
-            beforeMatch: beforeMatch.trim(),
-            afterMatch: afterMatch.trim(),
-            matchCountOnPage: matchCount,
-            globalIndex: results.length, // Global index across all pages
-          })
-          matchCount++
-        }
+        matchCount++
       }
 
       setSearchResults(results)
@@ -130,183 +132,160 @@ export default function ResumeViewer() {
     }
   }
 
-  const goToSearchResult = (index: number) => {
-    if (index >= 0 && index < searchResults.length) {
+  const scrollToElement = useCallback((targetElement: HTMLElement, containerElement: HTMLElement) => {
+    const containerRect = containerElement.getBoundingClientRect()
+    const targetRect = targetElement.getBoundingClientRect()
+    const scrollTop = containerElement.scrollTop
+
+    // Calculate the target scroll position to center the text
+    const targetElementTop = scrollTop + (targetRect.top - containerRect.top)
+    const containerHeight = containerElement.clientHeight
+    const targetScrollTop = targetElementTop - containerHeight / 2
+
+    containerElement.scrollTo({
+      top: Math.max(0, targetScrollTop),
+      behavior: "smooth",
+    })
+
+    // Highlight the found text temporarily
+    targetElement.style.backgroundColor = "rgba(34, 197, 94, 0.3)"
+    targetElement.style.transition = "background-color 0.3s ease"
+    setTimeout(() => {
+      targetElement.style.backgroundColor = ""
+    }, 5000)
+  }, [])
+
+  const fallbackScroll = useCallback((pageElement: HTMLElement, containerElement: HTMLElement) => {
+    const containerRect = containerElement.getBoundingClientRect()
+    const pageRect = pageElement.getBoundingClientRect()
+    const scrollTop = containerElement.scrollTop
+    const targetScrollTop = scrollTop + (pageRect.top - containerRect.top) - 100
+
+    containerElement.scrollTo({
+      top: Math.max(0, targetScrollTop),
+      behavior: "smooth",
+    })
+  }, [])
+
+  const getSurroundingContext = useCallback((spans: NodeListOf<Element>, targetIndex: number, range = 5) => {
+    let beforeContext = ""
+    let afterContext = ""
+
+    for (let i = Math.max(0, targetIndex - range); i < targetIndex; i++) {
+      beforeContext += (spans[i].textContent || "") + " "
+    }
+
+    for (let i = targetIndex + 1; i < Math.min(spans.length, targetIndex + range + 1); i++) {
+      afterContext += (spans[i].textContent || "") + " "
+    }
+
+    return { beforeContext: beforeContext.trim(), afterContext: afterContext.trim() }
+  }, [])
+
+  const goToSearchResult = useCallback(
+    (index: number) => {
+      if (index < 0 || index >= searchResults.length) return
+
       setCurrentSearchIndex(index)
       const result = searchResults[index]
-      const pageNumber = result.pageNumber
-      const pageElement = pageRefs.current[pageNumber]
+      const pageElement = pageRef.current
       const containerElement = pdfContainerRef.current
 
-      if (pageElement && containerElement) {
-        // Wait a bit for the page to be fully rendered
-        setTimeout(() => {
-          try {
-            // Find text layer elements in the page
-            const textLayer = pageElement.querySelector(".react-pdf__Page__textContent")
-            if (textLayer) {
-              // Get all text spans in the page
-              const textSpans = textLayer.querySelectorAll('[role="presentation"]')
-              let targetElement = null
-              let targetRect = null
+      if (!pageElement || !containerElement) return
 
-              // Use more specific context to find the exact match
-              const searchText = result.text.toLowerCase()
-              const beforeText = result.beforeMatch.toLowerCase()
-              const afterText = result.afterMatch.toLowerCase()
-              const matchingSpans: { element: Element; score: number }[] = []
-
-              // Build a text representation of all spans with their order
-              const spansWithText: {
-                element: Element
-                text: string
-                index: number
-              }[] = []
-              textSpans.forEach((span, index) => {
-                spansWithText.push({
-                  element: span,
-                  text: (span.textContent || "").toLowerCase(),
-                  index,
-                })
-              })
-
-              for (let i = 0; i < spansWithText.length; i++) {
-                const span = spansWithText[i]
-
-                if (span.text.includes(searchText)) {
-                  let score = 0
-
-                  // Exact match gets highest score
-                  if (span.text === searchText) {
-                    score += 100
-                  } else if (span.text.trim() === searchText) {
-                    score += 90
-                  } else {
-                    score += 50
-                  }
-
-                  // Check before/after context by looking at neighboring spans
-                  let beforeContext = ""
-                  let afterContext = ""
-
-                  // Collect text from previous spans
-                  for (let j = Math.max(0, i - 5); j < i; j++) {
-                    beforeContext += spansWithText[j].text + " "
-                  }
-
-                  // Collect text from next spans
-                  for (let j = i + 1; j < Math.min(spansWithText.length, i + 6); j++) {
-                    afterContext += spansWithText[j].text + " "
-                  }
-
-                  // Score based on before/after context match
-                  if (beforeText.length > 10) {
-                    const beforeWords = beforeText.split(/\s+/).filter((w: string) => w.length > 2)
-                    beforeWords.forEach((word: string) => {
-                      if (beforeContext.includes(word)) {
-                        score += 20
-                      }
-                    })
-                  }
-
-                  if (afterText.length > 10) {
-                    const afterWords = afterText.split(/\s+/).filter((w: string) => w.length > 2)
-                    afterWords.forEach((word: string) => {
-                      if (afterContext.includes(word)) {
-                        score += 20
-                      }
-                    })
-                  }
-
-                  // Bonus for position match if this is the Nth occurrence on page
-                  if (result.matchCountOnPage !== undefined) {
-                    let currentOccurrence = 0
-                    for (let k = 0; k <= i; k++) {
-                      if (spansWithText[k].text.includes(searchText)) {
-                        if (k === i && currentOccurrence === result.matchCountOnPage) {
-                          score += 50
-                        }
-                        currentOccurrence++
-                      }
-                    }
-                  }
-
-                  matchingSpans.push({ element: span.element, score })
-                }
-              }
-
-              // Sort by score and take the highest scoring match
-              if (matchingSpans.length > 0) {
-                matchingSpans.sort((a, b) => b.score - a.score)
-                targetElement = matchingSpans[0].element
-                targetRect = targetElement.getBoundingClientRect()
-              }
-
-              if (targetElement && targetRect) {
-                // Calculate position relative to container
-                const containerRect = containerElement.getBoundingClientRect()
-                const pageRect = pageElement.getBoundingClientRect()
-                const scrollTop = containerElement.scrollTop
-
-                // Calculate the target scroll position to center the text
-                const targetElementTop = scrollTop + (targetRect.top - containerRect.top)
-                const containerHeight = containerElement.clientHeight
-                const targetScrollTop = targetElementTop - containerHeight / 2
-
-                containerElement.scrollTo({
-                  top: Math.max(0, targetScrollTop),
-                  behavior: "smooth",
-                })
-
-                // Highlight the found text temporarily
-                if (targetElement && targetElement instanceof HTMLElement) {
-                  targetElement.style.backgroundColor = "rgba(34, 197, 94, 0.3)"
-                  targetElement.style.transition = "background-color 0.3s ease"
-                  setTimeout(() => {
-                    targetElement.style.backgroundColor = ""
-                  }, 5000)
-                }
-              } else {
-                // Fallback to page-level scrolling if text element not found
-                const containerRect = containerElement.getBoundingClientRect()
-                const pageRect = pageElement.getBoundingClientRect()
-                const scrollTop = containerElement.scrollTop
-                const targetScrollTop = scrollTop + (pageRect.top - containerRect.top) - 100
-
-                containerElement.scrollTo({
-                  top: Math.max(0, targetScrollTop),
-                  behavior: "smooth",
-                })
-              }
-            } else {
-              // Fallback if no text layer found
-              const containerRect = containerElement.getBoundingClientRect()
-              const pageRect = pageElement.getBoundingClientRect()
-              const scrollTop = containerElement.scrollTop
-              const targetScrollTop = scrollTop + (pageRect.top - containerRect.top) - 100
-
-              containerElement.scrollTo({
-                top: Math.max(0, targetScrollTop),
-                behavior: "smooth",
-              })
-            }
-          } catch (error) {
-            console.error("Error scrolling to search result:", error)
-            // Fallback to simple page scrolling
-            const containerRect = containerElement.getBoundingClientRect()
-            const pageRect = pageElement.getBoundingClientRect()
-            const scrollTop = containerElement.scrollTop
-            const targetScrollTop = scrollTop + (pageRect.top - containerRect.top) - 100
-
-            containerElement.scrollTo({
-              top: Math.max(0, targetScrollTop),
-              behavior: "smooth",
-            })
+      setTimeout(() => {
+        try {
+          const textLayer = pageElement.querySelector(".react-pdf__Page__textContent")
+          if (!textLayer) {
+            fallbackScroll(pageElement, containerElement)
+            return
           }
-        }, 100) // Small delay to ensure text layer is rendered
-      }
-    }
-  }
+
+          const textSpans = textLayer.querySelectorAll('[role="presentation"]')
+          if (textSpans.length === 0) {
+            fallbackScroll(pageElement, containerElement)
+            return
+          }
+
+          const searchText = result.text.toLowerCase()
+          const beforeText = result.beforeMatch.toLowerCase()
+          const afterText = result.afterMatch.toLowerCase()
+          let bestMatch: { element: HTMLElement; score: number } | null = null
+          let currentOccurrence = 0
+
+          // Convert NodeList to Array for easier indexing
+          const spanArray = Array.from(textSpans)
+
+          for (let i = 0; i < spanArray.length; i++) {
+            const span = spanArray[i]
+            const spanText = (span.textContent || "").toLowerCase()
+
+            if (!spanText.includes(searchText)) continue
+
+            let score = 0
+
+            // Prioritize exact matches
+            if (spanText === searchText) {
+              score = 100
+            } else if (spanText.trim() === searchText) {
+              score = 90
+            } else {
+              score = 50
+            }
+
+            // Check if this is the correct occurrence by matching context
+            if (beforeText.length > 3 || afterText.length > 3) {
+              const context = getSurroundingContext(textSpans, i)
+
+              // Score based on before/after context match
+              if (beforeText.length > 3) {
+                const beforeWords = beforeText.split(/\s+/).filter((w: string) => w.length > 2)
+                const contextMatchCount = beforeWords.filter((word: string) =>
+                  context.beforeContext.toLowerCase().includes(word)
+                ).length
+                score += contextMatchCount * 15
+              }
+
+              if (afterText.length > 3) {
+                const afterWords = afterText.split(/\s+/).filter((w: string) => w.length > 2)
+                const contextMatchCount = afterWords.filter((word: string) =>
+                  context.afterContext.toLowerCase().includes(word)
+                ).length
+                score += contextMatchCount * 15
+              }
+            }
+
+            // Bonus for matching the occurrence count
+            if (currentOccurrence === result.matchCountOnPage) {
+              score += 25
+            }
+
+            // Visibility bonus
+            const spanRect = span.getBoundingClientRect()
+            if (spanRect.width > 0 && spanRect.height > 0) {
+              score += 5
+            }
+
+            if (!bestMatch || score > bestMatch.score) {
+              bestMatch = { element: span as HTMLElement, score }
+            }
+
+            currentOccurrence++
+          }
+
+          if (bestMatch) {
+            scrollToElement(bestMatch.element, containerElement)
+          } else {
+            fallbackScroll(pageElement, containerElement)
+          }
+        } catch (error) {
+          console.error("Error scrolling to search result:", error)
+          fallbackScroll(pageElement, containerElement)
+        }
+      }, 50)
+    },
+    [searchResults, scrollToElement, fallbackScroll, getSurroundingContext]
+  )
 
   const highlightSearchText = (text: string, matchStart: number, matchEnd: number) => {
     const before = text.substring(0, matchStart)
@@ -328,6 +307,10 @@ export default function ResumeViewer() {
     setCurrentSearchIndex(-1)
   }
 
+  const openPDFInBrowser = useCallback(() => {
+    window.open("/resume.pdf", "_blank")
+  }, [])
+
   return (
     <div className="h-[max(80vh,825px)] overflow-hidden rounded-3xl border shadow-aboutcard backdrop-blur">
       {/* green highlight */}
@@ -347,11 +330,10 @@ export default function ResumeViewer() {
           Document={Document}
           Page={Page}
           loading={!isClient || !pdfLoaded || isLoading}
-          numPages={numPages}
           scale={scale}
           onDocumentLoadSuccess={onDocumentLoadSuccess}
           onDocumentLoadError={onDocumentLoadError}
-          pageRefs={pageRefs}
+          pageRef={pageRef}
           pdfContainerRef={pdfContainerRef}
         />
         <SearchPanel
