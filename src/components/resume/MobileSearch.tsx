@@ -5,7 +5,6 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -105,7 +104,6 @@ export default function MobileSearch({
                 searchInPDF(e.target.value)
               }}
               className="bg-background/80 pl-10 pr-10 backdrop-blur"
-              autoFocus
             />
             {searchText && (
               <Button
