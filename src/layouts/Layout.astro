@@ -154,6 +154,9 @@ const canonical = currentPath === "/" ? siteURL : `${siteURL}${currentPath}`
   let sound = new Audio()
 
   const playRandomSound = () => {
+    // Check if sound is muted
+    if (window.soundMuted) return
+
     const randomSound = sounds[Math.floor(Math.random() * sounds.length)]
 
     if (isPlaying) {

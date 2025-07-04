@@ -46,6 +46,9 @@ const ParticlesBG = () => {
 
   const playRandomSound = () => {
     if (!sound) return
+    // Check if sound is muted
+    if ((window as any).soundMuted) return
+    
     const randomSound = sounds[Math.floor(Math.random() * sounds.length)]
 
     if (isPlaying) {
