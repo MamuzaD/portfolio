@@ -50,7 +50,7 @@ export default function Contact() {
 
   return (
     <section className="relative z-50 flex flex-col items-center">
-      {!dropdownOpen && (
+      {!dropdownOpen && !viewForm && (
         <div className="absolute -right-24 bottom-10 z-10">
           <img src="/particles/arrow.gif" alt="pointer" className="h-24 w-24 object-contain" />
         </div>
