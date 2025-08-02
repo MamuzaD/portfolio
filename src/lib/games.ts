@@ -97,8 +97,11 @@ export async function getGames(): Promise<Game[]> {
 
   try {
     // get recent games
-    const recentGames = await fetchRecentGames()
-    games = await filterRecentGames(recentGames)
+    const shouldFetchRecent = await getCachedData<boolean>("portfolio_fetchRecent")
+    if (shouldFetchRecent) {
+      const recentGames = await fetchRecentGames()
+      games = await filterRecentGames(recentGames)
+    }
 
     if (games.length < 4) {
       const allGames = await fetchAllGames()

@@ -47,7 +47,7 @@ export async function getCachedData<T>(key: string): Promise<T | null> {
 
   try {
     const cachedData = await client.get(key)
-    if (cachedData) {
+    if (cachedData !== null && cachedData !== undefined) {
       console.log(`Redis: Cache HIT ${key}`)
       return cachedData as T
     }

@@ -10,8 +10,6 @@ interface FilmDetails {
   stars: string | null
 }
 
-const EXPIRATION_TIME = 24 * 60 * 60 * 1000 // one day
-
 const Movies = () => {
   const [filmDetails, setFilmDetails] = useState<FilmDetails | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
@@ -35,27 +33,8 @@ const Movies = () => {
     }
   }
 
-  const loadFilmDetailsFromStorage = () => {
-    const stored = localStorage.getItem("filmDetails")
-    if (stored) {
-      const { data, timestamp } = JSON.parse(stored)
-      const isExpired = Date.now() - timestamp > EXPIRATION_TIME
-      if (!isExpired) {
-        setFilmDetails(data)
-        setLoading(false)
-        return true
-      } else {
-        localStorage.removeItem("filmDetails")
-      }
-    }
-    return false
-  }
-
   useEffect(() => {
-    const hasValidData = loadFilmDetailsFromStorage()
-    if (!hasValidData) {
-      fetchFilmDetails()
-    }
+    fetchFilmDetails()
   }, [])
 
   const retry = () => {
