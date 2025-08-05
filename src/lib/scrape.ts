@@ -77,37 +77,30 @@ export async function scrapeFilmDetails(): Promise<FilmDetails | null> {
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: 20000 })
     console.log("Initial page load completed.")
 
-    console.log("Waiting for the .td-film-details selector...")
-    await page.waitForSelector(".td-film-details", { timeout: 10000 })
-    console.log("Element .td-film-details found.")
-
-    // Wait for the real image to load by checking its src attribute
+    console.log("Waiting for film poster to load...")
     await page.waitForFunction(
       () => {
-        const imgElement = document.querySelector(".td-film-details img")
-        if (!imgElement) return false
-        const src = imgElement.getAttribute("src")
-        return src && !src.includes("empty-poster")
+        const img = document.querySelector("tbody tr:first-child img[src*='ltrbxd.com']") as HTMLImageElement
+        return img && !img.src.includes("empty-poster")
       },
       { timeout: 10000, polling: 500 }
     )
-    console.log("Film poster received.")
+    console.log("Film poster loaded.")
 
     const filmDetails = await page.evaluate(() => {
-      const filmElement = document.querySelector(".td-film-details")
-      if (!filmElement) return null
+      // tbody tr:first-child
+      const firstRow = document.querySelector("tbody tr:first-child")
+      if (!firstRow) return null
 
-      const titleElement = filmElement.querySelector("h2.name a")
-      const title = titleElement?.textContent?.trim() || null
+      // img[src*='ltrbxd.com']
+      const img = firstRow.querySelector("img[src*='ltrbxd.com']") as HTMLImageElement
+      const imageUrl = img?.src?.replace(/-0-35-0-52-crop/, "-0-70-0-105-crop") || null
 
-      const imgElement = filmElement.querySelector("img")
-      let imageUrl = imgElement?.getAttribute("src")?.replace("35", "100") || null
-      if (imageUrl) {
-        imageUrl = imageUrl.replace(/-0-(\d+)-0-(\d+)/, "-0-70-0-105")
-      }
+      // a[href*='/film/']
+      const title = img?.alt || firstRow.querySelector("a[href*='/film/']")?.textContent?.trim() || null
 
-      const starsElement = document.querySelector("span.rating")
-      const stars = starsElement?.textContent?.trim() || null
+      // Extract stars from row text content
+      const stars = firstRow.textContent?.match(/★+½?/)?.[0] || null
 
       return { title, imageUrl, stars }
     })
