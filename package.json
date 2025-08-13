@@ -12,10 +12,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@astrojs/react": "^4.2.1",
-    "@astrojs/sitemap": "^3.2.1",
-    "@astrojs/tailwind": "^6.0.0",
-    "@astrojs/vercel": "^8.1.5",
+    "@astrojs/react": "^4.3.0",
+    "@astrojs/sitemap": "^3.4.2",
+    "@astrojs/tailwind": "6.0.2",
+    "@astrojs/vercel": "^8.2.5",
     "@emailjs/browser": "^4.4.1",
     "@hookform/resolvers": "^3.9.1",
     "@nanostores/persistent": "^0.10.2",
@@ -32,9 +32,9 @@
     "@types/react-dom": "^19.0.2",
     "@upstash/redis": "^1.35.0",
     "@vercel/functions": "^2.2.2",
-    "astro": "^5.4.2",
+    "astro": "^5.12.9",
     "astro-compressor": "^1.0.0",
-    "astro-icon": "^1.1.4",
+    "astro-icon": "^1.1.5",
     "astro-seo": "^0.8.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -44,7 +44,7 @@
     "lucide-react": "^0.469.0",
     "motion": "^11.15.0",
     "nanostores": "^0.11.3",
-    "puppeteer-core": "^23.11.1",
+    "puppeteer-core": "^24.16.1",
     "qss": "^3.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -63,6 +63,11 @@
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-astro-organize-imports": "^0.4.11",
     "prettier-plugin-tailwindcss": "^0.6.11",
-    "puppeteer": "^23.11.1"
+    "puppeteer": "^24.16.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "brace-expansion": "^2.0.2"
+    }
   }
 }
