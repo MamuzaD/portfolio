@@ -1,6 +1,6 @@
 import chromium from "@sparticuz/chromium"
 import { waitUntil } from "@vercel/functions"
-import puppeteer, { Browser, Page } from "puppeteer-core"
+import puppeteer, { Browser, Page } from "puppeteer"
 
 import { cacheData, getCachedData } from "./redis"
 
@@ -101,7 +101,7 @@ export async function scrapeFilmDetails(): Promise<FilmDetails | null> {
 
       if (img?.alt)
         // remove poster
-        title = img.alt.replace(/poster/i, "").trim()
+        title = img.alt.replace(/poster for/i, "").trim()
       else title = firstRow.querySelector("a[href*='/film/']")?.textContent?.trim() || null
 
       // Extract stars from row text content
