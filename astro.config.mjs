@@ -10,11 +10,13 @@ import { defineConfig } from "astro/config"
 
 import { sitemapCopier } from "./sitemap-copier"
 
-
 // https://astro.build/config
 export default defineConfig({
   site: "https://danielmamuza.com",
   base: "/",
+  prefetch: {
+    defaultStrategy: "hover",
+  },
 
   integrations: [
     react(),

@@ -26,7 +26,7 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
             <CardContainer className="rounded-lg p-4">
               <CardBody>
                 <CardItem translateZ="125" className="">
-                  <a href={`/work/${highlightedProject.id}`}>
+                  <a href={`/work/${highlightedProject.id}`} data-astro-prefetch>
                     {highlightedProject.data.card.type === "video" ? (
                       <motion.video
                         key={highlightedProject?.data.card.src}
@@ -48,7 +48,7 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
                         playsInline
                         preload="metadata"
                         style={{
-                          viewTransitionName: highlightedProject.data.card.alt,
+                          viewTransitionName: highlightedProject.id,
                         }}
                       />
                     ) : (
@@ -68,7 +68,7 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
                           delay: 0.2,
                         }}
                         style={{
-                          viewTransitionName: highlightedProject.data.card.alt,
+                          viewTransitionName: highlightedProject.id,
                         }}
                       />
                     )}
@@ -90,6 +90,7 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
               <li key={project.id} onMouseEnter={() => setHighlightedProject(project)}>
                 <a
                   href={`/work/${project.id}`}
+                  data-astro-prefetch
                   className={`backdrop-blur-xs group mt-4 block cursor-pointer rounded-[2.5rem] px-10 py-5 shadow-experiencard-card-light transition-[background_color] duration-300 hover:bg-muted/50 dark:shadow-experiencard-card-dark md:mt-0 md:rounded-xl md:shadow-none md:hover:bg-primary/30 md:dark:shadow-none ${highlightedProject && highlightedProject.id === project.id ? "bg-muted/70 md:bg-primary/40 md:dark:bg-primary/20" : "bg-muted/70 md:bg-transparent"}`}
                 >
                   <div className="mt-4 block rounded-lg shadow-md md:hidden">

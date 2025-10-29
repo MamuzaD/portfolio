@@ -27,6 +27,18 @@ const { data: project } = entry
 <Layout title={project.title} description={project.seoDescription} OGimg={project.ogImg}>
   <main class="relative pt-24">
     <div class="w-full md:px-24">
+      {/* back link */}
+      <div class="mb-8 flex items-center gap-2">
+        <a
+          href="/work"
+          data-astro-prefetch
+          class="group inline-flex items-center gap-2 text-sm font-medium text-neutral-500 transition-colors hover:text-foreground md:text-base"
+        >
+          <span class="transition-transform group-hover:-translate-x-1">←</span>
+          back to work
+        </a>
+      </div>
+
       {/* Banner Image */}
       <div class="mb-16 flex justify-center overflow-hidden">
         {
@@ -39,14 +51,16 @@ const { data: project } = entry
               loop
               playsinline
               preload="metadata"
+              transition:name={entry.id}
+              transition:animate="initial"
             />
           ) : (
             <Image
               src={project.banner.img}
               alt={project.banner.alt || ""}
               class={`h-full max-h-[50vh] w-auto rounded-2xl border`}
-              transition:name={project.card.alt}
-              transition:animate="fade"
+              transition:name={entry.id}
+              transition:animate="initial"
             />
           )
         }
@@ -55,8 +69,12 @@ const { data: project } = entry
       <div class="grid grid-cols-12 gap-8">
         {/* Project Title & Caption (fixed) */}
         <div class="col-span-full h-fit md:sticky md:top-32 md:col-end-4">
-          <h1 class="font-mono text-3xl font-light">{project.title}</h1>
-          <p class="mt-2 text-xl text-neutral-500">{project.caption}</p>
+          <h1 class="font-mono text-3xl font-light">
+            {project.title}
+          </h1>
+          <p class="mt-2 text-xl text-neutral-500">
+            {project.caption}
+          </p>
         </div>
 
         <div class="col-start-1 col-end-13 md:col-start-5 md:col-end-13 md:columns-2">

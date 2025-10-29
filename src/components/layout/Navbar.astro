@@ -25,7 +25,7 @@ const titles = [
   <div class="z-[70] flex items-center justify-between gap-4">
     <ProfilePic height="300px" width="300px" small />
     <div class="mt-2 flex flex-col">
-      <a href="/" class="hover-underline-animation inline-block w-fit"> Daniel Mamuza </a>
+      <a href="/" class="hover-underline-animation inline-block w-fit" data-astro-prefetch> Daniel Mamuza </a>
       <WordRotate
         words={titles}
         duration={6000}
@@ -37,9 +37,9 @@ const titles = [
     </div>
   </div>
   <div class="-ml-12 hidden items-center justify-center gap-4 md:flex">
-    <a href="/" class="hover-underline-animation">Home</a>
+    <a href="/" class="hover-underline-animation" data-astro-prefetch>Home</a>
     <span>•</span>
-    <a href="/work" class="hover-underline-animation">Work</a>
+    <a href="/work" class="hover-underline-animation" data-astro-prefetch>Work</a>
   </div>
   <div class="hidden place-items-center gap-2 md:flex md:gap-6">
     {
@@ -83,9 +83,9 @@ const titles = [
     class="fixed left-0 top-0 z-50 flex w-full -translate-y-full transform justify-between gap-4 rounded-b-3xl border-b bg-background/50 px-10 pb-10 pt-28 shadow-lg backdrop-blur-sm transition-transform duration-500 ease-in-out md:hidden"
   >
     <div class="flex items-center justify-center gap-2">
-      <a href="/" class="hover-underline-animation">Home</a>
+      <a href="/" class="hover-underline-animation" data-astro-prefetch>Home</a>
       <span>•</span>
-      <a href="/work" class="hover-underline-animation">Work</a>
+      <a href="/work" class="hover-underline-animation" data-astro-prefetch>Work</a>
     </div>
     <div class="flex items-center gap-4">
       {

@@ -9,7 +9,7 @@ interface Props {
 const { data, id } = Astro.props.project
 ---
 
-<a href={`/work/${id}`} class="w-full">
+<a href={`/work/${id}`} class="w-full" data-astro-prefetch>
   {
     data.card.type === "video" ? (
       <video
@@ -20,14 +20,16 @@ const { data, id } = Astro.props.project
         loop
         playsinline
         preload="metadata"
+        transition:name={id}
+        transition:animate="initial"
       />
     ) : (
       <Image
         src={data.card.img}
         alt={data.card.alt || ""}
         class="max-h-[50vh] animate-fadeIn rounded-lg opacity-100 transition-opacity duration-300 hover:opacity-70"
-        transition:name={data.card.alt}
-        transition:animate="fade"
+        transition:name={id}
+        transition:animate="initial"
       />
     )
   }
