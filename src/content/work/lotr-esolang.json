@@ -9,12 +9,12 @@
   "ogImg": "https://danielmamuza.com/work/lotr-esolang/lotr-esolang.webp",
   "duration": { "start": "2024-02-14T00:00:00Z" },
   "banner": {
-    "img": "public/work/lotr-esolang/lotr-esolang.webp",
+    "src": "public/work/lotr-esolang/lotr-esolang.webp",
     "alt": "Esolang Banner",
     "type": "image"
   },
   "card": {
-    "img": "public/work/lotr-esolang/lotr-esolang.webp",
+    "src": "public/work/lotr-esolang/lotr-esolang.webp",
     "alt": "Esolang Card",
     "type": "image"
   },

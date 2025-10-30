@@ -4,14 +4,13 @@ import { type ImageFunction, defineCollection, z } from "astro:content"
 const imageSchema = (image: ImageFunction) =>
   z.object({
     type: z.literal("image"),
-    img: image(),
+    src: image(),
     alt: z.string().optional(),
   })
 
 const videoSchema = z.object({
   type: z.literal("video"),
   src: z.string(),
-  alt: z.string().optional(),
 })
 
 const mediaSchema = (image: ImageFunction) => z.union([imageSchema(image), videoSchema])
@@ -44,7 +43,7 @@ const work = defineCollection({
       // media
       banner: mediaSchema(image),
       card: mediaSchema(image),
-      imgs: z.array(mediaSchema(image)).optional(),
+      media: z.array(mediaSchema(image)).optional(),
     }),
 })
 

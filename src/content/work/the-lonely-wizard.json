@@ -9,12 +9,12 @@
   "ogImg": "https://danielmamuza.com/work/the-lonely-wizard/card.jpg",
   "duration": { "start": "2024-01-10", "end": "2024-02-01" },
   "banner": {
-    "img": "public/work/the-lonely-wizard/banner.jpg",
+    "src": "public/work/the-lonely-wizard/banner.jpg",
     "alt": "The Lonely Wizard Banner",
     "type": "image"
   },
   "card": {
-    "img": "public/work/the-lonely-wizard/card.jpg",
+    "src": "public/work/the-lonely-wizard/card.jpg",
     "alt": "The Lonely Wizard Card",
     "type": "image"
   },

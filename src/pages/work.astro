@@ -10,36 +10,47 @@ const projects = (await getCollection("work")).sort(
   (a: Work, b: Work) => b.data.duration.start.valueOf() - a.data.duration.start.valueOf()
 )
 
-const columns: Work[][] = [[], [], []]
+const columns3: Work[][] = [[], [], []]
+const columns2: Work[][] = [[], []]
+
+let globalIndex = 0
 projects.forEach((project: Work, index: number) => {
-  columns[index % 3].push(project)
+  columns3[index % 3].push({ ...project, index: globalIndex++ })
+  columns2[index % 2].push({ ...project, index: globalIndex })
 })
 ---
 
 <Layout title={texts.work.title} description={texts.work.description}>
   <main class="min-h-[calc(90vh)] pt-32">
-    <div class="hidden gap-4 px-8 sm:grid sm:grid-cols-2 lg:grid-cols-3">
+    <!-- 3 columns for lg -->
+    <div class="hidden gap-4 px-8 lg:grid lg:grid-cols-3">
       {
-        columns.map((column) => (
+        columns3.map((column) => (
           <div class="flex flex-shrink-0 flex-col gap-6">
             {column.map((project) => (
-              <div class="z-10">
-                <ProjectCard {project} />
-              </div>
+              <ProjectCard project={project} delay={project.index * 150} />
             ))}
           </div>
         ))
       }
     </div>
 
-    <div class="flex flex-col gap-12 sm:hidden">
+    <!-- 2 columns for sm -->
+    <div class="hidden gap-4 px-8 sm:grid sm:grid-cols-2 lg:hidden">
       {
-        projects.map((project) => (
-          <div class="z-10">
-            <ProjectCard {project} />
+        columns2.map((column) => (
+          <div class="flex flex-shrink-0 flex-col gap-6">
+            {column.map((project) => (
+              <ProjectCard project={project} delay={project.index * 150} />
+            ))}
           </div>
         ))
       }
+    </div>
+
+    <!-- Mobile fallback (1 column) -->
+    <div class="flex flex-col gap-12 sm:hidden">
+      {projects.map((project, i) => <ProjectCard project={project} delay={i * 150} />)}
     </div>
   </main>
 </Layout>
