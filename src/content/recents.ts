@@ -9,6 +9,10 @@ type Recent = {
 
 const recents: Recent[] = [
   {
+    content: "competed & created Weyes at Cal Hacks 12.0",
+    links: [{ where: "Weyes", href: "/work/weyes" }],
+  },
+  {
     content: "created and released Vidlogd",
     links: [
       {
@@ -18,7 +22,7 @@ const recents: Recent[] = [
     ],
   },
   {
-    content: "built FlipTrick through CodePath iOS course",
+    content: "built FlipTrick part of CodePath's iOS 101",
     links: [
       {
         where: "FlipTrick",

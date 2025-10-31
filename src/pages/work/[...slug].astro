@@ -128,29 +128,33 @@ const { data: project } = entry
           )
         }
 
-        {
-          project.links &&
-            project.links.length > 0 &&
-            project.links.map((link, index) => {
-              const colStart = Math.ceil(5 + index * 3.5) // Dynamically set the column start for each link
-              const icon = `mdi--${link.icon}`
-              return (
-                <div class={`md:col-start-${colStart} relative col-span-full w-full md:col-span-4`}>
-                  <a
-                    href={link.url}
-                    class="group inline-block w-full rounded-xl border bg-primary-foreground/60 p-4 backdrop-blur transition-[background-color] duration-200 hover:bg-primary-foreground/90"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span class="flex items-center justify-center gap-8 text-center text-lg font-medium uppercase tracking-wider transition-transform duration-300 group-hover:scale-110">
-                      {link.name}
-                      <Icon name={icon} class="inline-block size-7" />
-                    </span>
-                  </a>
-                </div>
-              )
-            })
-        }
+        {/* Links section: its own row, aligned under content area */}
+        <div class="col-start-1 col-end-13 md:col-start-5 md:col-end-13">
+          <div class="grid grid-cols-12 gap-4">
+            {
+              project.links &&
+                project.links.length > 0 &&
+                project.links.map((link) => {
+                  const icon = `mdi--${link.icon}`
+                  return (
+                    <div class="col-span-12 sm:col-span-6">
+                      <a
+                        href={link.url}
+                        class="group inline-block w-full rounded-xl border bg-primary-foreground/60 p-4 backdrop-blur transition-[background-color] duration-200 hover:bg-primary-foreground/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <span class="flex items-center justify-center gap-8 text-center text-lg font-medium uppercase tracking-wider transition-transform duration-300 group-hover:scale-110">
+                          {link.name}
+                          <Icon name={icon} class="inline-block size-7" />
+                        </span>
+                      </a>
+                    </div>
+                  )
+                })
+            }
+          </div>
+        </div>
 
         <div class="col-start-1 col-end-13 mt-16 space-y-8 md:col-start-5 md:space-y-16">
           {

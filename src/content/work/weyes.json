@@ -1,0 +1,61 @@
+{
+  "title": "Weyes",
+  "caption": "Visualize financial networks between politicians and companies",
+  "description": [
+    "Built at Cal Hacks 12.0 in San Francisco with Andy Nguyen, Athanasios Tassiadamis, and Yash Mulimani, we balanced Golden Gate views with competing and spotty WiFi. I led the React + D3.js frontend (Vite, Tailwind, shadcn/ui) and contributed to the FastAPI backend.",
+    "After the data pipeline landed, I pushed to 6 AM to finish the frontend and backend integration. The result is an interactive D3.js graph powered by AI-assisted entity classification (Anthropic Claude) and real, web scraped congressional data."
+  ],
+  "seoDescription": "Interactive web app to search and visualize political–corporate networks. Explore financial connections between politicians and companies with an interactive D3.js graph.",
+  "ogImg": "https://github.com/user-attachments/assets/aafa8b9d-46a1-46a3-92b1-47d934c2d64c",
+  "duration": { "start": "2025-10-29" },
+  "links": [
+    {
+      "icon": "github",
+      "name": "github",
+      "url": "https://github.com/MamuzaD/cal-hacks"
+    },
+    {
+      "icon": "link",
+      "name": "live (goes offline nov 22)",
+      "url": "https://weyes.up.railway.app"
+    },
+    {
+      "icon": "link",
+      "name": "presentation slides",
+      "url": "https://docs.google.com/presentation/d/1tHFdWcxdQnHa9Py0JFuKED4ZOUyxrOl1VI6i04uD-1Q/edit?usp=sharinghttps://docs.google.com/presentation/d/1tHFdWcxdQnHa9Py0JFuKED4ZOUyxrOl1VI6i04uD-1Q/edit?usp=sharing"
+    }
+  ],
+  "tags": ["TypeScript", "React", "Vite", "TailwindCSS", "shadcn/ui", "D3.js", "FastAPI", "PostgreSQL", "Anthropic"],
+  "banner": {
+    "src": "/work/weyes/demo.mp4",
+    "alt": "Weyes Banner",
+    "type": "video"
+  },
+  "card": {
+    "src": "/work/weyes/demo.mp4",
+    "alt": "Weyes card",
+    "type": "video"
+  },
+  "media": [
+    {
+      "src": "/work/weyes/demo.mp4",
+      "alt": "Weyes Demo Video",
+      "type": "video"
+    },
+    {
+      "src": "public/work/weyes/company.jpg",
+      "alt": "Weyes UI of a Company",
+      "type": "image"
+    },
+    {
+      "src": "public/work/weyes/politician.jpg",
+      "alt": "Weyes UI of a Politician",
+      "type": "image"
+    },
+    {
+      "src": "public/work/weyes/dense.jpg",
+      "alt": "Weyes dense graph view screenshot",
+      "type": "image"
+    }
+  ]
+}
