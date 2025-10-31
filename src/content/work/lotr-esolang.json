@@ -19,5 +19,5 @@
     "type": "image"
   },
   "tags": ["TypeScript", "Interpreter Design", "Parser", "Lexer", "Evaluater"],
-  "links": [{ "name": "github", "url": "//github.com/MamuzaD/Lord-of-The-Rings-Esolang" }]
+  "links": [{ "icon": "github", "name": "github", "url": "https://github.com/MamuzaD/Lord-of-The-Rings-Esolang" }]
 }

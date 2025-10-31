@@ -19,7 +19,7 @@
     "type": "image"
   },
   "tags": ["Next.js", "Shadcn UI", "Tailwind CSS", "Redis", "Resend", "Machine Learning"],
-  "links": [{ "name": "live", "url": "https://fateapp.dev" }],
+  "links": [{ "icon": "link", "name": "live", "url": "https://fateapp.dev" }],
   "media": [
     { "src": "public/work/fate/fate-canvas.png", "alt": "Fate Hero", "type": "image" },
     { "src": "public/work/fate/features.png", "alt": "Fate Features", "type": "image" }

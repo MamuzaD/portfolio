@@ -20,8 +20,8 @@
   },
   "tags": ["Next.js", "Shadcn UI", "Tailwind CSS", "Figma"],
   "links": [
-    { "name": "github", "url": "//github.com/acmunlv/www" },
-    { "name": "live", "url": "https://acm.cs.unlv.edu" }
+    { "icon": "github", "name": "github", "url": "https://github.com/acmunlv/www" },
+    { "icon": "link", "name": "live", "url": "https://acm.cs.unlv.edu" }
   ],
   "media": [{ "src": "public/work/acm/about.jpg", "alt": "ACM About", "type": "image" }]
 }

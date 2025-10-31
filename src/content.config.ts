@@ -15,10 +15,10 @@ const videoSchema = z.object({
 
 const mediaSchema = (image: ImageFunction) => z.union([imageSchema(image), videoSchema])
 
-const linkSchema = z.object({ url: z.string(), name: z.string() })
+const linkSchema = z.object({ url: z.string(), name: z.string(), icon: z.string() })
 const durationSchema = z.object({
   start: z.coerce.date(),
-  end: z.union([z.coerce.date().optional(), z.literal("Present").optional()]),
+  end: z.union([z.coerce.date(), z.literal("Present")]).optional(),
 })
 
 const work = defineCollection({

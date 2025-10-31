@@ -11,7 +11,7 @@ interface RecentWorkProps {
 }
 
 const HoverWork = ({ projects }: RecentWorkProps) => {
-  const [highlightedProject, setHighlightedProject] = useState<any | null>(null)
+  const [highlightedProject, setHighlightedProject] = useState<CollectionEntry<"work"> | null>(null)
 
   return (
     <section
@@ -53,8 +53,8 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
                       />
                     ) : (
                       <motion.img
-                        key={highlightedProject?.data.card.img.src}
-                        src={highlightedProject.data.card.img.src}
+                        key={highlightedProject?.data.card.src.src}
+                        src={highlightedProject.data.card.src.src}
                         alt={highlightedProject.data.card.alt || highlightedProject.data.title}
                         className="duration-250 h-full max-h-[450px] w-full max-w-[450px] rounded-lg object-cover shadow-mac-md transition-[box-shadow] hover:shadow-mac-lg"
                         initial={{ opacity: 0, translateY: 25 }}
@@ -106,7 +106,7 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
                       />
                     ) : (
                       <img
-                        src={project.data.card.img.src}
+                        src={project.data.card.src.src}
                         alt={project.data.card.alt || project.data.title}
                         className="h-full w-full rounded-3xl object-cover"
                       />

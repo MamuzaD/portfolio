@@ -20,8 +20,13 @@
   },
   "tags": ["Python", "Discord", "OpenAI"],
   "links": [
-    { "name": "github", "url": "https://github.com/MamuzaD/JeraldBot" },
     {
+      "icon": "github",
+      "name": "github",
+      "url": "https://github.com/MamuzaD/JeraldBot"
+    },
+    {
+      "icon": "link",
       "name": "live",
       "url": "https://discord.com/oauth2/authorize?client_id=1239862738612785182&permissions=137439464512&scope=bot"
     }

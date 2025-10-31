@@ -4,39 +4,32 @@ import type { CollectionEntry } from "astro:content"
 
 interface Props {
   project: CollectionEntry<"work">
-  delay: number
 }
 
-const { project, delay } = Astro.props
+const { project } = Astro.props
 const { data, id } = project
 ---
 
-<a
-  href={`/work/${id}`}
-  class="w-full animate-fadeIn opacity-0"
-  style={`animation-delay: ${delay}ms; animation-fill-mode: forwards;`}
-  data-astro-prefetch
->
+<a href={`/work/${id}`} class="w-full" data-astro-prefetch transition:persist>
   {
     data.card.type === "video" ? (
       <video
         src={data.card.src}
-        class="mx-auto h-auto max-h-[50vh] w-auto rounded-lg opacity-100 transition-opacity duration-300 hover:opacity-70"
+        class="mx-auto h-auto max-h-[50vh] w-auto animate-fadeIn rounded-lg opacity-100 transition-opacity duration-300 hover:opacity-70"
         autoplay
         muted
         loop
         playsinline
         preload="metadata"
         transition:name={id}
-        transition:animate="initial"
       />
     ) : (
       <Image
         src={data.card.src}
         alt={data.card.alt || ""}
-        class="max-h-[50vh] rounded-lg opacity-100 transition-opacity duration-300 hover:opacity-70"
+        class="max-h-[50vh] animate-fadeIn rounded-lg opacity-100 transition-opacity duration-300 hover:opacity-70"
         transition:name={id}
-        transition:animate="initial"
+        placeholder="blur"
       />
     )
   }

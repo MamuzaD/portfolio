@@ -8,7 +8,7 @@
   "seoDescription": "Flip Trick is a motion-oriented iOS arcade game built with Swift, UIKit, and CoreMotion. Features include real-time scoring, combo system, multiple game modes, and score history.",
   "ogImg": "https://danielmamuza.com/work/fliptrick/fliptrick_og.webp",
   "duration": { "start": "2025-04-22", "end": "2025-05-25" },
-  "links": [{ "name": "github", "url": "https://github.com/MamuzaD/fliptrick" }],
+  "links": [{ "icon": "github", "name": "github", "url": "https://github.com/MamuzaD/fliptrick" }],
   "tags": ["iOS", "Swift", "UIKit", "CoreMotion"],
   "banner": {
     "src": "public/work/fliptrick/icon.png",
@@ -16,7 +16,7 @@
     "type": "image"
   },
   "card": {
-    "src": "/work/fliptrick/card.mp4",
+    "src": "public/work/fliptrick/card.mp4",
     "alt": "FlipTrick Card",
     "type": "video"
   },

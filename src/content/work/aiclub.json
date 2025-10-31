@@ -20,8 +20,8 @@
   },
   "tags": ["React", "Tailwind CSS", "Vite", "TypeScript", "Google Analytics"],
   "links": [
-    { "name": "github", "url": "https://github.com/aiunlv/website" },
-    { "name": "live", "url": "https://aiclub.cs.unlv.edu" }
+    { "icon": "github", "name": "github", "url": "https://github.com/aiunlv/website" },
+    { "icon": "link", "name": "live", "url": "https://aiclub.cs.unlv.edu" }
   ],
   "media": [
     {

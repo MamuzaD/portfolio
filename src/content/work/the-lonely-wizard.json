@@ -19,5 +19,5 @@
     "type": "image"
   },
   "tags": ["Unity", "C#", "Game Development"],
-  "links": [{ "name": "github", "url": "//github.com/MamuzaD/thelonelywizard" }]
+  "links": [{ "icon": "github", "name": "github", "url": "https://github.com/MamuzaD/thelonelywizard" }]
 }
