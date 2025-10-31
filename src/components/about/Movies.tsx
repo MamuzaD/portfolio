@@ -74,15 +74,7 @@ const Movies = () => {
               }}
             />
             <div className="flex flex-col justify-center">
-              <h2 className="text-md text-center">
-                {filmDetails.title
-                  ? filmDetails.title.includes(":") // for sequels
-                    ? `${filmDetails.title.split(":")[0]}`
-                    : filmDetails.title.length > 18 // for longer titles
-                      ? `${filmDetails.title.slice(0, 18)}...`
-                      : filmDetails.title
-                  : ""}
-              </h2>
+              <h2 className="text-md leader-tight line-clamp-1 text-center">{filmDetails.title}</h2>
               <p className="text-center text-lg tracking-widest text-primary md:mt-1">{filmDetails.stars}</p>
             </div>
           </div>

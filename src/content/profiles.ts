@@ -29,7 +29,7 @@ export const profiles = [
   {
     name: "Gandalf",
     path: "/profile/gandalf.jpg",
-    icons: ["/particles/lotr/ring.webp", "/particles/lotr/elven-brooch.webp", "/particles/lotr/eye.png"],
+    icons: ["/particles/lotr/ring.webp", "/particles/lotr/elven-brooch.webp", "/particles/lotr/eye.webp"],
     audio: "",
   },
 ]
