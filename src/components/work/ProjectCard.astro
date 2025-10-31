@@ -29,14 +29,13 @@ const { data, id } = project
         alt={data.card.alt || ""}
         class="max-h-[50vh] animate-fadeIn rounded-lg opacity-100 transition-opacity duration-300 hover:opacity-70"
         transition:name={id}
-        placeholder="blur"
       />
     )
   }
   <div class="mt-2 flex justify-between gap-4">
-    <div class="flex h-full flex-shrink-0 flex-col text-sm leading-5 transition-transform duration-500 hover:scale-105">
-      <span class="capital font-medium">{data.title}</span>
-      <span class="capitalize tracking-wide text-neutral-500">
+    <div class="flex h-full w-full min-w-0 flex-col text-sm leading-5 transition-transform duration-500 hover:scale-105">
+      <span class="capital whitespace-normal break-words font-medium">{data.title}</span>
+      <span class="whitespace-normal break-words capitalize tracking-wide text-neutral-500">
         {data.caption}
       </span>
     </div>
