@@ -8,8 +8,6 @@ import compressor from "astro-compressor"
 import icon from "astro-icon"
 import { defineConfig } from "astro/config"
 
-import { sitemapCopier } from "./sitemap-copier"
-
 // https://astro.build/config
 export default defineConfig({
   site: "https://danielmamuza.com",
@@ -26,7 +24,6 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     compressor(),
-    sitemapCopier(),
   ],
   output: "server",
   adapter: vercel({
