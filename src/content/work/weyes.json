@@ -1,6 +1,6 @@
 {
   "title": "Weyes",
-  "caption": "Visualize financial networks between politicians and companies",
+  "caption": "Political Network Graph",
   "description": [
     "Built at Cal Hacks 12.0 in San Francisco with Andy Nguyen, Athanasios Tassiadamis, and Yash Mulimani, we balanced Golden Gate views with competing and spotty WiFi. I led the React + D3.js frontend (Vite, Tailwind, shadcn/ui) and contributed to the FastAPI backend.",
     "After the data pipeline landed, I pushed to 6 AM to finish the frontend and backend integration. The result is an interactive D3.js graph powered by AI-assisted entity classification (Anthropic Claude) and real, web scraped congressional data."
@@ -25,7 +25,7 @@
       "url": "https://docs.google.com/presentation/d/1tHFdWcxdQnHa9Py0JFuKED4ZOUyxrOl1VI6i04uD-1Q/edit?usp=sharinghttps://docs.google.com/presentation/d/1tHFdWcxdQnHa9Py0JFuKED4ZOUyxrOl1VI6i04uD-1Q/edit?usp=sharing"
     }
   ],
-  "tags": ["TypeScript", "React", "Vite", "TailwindCSS", "shadcn/ui", "D3.js", "FastAPI", "PostgreSQL", "Anthropic"],
+  "tags": ["TypeScript", "React", "FastAPI", "D3.js", "Vite", "Tailwind CSS", "shadcn/ui", "PostgreSQL", "Anthropic"],
   "banner": {
     "src": "/work/weyes/demo.mp4",
     "alt": "Weyes Banner",

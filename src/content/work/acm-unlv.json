@@ -2,10 +2,10 @@
   "title": "ACM UNLV",
   "caption": "Club Website",
   "description": [
-    "Worked alongside Thien Nguyen, the President of ACM UNLV, to build the club's website using Next.js, Shadcn UI, and Tailwind CSS. Contributed to the development of a sleek, user-friendly design that showcases club events, resources, and initiatives. ",
+    "Worked alongside Thien Nguyen, the President of ACM UNLV, to build the club's website using Next.js, shadcn/ui, and Tailwind CSS. Contributed to the development of a sleek, user-friendly design that showcases club events, resources, and initiatives. ",
     "The website features an animated banner, created in Figma and animated with CSS, enhancing the overall visual appeal. The project aimed to improve the member and visitor experience with dynamic pages and a modern interface."
   ],
-  "seoDescription": "Developed ACM UNLV's website with Next.js, Shadcn UI, and Tailwind CSS, featuring dynamic pages and an animated Figma-designed banner.",
+  "seoDescription": "Developed ACM UNLV's website with Next.js, shadcn/ui, and Tailwind CSS, featuring dynamic pages and an animated Figma-designed banner.",
   "ogImg": "https://danielmamuza.com/work/acm/acm.jpg",
   "duration": { "start": "2024-07-28", "end": "2024-09-15" },
   "banner": {
@@ -18,7 +18,7 @@
     "alt": "ACM Card",
     "type": "image"
   },
-  "tags": ["Next.js", "Shadcn UI", "Tailwind CSS", "Figma"],
+  "tags": ["Next.js", "shadcn/ui", "Tailwind CSS", "Figma"],
   "links": [
     { "icon": "github", "name": "github", "url": "https://github.com/acmunlv/www" },
     { "icon": "link", "name": "live", "url": "https://acm.cs.unlv.edu" }
