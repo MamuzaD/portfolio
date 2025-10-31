@@ -16,7 +16,7 @@
     "type": "image"
   },
   "card": {
-    "src": "public/work/fliptrick/card.mp4",
+    "src": "/work/fliptrick/card.mp4",
     "alt": "FlipTrick Card",
     "type": "video"
   },
