@@ -155,7 +155,10 @@ const { height, width, small } = Astro.props
 
   button.profile-picture:hover,
   button.profile-picture-small:hover {
-    cursor: url("/help.png"), auto;
+    cursor:
+      url("/help.svg") 16 16,
+      url("/help.png") 16 16,
+      help;
   }
 
   .profile-picture {
