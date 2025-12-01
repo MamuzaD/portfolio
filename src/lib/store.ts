@@ -2,7 +2,7 @@ import { persistentAtom } from "@nanostores/persistent"
 
 import { profiles } from "@/content/profiles"
 
-export const currentProfile = persistentAtom<string>("currentProfile", "me")
+export const currentProfile = persistentAtom<string>("currentProfile", "Me")
 
 export const cycleProfile = () => {
   currentProfile.set(
