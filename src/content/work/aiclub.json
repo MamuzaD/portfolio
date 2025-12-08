@@ -9,12 +9,12 @@
   "ogImg": "https://danielmamuza.com/work/aiclub/aiclub.jpg",
   "duration": { "start": "2024-09-28", "end": "2024-11-16" },
   "banner": {
-    "src": "public/work/aiclub/aiclub.jpg",
+    "src": "/public/work/aiclub/aiclub.jpg",
     "alt": "AIClub Banner",
     "type": "image"
   },
   "card": {
-    "src": "public/work/aiclub/aiclub.jpg",
+    "src": "/public/work/aiclub/aiclub.jpg",
     "alt": "AIClub Card",
     "type": "image"
   },
@@ -25,17 +25,17 @@
   ],
   "media": [
     {
-      "src": "public/work/aiclub/discover.jpg",
+      "src": "/public/work/aiclub/discover.jpg",
       "alt": "AIClub Discover",
       "type": "image"
     },
     {
-      "src": "public/work/aiclub/events.jpg",
+      "src": "/public/work/aiclub/events.jpg",
       "alt": "AIClub Events",
       "type": "image"
     },
     {
-      "src": "public/work/aiclub/projects.jpg",
+      "src": "/public/work/aiclub/projects.jpg",
       "alt": "AIClub Projects",
       "type": "image"
     }

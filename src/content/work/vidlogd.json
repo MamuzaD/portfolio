@@ -25,22 +25,22 @@
   },
   "media": [
     {
-      "src": "public/work/vidlogd/form.webp",
+      "src": "/public/work/vidlogd/form.webp",
       "alt": "vidlogd form",
       "type": "image"
     },
     {
-      "src": "public/work/vidlogd/ratings.webp",
+      "src": "/public/work/vidlogd/ratings.webp",
       "alt": "vidlogd ratings",
       "type": "image"
     },
     {
-      "src": "public/work/vidlogd/months.webp",
+      "src": "/public/work/vidlogd/months.webp",
       "alt": "vidlogd months",
       "type": "image"
     },
     {
-      "src": "public/work/vidlogd/stats.webp",
+      "src": "/public/work/vidlogd/stats.webp",
       "alt": "vidlogd stats",
       "type": "image"
     }

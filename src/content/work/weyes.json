@@ -43,17 +43,17 @@
       "type": "video"
     },
     {
-      "src": "public/work/weyes/company.jpg",
+      "src": "/public/work/weyes/company.jpg",
       "alt": "Weyes UI of a Company",
       "type": "image"
     },
     {
-      "src": "public/work/weyes/politician.jpg",
+      "src": "/public/work/weyes/politician.jpg",
       "alt": "Weyes UI of a Politician",
       "type": "image"
     },
     {
-      "src": "public/work/weyes/dense.jpg",
+      "src": "/public/work/weyes/dense.jpg",
       "alt": "Weyes dense graph view screenshot",
       "type": "image"
     }

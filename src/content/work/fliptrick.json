@@ -11,7 +11,7 @@
   "links": [{ "icon": "github", "name": "github", "url": "https://github.com/MamuzaD/fliptrick" }],
   "tags": ["iOS", "Swift", "UIKit", "CoreMotion"],
   "banner": {
-    "src": "public/work/fliptrick/icon.png",
+    "src": "/public/work/fliptrick/icon.png",
     "alt": "FlipTrick Banner",
     "type": "image"
   },
@@ -27,12 +27,12 @@
       "type": "video"
     },
     {
-      "src": "public/work/fliptrick/icon.png",
+      "src": "/public/work/fliptrick/icon.png",
       "alt": "FlipTrick App Icon",
       "type": "image"
     },
     {
-      "src": "public/work/fliptrick/loading.png",
+      "src": "/public/work/fliptrick/loading.png",
       "alt": "FlipTrick Loading Screen",
       "type": "image"
     }

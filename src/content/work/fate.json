@@ -9,19 +9,19 @@
   "ogImg": "https://danielmamuza.com/work/fate/fate.png",
   "duration": { "start": "2025-03-06", "end": "Present" },
   "banner": {
-    "src": "public/work/fate/fate.png",
+    "src": "/public/work/fate/fate.png",
     "alt": "Fate Banner",
     "type": "image"
   },
   "card": {
-    "src": "public/work/fate/fate.png",
+    "src": "/public/work/fate/fate.png",
     "alt": "Fate Card",
     "type": "image"
   },
   "tags": ["Next.js", "shadcn/ui", "Tailwind CSS", "Redis", "Resend", "Machine Learning"],
   "links": [{ "icon": "link", "name": "live", "url": "https://fateapp.dev" }],
   "media": [
-    { "src": "public/work/fate/fate-canvas.png", "alt": "Fate Hero", "type": "image" },
-    { "src": "public/work/fate/features.png", "alt": "Fate Features", "type": "image" }
+    { "src": "/public/work/fate/fate-canvas.png", "alt": "Fate Hero", "type": "image" },
+    { "src": "/public/work/fate/features.png", "alt": "Fate Features", "type": "image" }
   ]
 }

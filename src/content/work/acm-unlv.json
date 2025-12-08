@@ -9,12 +9,12 @@
   "ogImg": "https://danielmamuza.com/work/acm/acm.jpg",
   "duration": { "start": "2024-07-28", "end": "2024-09-15" },
   "banner": {
-    "src": "public/work/acm/acm.jpg",
+    "src": "/public/work/acm/acm.jpg",
     "alt": "ACM Banner",
     "type": "image"
   },
   "card": {
-    "src": "public/work/acm/acm.jpg",
+    "src": "/public/work/acm/acm.jpg",
     "alt": "ACM Card",
     "type": "image"
   },
@@ -23,5 +23,5 @@
     { "icon": "github", "name": "github", "url": "https://github.com/acmunlv/www" },
     { "icon": "link", "name": "live", "url": "https://acm.cs.unlv.edu" }
   ],
-  "media": [{ "src": "public/work/acm/about.jpg", "alt": "ACM About", "type": "image" }]
+  "media": [{ "src": "/public/work/acm/about.jpg", "alt": "ACM About", "type": "image" }]
 }
