@@ -108,8 +108,22 @@
 }
 
 @layer utilities {
-  .shadow-experiencard-card-light {
-    box-shadow: var(--shadow-experiencard-card-light);
+  @responsive {
+    .shadow-experiencard-card-light {
+      box-shadow: var(--shadow-experiencard-card-light);
+    }
+    .shadow-experiencard-card-dark {
+      box-shadow: var(--shadow-experiencard-card-dark);
+    }
+    .shadow-aboutcard {
+      box-shadow: var(--shadow-aboutcard);
+    }
+    .shadow-mac-lg {
+      box-shadow: var(--shadow-mac-lg);
+    }
+    .shadow-mac-md {
+      box-shadow: var(--shadow-mac-md);
+    }
   }
 }
 
@@ -181,18 +195,14 @@
     background-color: #ebebeb;
     color: #338a37;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
   }
-}
 
-@layer base {
   *::-webkit-scrollbar {
     width: 8px;
     height: 8px; /* horizontal */

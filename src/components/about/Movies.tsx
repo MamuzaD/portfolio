@@ -82,10 +82,10 @@ const Movies = () => {
             variant="ghost"
             size="icon"
             onClick={retry}
-            className="absolute right-1 bottom-1 rounded-full"
+            className="hover:bg-muted-foreground/10 dark:hover:bg-muted/80 absolute right-1 bottom-1 h-8 w-8 rounded-full"
             aria-label="Refresh?"
           >
-            <RotateCcw className="size-5" />
+            <RotateCcw className="size-4" />
           </Button>
         </>
       )}

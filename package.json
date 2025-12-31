@@ -56,7 +56,6 @@
   "devDependencies": {
     "@iconify-json/skill-icons": "^1.2.3",
     "@trivago/prettier-plugin-sort-imports": "^6.0.0",
-    "depcheck": "^1.4.7",
     "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-astro-organize-imports": "^0.4.11",
