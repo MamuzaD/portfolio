@@ -199,6 +199,11 @@
   * {
     @apply border-border;
   }
+  
+  html {
+    overscroll-behavior-y: none;
+  }
+  
   body {
     @apply bg-background text-foreground;
   }

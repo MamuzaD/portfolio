@@ -43,7 +43,7 @@ const Movies = () => {
 
   return (
     <div
-      className={`bg-muted-foreground/10 row-span-1 flex h-full flex-col items-center gap-0.5 rounded-xl py-4 backdrop-blur-lg md:p-2`}
+      className={`bg-muted-foreground/10 dark:bg-muted/60 row-span-1 flex h-full flex-col items-center gap-0.5 rounded-xl py-4 backdrop-blur-lg md:p-2`}
     >
       <span className="text-base font-medium">recently watched</span>
       {loading && (
