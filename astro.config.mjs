@@ -1,9 +1,8 @@
 // @ts-check
 import react from "@astrojs/react"
 import sitemap from "@astrojs/sitemap"
-// import tailwindcss from "@tailwindcss/vite"; // tailwind v4
-import tailwind from "@astrojs/tailwind"
 import vercel from "@astrojs/vercel"
+import tailwindcss from "@tailwindcss/vite"
 import compressor from "astro-compressor"
 import icon from "astro-icon"
 import { defineConfig } from "astro/config"
@@ -12,19 +11,12 @@ import { defineConfig } from "astro/config"
 export default defineConfig({
   site: "https://danielmamuza.com",
   base: "/",
+
   prefetch: {
     defaultStrategy: "hover",
   },
 
-  integrations: [
-    react(),
-    icon(),
-    sitemap(),
-    tailwind({
-      applyBaseStyles: false,
-    }),
-    compressor(),
-  ],
+  integrations: [react(), icon(), sitemap(), compressor()],
   output: "server",
   adapter: vercel({
     maxDuration: 25,
@@ -35,7 +27,8 @@ export default defineConfig({
     remotePatterns: [{ protocol: "https" }],
     domains: ["api.microlink.io"],
   },
-  // vite: {
-  //   plugins: [tailwindcss()],
-  // },
+  vite: {
+    plugins: [tailwindcss()],
+  },
 })
+
