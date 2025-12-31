@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import { useRef, useState } from "react"
 
 import { type skill, tabContent } from "@/content/skills"
@@ -11,7 +11,7 @@ const Skills = () => {
   const animatedCategories = useRef<Set<string>>(new Set())
 
   return (
-    <section className="z-10 rounded-3xl bg-primary-foreground/80 px-4 pb-10 pt-5 shadow-aboutcard backdrop-blur-md md:px-16">
+    <section className="bg-primary-foreground/80 shadow-aboutcard z-10 rounded-3xl px-4 pt-5 pb-10 backdrop-blur-md md:px-16">
       <div
         className={`no-visible-scrollbar relative mb-4 flex w-full max-w-full flex-row items-center justify-center overflow-auto sm:overflow-visible`}
       >

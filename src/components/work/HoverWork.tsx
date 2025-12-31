@@ -1,5 +1,5 @@
 import type { CollectionEntry } from "astro:content"
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import { ArrowRight, ArrowRightCircle } from "lucide-react"
 import { useState } from "react"
 

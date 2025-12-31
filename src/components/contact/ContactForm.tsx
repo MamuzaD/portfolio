@@ -2,7 +2,7 @@
 
 import emailjs from "@emailjs/browser"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
