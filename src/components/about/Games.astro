@@ -8,7 +8,7 @@ const games = await getGames()
 ---
 
 <div
-  class="bg-muted/60 z-50 col-span-1 row-span-1 grid h-full w-full grid-cols-4 place-items-center gap-2 rounded-xl p-2 py-4 backdrop-blur-lg md:max-w-56 md:grid-cols-2 md:py-2"
+  class="bg-muted-foreground/5 dark:bg-muted-foreground/10 dark:bg-muted/60 z-50 col-span-1 row-span-1 grid h-full w-full grid-cols-4 place-items-center gap-2 rounded-xl p-2 py-4 backdrop-blur-lg md:max-w-56 md:grid-cols-2 md:py-2"
 >
   {games.map((game) => <GameCard {game} client:idle />)}
 

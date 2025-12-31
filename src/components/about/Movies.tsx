@@ -43,7 +43,7 @@ const Movies = () => {
 
   return (
     <div
-      className={`bg-muted/60 row-span-1 flex h-full flex-col items-center gap-0.5 rounded-xl py-4 backdrop-blur-lg md:p-2`}
+      className={`bg-muted-foreground/10 row-span-1 flex h-full flex-col items-center gap-0.5 rounded-xl py-4 backdrop-blur-lg md:p-2`}
     >
       <span className="text-base font-medium">recently watched</span>
       {loading && (
@@ -60,34 +60,23 @@ const Movies = () => {
         </>
       )}
       {filmDetails && !loading && (
-        <>
-          <div className="animate-fadeIn flex h-full flex-wrap items-center justify-center gap-2 transition-opacity duration-500 ease-in-out md:gap-1 md:pb-8">
-            <motion.img
-              src={filmDetails.imageUrl || ""}
-              alt={filmDetails.title || "Film image"}
-              className="bg-muted-foreground/30 w-12 rounded-lg text-[8px]"
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 0.9 }}
-              transition={{
-                whileHover: { duration: 500 },
-                whileTap: { duration: 100 },
-              }}
-            />
-            <div className="flex flex-col justify-center">
-              <h2 className="text-md leader-tight line-clamp-1 text-center">{filmDetails.title}</h2>
-              <p className="text-primary text-center text-lg tracking-widest md:mt-1">{filmDetails.stars}</p>
-            </div>
+        <div className="animate-fadeIn flex h-full flex-wrap items-center justify-center gap-2 transition-opacity duration-500 ease-in-out md:gap-1 md:pb-8">
+          <motion.img
+            src={filmDetails.imageUrl || ""}
+            alt={filmDetails.title || "Film image"}
+            className="bg-muted-foreground/30 w-12 rounded-lg text-[8px]"
+            whileHover={{ scale: 1.2 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{
+              whileHover: { duration: 500 },
+              whileTap: { duration: 100 },
+            }}
+          />
+          <div className="flex flex-col justify-center">
+            <h2 className="text-md leader-tight line-clamp-1 text-center">{filmDetails.title}</h2>
+            <p className="text-primary text-center text-lg tracking-widest md:mt-1">{filmDetails.stars}</p>
           </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={retry}
-            className="hover:bg-muted-foreground/10 dark:hover:bg-muted/80 absolute right-1 bottom-1 h-8 w-8 rounded-full"
-            aria-label="Refresh?"
-          >
-            <RotateCcw className="size-4" />
-          </Button>
-        </>
+        </div>
       )}
       {!filmDetails && !loading && (
         <div className="animate-fadeIn flex flex-col flex-wrap items-center justify-center gap-6 transition-opacity duration-500 ease-in-out">
