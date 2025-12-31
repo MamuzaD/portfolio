@@ -67,7 +67,7 @@ export default function ContactForm({ setViewForm, setDropdownOpen }: ContactFor
   return (
     <div className="flex flex-col items-center">
       <h3
-        className={`min-h-26 hover-underline-animation z-50 mb-4 cursor-pointer pb-5 text-center text-4xl font-bold`}
+        className={`hover-underline-animation z-50 mb-4 min-h-26 cursor-pointer pb-5 text-center text-4xl font-bold`}
         onClick={() => {
           setViewForm(false)
           setDropdownOpen(true)
@@ -76,7 +76,7 @@ export default function ContactForm({ setViewForm, setDropdownOpen }: ContactFor
         contact me
       </h3>
       {isSubmitted ? (
-        <p className="text-2xl font-medium text-primary">sent! thanks for reaching out</p>
+        <p className="text-primary text-2xl font-medium">sent! thanks for reaching out</p>
       ) : (
         <>
           <Form {...form}>
@@ -122,7 +122,7 @@ export default function ContactForm({ setViewForm, setDropdownOpen }: ContactFor
                       <Textarea
                         placeholder="hey i saw your portfolio..."
                         {...field}
-                        className="w-[22rem] bg-background/80 backdrop-blur md:w-96"
+                        className="bg-background/80 w-[22rem] backdrop-blur md:w-96"
                       />
                     </FormControl>
                     <FormMessage />

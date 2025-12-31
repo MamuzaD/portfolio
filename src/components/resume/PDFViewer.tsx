@@ -26,7 +26,7 @@ export default function PDFViewer({
   pdfContainerRef,
 }: PDFViewerProps) {
   return (
-    <div ref={pdfContainerRef} className="custom-scrollbar flex-1 overflow-auto bg-muted/50 p-4">
+    <div ref={pdfContainerRef} className="custom-scrollbar bg-muted/50 flex-1 overflow-auto p-4">
       <style>{`
         .react-pdf__Page__textContent span::selection {
           background: rgba(34, 197, 94, 0.3) !important;
@@ -41,7 +41,7 @@ export default function PDFViewer({
       {loading && (
         <div className="flex min-w-fit flex-col items-center">
           <div className="min-w-fit overflow-hidden rounded-lg shadow-xl">
-            <div className="h-[792px] w-[612px] bg-gradient-to-br from-muted/20 to-muted/40">
+            <div className="from-muted/20 to-muted/40 h-[792px] w-[612px] bg-gradient-to-br">
               {/* header */}
               <div className="space-y-3 p-12">
                 <div className="mx-auto h-8 w-48 animate-pulse rounded bg-neutral-200 dark:bg-neutral-700"></div>

@@ -29,11 +29,11 @@ export function MuteToggle() {
     <Button
       size="icon"
       onClick={toggleMute}
-      className="no-sound h-7 w-7 rounded-full bg-foreground p-0 hover:bg-primary"
+      className="no-sound bg-foreground hover:bg-primary h-7 w-7 rounded-full p-0"
     >
-      <Volume2 className={`h-4 w-4 transition-transform ${isMuted ? "-rotate-90 scale-0" : ""}`} />
+      <Volume2 className={`h-4 w-4 transition-transform ${isMuted ? "scale-0 -rotate-90" : ""}`} />
       <VolumeX
-        className={`absolute h-4 w-4 transition-transform ${isMuted ? "rotate-0 scale-100" : "-rotate-90 scale-0"}`}
+        className={`absolute h-4 w-4 transition-transform ${isMuted ? "scale-100 rotate-0" : "scale-0 -rotate-90"}`}
       />
       <span className="sr-only">Toggle sound</span>
     </Button>

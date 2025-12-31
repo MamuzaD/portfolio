@@ -2,14 +2,14 @@
 import recents from "@/content/recents"
 ---
 
-<section class="z-10 col-span-1 row-span-2 flex w-full flex-col gap-4 rounded-xl bg-muted/60 p-2 backdrop-blur-lg">
+<section class="bg-muted/60 z-10 col-span-1 row-span-2 flex w-full flex-col gap-4 rounded-xl p-2 backdrop-blur-lg">
   <h3 class="text-center font-medium">recent highlights</h3>
   <div class="ml-12 flex md:ml-6">
     <ul class="list-disc space-y-2">
       {
         recents.length > 0 ? (
           recents.map((recent) => (
-            <li class="text-sm text-muted-foreground">
+            <li class="text-muted-foreground text-sm">
               {recent.links ? (
                 <>
                   {recent.content
@@ -19,7 +19,7 @@ import recents from "@/content/recents"
                       return link ? (
                         <a
                           href={link.href}
-                          class="font-medium text-primary underline-offset-2 hover:underline"
+                          class="text-primary font-medium underline-offset-2 hover:underline"
                           target={!link.internal ? "_blank" : "_self"}
                           rel="noopener noreferrer"
                         >
@@ -36,7 +36,7 @@ import recents from "@/content/recents"
             </li>
           ))
         ) : (
-          <li class="text-sm text-muted-foreground">No recent highlights to display.</li>
+          <li class="text-muted-foreground text-sm">No recent highlights to display.</li>
         )
       }
     </ul>

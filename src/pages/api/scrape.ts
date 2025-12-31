@@ -10,8 +10,8 @@ export const GET: APIRoute = async ({ request }) => {
     try {
       const filmDetails = await scrapeFilmDetails()
       if (filmDetails) {
-      return new Response(JSON.stringify(filmDetails), {
-        status: 200,
+        return new Response(JSON.stringify(filmDetails), {
+          status: 200,
           headers: { "Content-Type": "application/json" },
         })
       }

@@ -32,7 +32,7 @@ const { data: project } = entry
         <a
           href="/work"
           data-astro-prefetch
-          class="group inline-flex items-center gap-2 text-sm font-medium text-neutral-500 transition-colors hover:text-foreground md:text-base"
+          class="group hover:text-foreground inline-flex items-center gap-2 text-sm font-medium text-neutral-500 transition-colors md:text-base"
         >
           <span class="transition-transform group-hover:-translate-x-1">←</span>
           back to work
@@ -101,7 +101,7 @@ const { data: project } = entry
         {
           project.duration && (
             <div class="col-start-1 col-end-7 md:col-start-5 md:col-end-8 md:mb-8">
-              <h3 class="mb-1 text-sm uppercase tracking-wider text-neutral-500">Duration</h3>
+              <h3 class="mb-1 text-sm tracking-wider text-neutral-500 uppercase">Duration</h3>
               <p class="mt-1 text-base font-medium">
                 {`${new Intl.DateTimeFormat("en-US", { month: "long" }).format(project.duration.start)} ${project.duration.start.getFullYear()}`}
                 {project.duration.end === "Present"
@@ -116,7 +116,7 @@ const { data: project } = entry
         {
           project.tags && (
             <div class="col-start-7 col-end-13 md:col-start-8 md:col-end-12 md:mb-8">
-              <h3 class="mb-1 text-sm uppercase tracking-wider text-neutral-500">Tags</h3>
+              <h3 class="mb-1 text-sm tracking-wider text-neutral-500 uppercase">Tags</h3>
               <div class="flex flex-wrap items-center justify-start gap-1 text-base font-medium">
                 {project.tags.map((tag) => (
                   <p class="rounded-full border px-2.5 py-[0.25rem] text-sm transition-transform duration-300 ease-in-out hover:-translate-y-0.5">
@@ -140,11 +140,11 @@ const { data: project } = entry
                     <div class="col-span-12 sm:col-span-6">
                       <a
                         href={link.url}
-                        class="group inline-block w-full rounded-xl border bg-primary-foreground/60 p-4 backdrop-blur transition-[background-color] duration-200 hover:bg-primary-foreground/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        class="group bg-primary-foreground/60 hover:bg-primary-foreground/90 focus-visible:ring-primary inline-block w-full rounded-xl border p-4 backdrop-blur transition-[background-color] duration-200 focus:outline-none focus-visible:ring-2"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <span class="flex items-center justify-center gap-8 text-center text-lg font-medium uppercase tracking-wider transition-transform duration-300 group-hover:scale-110">
+                        <span class="flex items-center justify-center gap-8 text-center text-lg font-medium tracking-wider uppercase transition-transform duration-300 group-hover:scale-110">
                           {link.name}
                           <Icon name={icon} class="inline-block size-7" />
                         </span>
@@ -159,11 +159,11 @@ const { data: project } = entry
         <div class="col-start-1 col-end-13 mt-16 space-y-8 md:col-start-5 md:space-y-16">
           {
             project.media?.map((media) => (
-              <div class="h-auto w-full overflow-hidden rounded-3xl border bg-primary-foreground/90 p-4 backdrop-blur md:p-10">
+              <div class="bg-primary-foreground/90 h-auto w-full overflow-hidden rounded-3xl border p-4 backdrop-blur md:p-10">
                 {media.type === "video" ? (
                   <video
                     src={media.src}
-                    class="mx-auto max-h-[70vh] w-auto rounded-lg shadow-mac-md transition-[box-shadow] duration-300 hover:shadow-mac-lg"
+                    class="shadow-mac-md hover:shadow-mac-lg mx-auto max-h-[70vh] w-auto rounded-lg transition-[box-shadow] duration-300"
                     autoplay
                     muted
                     loop
@@ -176,7 +176,7 @@ const { data: project } = entry
                     alt={media.alt || ""}
                     width={1200}
                     height={675}
-                    class="mx-auto max-h-[70vh] w-auto rounded-lg shadow-mac-md transition-[box-shadow] duration-300 hover:shadow-mac-lg"
+                    class="shadow-mac-md hover:shadow-mac-lg mx-auto max-h-[70vh] w-auto rounded-lg transition-[box-shadow] duration-300"
                   />
                 )}
               </div>

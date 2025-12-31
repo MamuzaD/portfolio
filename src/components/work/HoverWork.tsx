@@ -1,6 +1,6 @@
 import type { CollectionEntry } from "astro:content"
-import { motion } from "motion/react"
 import { ArrowRight, ArrowRightCircle } from "lucide-react"
+import { motion } from "motion/react"
 import { useState } from "react"
 
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card"
@@ -21,7 +21,7 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
       <h3 className="block text-3xl font-semibold md:hidden">recent work</h3>
       <div className="flex gap-8">
         {/* image */}
-        <div className="z-50 hidden h-[500px] w-[500px] flex-shrink-0 items-center justify-center rounded-3xl bg-primary-foreground/50 p-5 shadow-experiencard-card-light backdrop-blur dark:shadow-experiencard-card-dark md:flex">
+        <div className="bg-primary-foreground/50 shadow-experiencard-card-light dark:shadow-experiencard-card-dark z-50 hidden h-[500px] w-[500px] flex-shrink-0 items-center justify-center rounded-3xl p-5 backdrop-blur md:flex">
           {highlightedProject ? (
             <CardContainer className="rounded-lg p-4">
               <CardBody>
@@ -31,7 +31,7 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
                       <motion.video
                         key={highlightedProject?.data.card.src}
                         src={highlightedProject.data.card.src}
-                        className="duration-250 h-full max-h-[450px] w-full max-w-[450px] rounded-lg object-cover shadow-mac-md transition-[box-shadow] hover:shadow-mac-lg"
+                        className="shadow-mac-md hover:shadow-mac-lg h-full max-h-[450px] w-full max-w-[450px] rounded-lg object-cover transition-[box-shadow] duration-250"
                         initial={{ opacity: 0, translateY: 25 }}
                         animate={{ opacity: 1, translateY: 0 }}
                         exit={{ opacity: 0 }}
@@ -56,7 +56,7 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
                         key={highlightedProject?.data.card.src.src}
                         src={highlightedProject.data.card.src.src}
                         alt={highlightedProject.data.card.alt || highlightedProject.data.title}
-                        className="duration-250 h-full max-h-[450px] w-full max-w-[450px] rounded-lg object-cover shadow-mac-md transition-[box-shadow] hover:shadow-mac-lg"
+                        className="shadow-mac-md hover:shadow-mac-lg h-full max-h-[450px] w-full max-w-[450px] rounded-lg object-cover transition-[box-shadow] duration-250"
                         initial={{ opacity: 0, translateY: 25 }}
                         animate={{ opacity: 1, translateY: 0 }}
                         exit={{ opacity: 0 }}
@@ -91,7 +91,7 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
                 <a
                   href={`/work/${project.id}`}
                   data-astro-prefetch
-                  className={`backdrop-blur-xs group mt-4 block cursor-pointer rounded-[2.5rem] px-10 py-5 shadow-experiencard-card-light transition-[background_color] duration-300 hover:bg-muted/50 dark:shadow-experiencard-card-dark md:mt-0 md:rounded-xl md:shadow-none md:hover:bg-primary/30 md:dark:shadow-none ${highlightedProject && highlightedProject.id === project.id ? "bg-muted/70 md:bg-primary/40 md:dark:bg-primary/20" : "bg-muted/70 md:bg-transparent"}`}
+                  className={`group shadow-experiencard-card-light hover:bg-muted/50 dark:shadow-experiencard-card-dark md:hover:bg-primary/30 mt-4 block cursor-pointer rounded-[2.5rem] px-10 py-5 backdrop-blur-xs transition-[background_color] duration-300 md:mt-0 md:rounded-xl md:shadow-none md:dark:shadow-none ${highlightedProject && highlightedProject.id === project.id ? "bg-muted/70 md:bg-primary/40 md:dark:bg-primary/20" : "bg-muted/70 md:bg-transparent"}`}
                 >
                   <div className="mt-4 block rounded-lg shadow-md md:hidden">
                     {project.data.card.type === "video" ? (
@@ -114,10 +114,10 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
                   </div>
                   <span className="mt-4 flex w-full flex-row justify-between gap-6 md:mt-0">
                     <span className="">
-                      <h3 className="text-base font-medium text-neutral-950 transition-none dark:text-neutral-50 md:text-lg">
+                      <h3 className="text-base font-medium text-neutral-950 transition-none md:text-lg dark:text-neutral-50">
                         {project.data.title}
                       </h3>
-                      <p className="text-sm text-neutral-500 dark:text-neutral-600 md:text-base">
+                      <p className="text-sm text-neutral-500 md:text-base dark:text-neutral-600">
                         {project.data.caption}
                       </p>
                     </span>
@@ -143,7 +143,7 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
         imageSrc="/socials/work.jpg"
         side="bottom"
         sideOffset={25}
-        className="rounded-lg bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
+        className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-4 py-2"
       >
         view all
       </LinkPreview>

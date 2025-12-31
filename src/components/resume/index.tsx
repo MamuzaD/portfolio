@@ -287,7 +287,7 @@ export default function ResumeViewer() {
     return (
       <>
         {before}
-        <mark className="rounded bg-primary/50 px-1 py-0.5 font-semibold text-primary">{match}</mark>
+        <mark className="bg-primary/50 text-primary rounded px-1 py-0.5 font-semibold">{match}</mark>
         {after}
       </>
     )
@@ -300,7 +300,7 @@ export default function ResumeViewer() {
   }
 
   return (
-    <div className="relative h-[max(80vh,830px)] overflow-hidden rounded-3xl border shadow-aboutcard backdrop-blur">
+    <div className="shadow-aboutcard relative h-[max(80vh,830px)] overflow-hidden rounded-3xl border backdrop-blur">
       <div className="flex h-full">
         <PDFViewer
           Document={Document}

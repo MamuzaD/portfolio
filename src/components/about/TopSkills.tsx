@@ -4,7 +4,7 @@ import { topSkills } from "@/content/skills"
 
 const TopSkills = () => {
   return (
-    <div className="z-10 col-span-2 flex w-full flex-col flex-wrap items-center justify-start gap-4 rounded-lg bg-muted/60 py-4 backdrop-blur-lg md:py-2">
+    <div className="bg-muted/60 z-10 col-span-2 flex w-full flex-col flex-wrap items-center justify-start gap-4 rounded-lg py-4 backdrop-blur-lg md:py-2">
       <span className="font-medium">most used technologies</span>
       <div className="flex flex-wrap gap-4 md:mt-4">
         {topSkills.map((skill, i) => {

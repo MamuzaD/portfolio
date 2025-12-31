@@ -1,7 +1,7 @@
 "use client"
 
-import { motion } from "motion/react"
 import { Clipboard, Link2 } from "lucide-react"
+import { motion } from "motion/react"
 import { useEffect, useRef, useState } from "react"
 
 import { reachouts } from "@/content/socials"
@@ -60,11 +60,11 @@ export default function Contact() {
           <DropdownMenu modal={false} open={dropdownOpen}>
             <DropdownMenuTrigger
               onClick={() => setDropdownOpen((val) => !val)}
-              className={`min-h-26 z-50 text-4xl font-bold ${!copied && "pb-5"} hover-underline-animation cursor-pointer`}
+              className={`z-50 min-h-26 text-4xl font-bold ${!copied && "pb-5"} hover-underline-animation cursor-pointer`}
             >
               contact me
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-full bg-muted/50 backdrop-blur-md">
+            <DropdownMenuContent className="bg-muted/50 w-full backdrop-blur-md">
               <DropdownMenuLabel className="text-center">your preference</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem
@@ -89,7 +89,7 @@ export default function Contact() {
                     <span>{r.name}</span>
                   </div>
                   <div className="flex gap-1">
-                    <Button size="icon" variant="outline" className="size-9 dark:hover:bg-primary-foreground">
+                    <Button size="icon" variant="outline" className="dark:hover:bg-primary-foreground size-9">
                       <a href={r.href} target="_blank" rel="noopener noreferrer">
                         <Link2 />
                       </a>
@@ -97,7 +97,7 @@ export default function Contact() {
                     <Button
                       size="icon"
                       variant="outline"
-                      className="size-9 dark:hover:bg-primary-foreground"
+                      className="dark:hover:bg-primary-foreground size-9"
                       onClick={() => handleCopy(r.name, r.href)}
                     >
                       <Clipboard />
@@ -116,7 +116,7 @@ export default function Contact() {
       )}
       {copied && (
         <motion.span
-          className="saved text-sm font-semibold text-primary"
+          className="saved text-primary text-sm font-semibold"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
