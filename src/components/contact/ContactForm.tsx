@@ -122,7 +122,7 @@ export default function ContactForm({ setViewForm, setDropdownOpen }: ContactFor
                       <Textarea
                         placeholder="hey i saw your portfolio..."
                         {...field}
-                        className="bg-background/80 w-[22rem] backdrop-blur md:w-96"
+                        className="bg-background/80 w-88 backdrop-blur md:w-96"
                       />
                     </FormControl>
                     <FormMessage />

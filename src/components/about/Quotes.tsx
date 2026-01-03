@@ -24,7 +24,7 @@ const Quotes = () => {
         {quotes.map((q, index) => (
           <CarouselItem key={index}>
             <div className="flex h-full flex-col gap-1 rounded-md p-4 font-light">
-              <span className="mt-0.5 flex-grow text-lg font-normal">{`"${q.quote}"`}</span>
+              <span className="mt-0.5 grow text-lg font-normal">{`"${q.quote}"`}</span>
               <LinkPreview
                 noUrl
                 imageSrc={q.src}

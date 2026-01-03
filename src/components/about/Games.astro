@@ -16,7 +16,7 @@ const games = await getGames()
   {
     games.length < 4 &&
       Array.from({ length: 4 - games.length }).map((_, index) => (
-        <div class="h-16 w-16 rounded-lg bg-neutral-200 transition-transform duration-300 ease-in-out hover:scale-110 md:h-[4.75rem] md:w-[4.75rem] dark:bg-neutral-700" />
+        <div class="h-16 w-16 rounded-lg bg-neutral-200 transition-transform duration-300 ease-in-out hover:scale-110 md:h-19 md:w-19 dark:bg-neutral-700" />
       ))
   }
 </div>

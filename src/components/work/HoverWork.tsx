@@ -21,7 +21,7 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
       <h3 className="block text-3xl font-semibold md:hidden">recent work</h3>
       <div className="flex gap-8">
         {/* image */}
-        <div className="bg-primary-foreground/50 shadow-experiencard-card-light dark:shadow-experiencard-card-dark z-50 hidden h-[500px] w-[500px] flex-shrink-0 items-center justify-center rounded-3xl p-5 backdrop-blur md:flex">
+        <div className="bg-primary-foreground/50 shadow-experiencard-card-light dark:shadow-experiencard-card-dark z-50 hidden h-[500px] w-[500px] shrink-0 items-center justify-center rounded-3xl p-5 backdrop-blur md:flex">
           {highlightedProject ? (
             <CardContainer className="rounded-lg p-4">
               <CardBody>
@@ -31,7 +31,7 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
                       <motion.video
                         key={highlightedProject?.data.card.src}
                         src={highlightedProject.data.card.src}
-                        className="shadow-mac-md hover:shadow-mac-lg h-full max-h-[450px] w-full max-w-[450px] rounded-lg object-cover transition-[box-shadow] duration-250"
+                        className="shadow-mac-md hover:shadow-mac-lg h-full max-h-[450px] w-full max-w-[450px] rounded-lg object-cover transition-shadow duration-250"
                         initial={{ opacity: 0, translateY: 25 }}
                         animate={{ opacity: 1, translateY: 0 }}
                         exit={{ opacity: 0 }}
@@ -56,7 +56,7 @@ const HoverWork = ({ projects }: RecentWorkProps) => {
                         key={highlightedProject?.data.card.src.src}
                         src={highlightedProject.data.card.src.src}
                         alt={highlightedProject.data.card.alt || highlightedProject.data.title}
-                        className="shadow-mac-md hover:shadow-mac-lg h-full max-h-[450px] w-full max-w-[450px] rounded-lg object-cover transition-[box-shadow] duration-250"
+                        className="shadow-mac-md hover:shadow-mac-lg h-full max-h-[450px] w-full max-w-[450px] rounded-lg object-cover transition-shadow duration-250"
                         initial={{ opacity: 0, translateY: 25 }}
                         animate={{ opacity: 1, translateY: 0 }}
                         exit={{ opacity: 0 }}

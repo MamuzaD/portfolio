@@ -41,7 +41,7 @@ export default function PDFViewer({
       {loading && (
         <div className="flex min-w-fit flex-col items-center">
           <div className="min-w-fit overflow-hidden rounded-lg shadow-xl">
-            <div className="from-muted/20 to-muted/40 h-[792px] w-[612px] bg-gradient-to-br">
+            <div className="from-muted/20 to-muted/40 h-[792px] w-[612px] bg-linear-to-br">
               {/* header */}
               <div className="space-y-3 p-12">
                 <div className="mx-auto h-8 w-48 animate-pulse rounded bg-neutral-200 dark:bg-neutral-700"></div>
