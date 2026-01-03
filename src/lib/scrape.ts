@@ -1,6 +1,6 @@
 import chromium from "@sparticuz/chromium"
 import { waitUntil } from "@vercel/functions"
-import puppeteer, { Browser, Page } from "puppeteer"
+import puppeteer, { type Browser, type Page } from "puppeteer"
 
 import { cacheData, getCachedData } from "./redis"
 
