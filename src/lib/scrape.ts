@@ -1,51 +1,6 @@
-import chromium from "@sparticuz/chromium"
 import { waitUntil } from "@vercel/functions"
-import puppeteer, { type Browser, type Page } from "puppeteer"
 
 import { cacheData, getCachedData } from "./redis"
-
-let browserInstance: Browser | null = null
-
-async function getBrowser() {
-  if (browserInstance) return browserInstance
-
-  console.log("Starting browser launch...")
-  if (process.env.NODE_ENV === "development") {
-    console.log("Launching in development mode...")
-    browserInstance = await puppeteer.launch({
-      headless: true,
-      dumpio: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage", "--single-process", "--no-zygote"],
-    })
-  } else {
-    console.log("Launching in production mode with Chromium...")
-    browserInstance = await puppeteer.launch({
-      args: [
-        ...chromium.args,
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--disable-dev-shm-usage",
-        "--single-process",
-        "--no-zygote",
-      ],
-      defaultViewport: { width: 1280, height: 800 },
-      executablePath: await chromium.executablePath(),
-      headless: true,
-    })
-  }
-  console.log("Browser launched successfully.")
-
-  return browserInstance
-}
-
-export async function closeBrowser() {
-  if (browserInstance) {
-    console.log("Closing browser instance...")
-    await browserInstance.close()
-    browserInstance = null
-    console.log("Browser closed")
-  }
-}
 
 type FilmDetails = {
   title: string | null
@@ -53,75 +8,81 @@ type FilmDetails = {
   stars: string | null
 }
 
+const LETTERBOXD_RSS_URL = "https://letterboxd.com/da_ni/rss/"
+const LETTERBOXD_PROFILE_URL = "https://letterboxd.com/da_ni/"
+const SCRAPE_USER_AGENT =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+const SCRAPE_ACCEPT_LANGUAGE = "en-US,en;q=0.9"
+
+function extractTag(xml: string, tagName: string): string | null {
+  const match = xml.match(new RegExp(`<${tagName}>([\\s\\S]*?)<\\/${tagName}>`, "i"))
+  return match?.[1]?.trim() ?? null
+}
+
+function ratingToStars(memberRating: string | null): string | null {
+  const value = Number(memberRating)
+  if (!Number.isFinite(value) || value <= 0) return null
+
+  const full = Math.floor(value)
+  const half = value % 1 >= 0.5
+  return `${"★".repeat(full)}${half ? "½" : ""}`
+}
+
+function parseFilmDetailsFromRss(xml: string): FilmDetails | null {
+  const firstItem = xml.match(/<item>\s*([\s\S]*?)\s*<\/item>/i)?.[1] ?? null
+  if (!firstItem) return null
+
+  const filmTitleTag = extractTag(firstItem, "letterboxd:filmTitle")
+  const itemTitleTag = extractTag(firstItem, "title")
+  const titleFromItem = itemTitleTag?.replace(/\s*,\s*\d{4}\s*-\s*.*$/, "").trim() ?? null
+  const title = filmTitleTag ?? titleFromItem ?? ""
+
+  const memberRating = extractTag(firstItem, "letterboxd:memberRating")
+  const stars = ratingToStars(memberRating)
+
+  const description = extractTag(firstItem, "description")
+  const imageUrl =
+    description
+      ?.match(/<img[^>]+src="([^"]+)"/i)?.[1]
+      ?.trim()
+      ?.replace(/-0-600-0-900-crop/, "-0-70-0-105-crop") ?? ""
+
+  return {
+    title: title || null,
+    imageUrl: imageUrl || null,
+    stars,
+  }
+}
+
 export async function scrapeFilmDetails(): Promise<FilmDetails | null> {
-  const url = "https://letterboxd.com/da_ni/films/diary/"
-  let browser: Browser | null = null
-  let page: Page | null = null
+  const headers = {
+    "user-agent": SCRAPE_USER_AGENT,
+    "accept-language": SCRAPE_ACCEPT_LANGUAGE,
+    accept: "application/rss+xml, application/xml;q=0.9, text/xml;q=0.8, */*;q=0.7",
+    referer: LETTERBOXD_PROFILE_URL,
+  }
 
-  try {
-    browser = await getBrowser()
-
-    page = await browser.newPage()
-    await page.setViewport({ width: 1280, height: 800 })
-    await page.setRequestInterception(true)
-    page.on("request", (req) => {
-      const resourceType = req.resourceType()
-      if (["document", "xhr", "fetch", "script", "image"].includes(resourceType)) {
-        req.continue()
-      } else {
-        req.abort()
-      }
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    const response = await fetch(LETTERBOXD_RSS_URL, {
+      headers,
+      signal: AbortSignal.timeout(30000),
     })
 
-    console.log(`Navigating to URL: ${url}`)
-    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 20000 })
-    console.log("Initial page load completed.")
+    if (response.ok) {
+      const xml = await response.text()
+      const filmDetails = parseFilmDetailsFromRss(xml)
+      console.log(`Scraping completed via RSS (attempt ${attempt}/2).`)
+      console.log(filmDetails)
+      return filmDetails
+    }
 
-    console.log("Waiting for film poster to load...")
-    await page.waitForFunction(
-      () => {
-        const img = document.querySelector("tbody tr:first-child img[src*='ltrbxd.com']") as HTMLImageElement
-        return img && !img.src.includes("empty-poster")
-      },
-      { timeout: 10000, polling: 500 }
-    )
-    console.log("Film poster loaded.")
-
-    const filmDetails = await page.evaluate(() => {
-      // tbody tr:first-child
-      const firstRow = document.querySelector("tbody tr:first-child")
-      if (!firstRow) return null
-
-      // img[src*='ltrbxd.com']
-      const img = firstRow.querySelector("img[src*='ltrbxd.com']") as HTMLImageElement
-      const imageUrl = img?.src?.replace(/-0-35-0-52-crop/, "-0-70-0-105-crop") || null
-
-      // a[href*='/film/']
-      let title = null
-
-      if (img?.alt)
-        // remove poster
-        title = img.alt.replace(/poster for/i, "").trim()
-      else title = firstRow.querySelector("a[href*='/film/']")?.textContent?.trim() || null
-
-      // Extract stars from row text content
-      const stars = firstRow.textContent?.match(/★+½?/)?.[0] || null
-
-      return { title, imageUrl, stars }
-    })
-
-    console.log("Scraping completed.")
-    console.log(filmDetails)
-    return filmDetails
-  } catch (error) {
-    console.error("Error occurred while scraping:", error)
-    return null
-  } finally {
-    if (page) {
-      await page.close()
-      console.log("Page closed")
+    console.warn(`Letterboxd RSS request failed (${response.status}) on attempt ${attempt}/2`)
+    if (attempt < 2) {
+      await new Promise((resolve) => setTimeout(resolve, 1200))
     }
   }
+
+  return null
 }
 
 function dataHasChanged(cached: FilmDetails, fresh: FilmDetails): boolean {
@@ -142,6 +103,10 @@ export async function getFilmDetails(): Promise<FilmDetails | null> {
       scrapePromise
         .then(async (freshData) => {
           if (freshData) {
+            if (!freshData.imageUrl) {
+              console.warn("Fresh data has no poster URL; skipping cache update")
+              return
+            }
             if (dataHasChanged(cachedData, freshData)) {
               console.log("Fresh data differs from cache, updating")
               await cacheData(cacheKey, freshData)
@@ -162,7 +127,7 @@ export async function getFilmDetails(): Promise<FilmDetails | null> {
   console.log("No cached data, waiting for fresh scrape")
   const freshData = await scrapePromise
 
-  if (freshData) {
+  if (freshData?.imageUrl) {
     console.log("Caching fresh film details")
     await cacheData(cacheKey, freshData)
   }
