@@ -8,7 +8,7 @@
     "Built in Go with Bubble Tea + Bubbles for the TUI, Lipgloss for styling, and go-figure for rendering. Looking into making it to a SSH app."
   ],
   "seoDescription": "large-tty is a Go Bubble Tea app that renders large ASCII text in your terminal with multiple fonts and auto-fit sizing. SSH support is coming soon.",
-  "ogImg": "/work/large-tty/og.png",
+  "ogImg": "https://danielmamuza.com/work/large-tty/demo.jpg",
   "duration": { "start": "2026-02-26" },
   "links": [
     {
