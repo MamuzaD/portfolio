@@ -1,5 +1,6 @@
 {
   "title": "Monk",
+  "status": "featured",
   "caption": "Kanban Board",
   "description": [
     "Developing Monk was a great experience, allowing me to learn Next.js and the app router. I integrated server actions to allow the Supabase database to respond to client-side actions involving notes or kanban boards. Using Next.js and React.js best practices, I built a SaaS and CRUD app with a strong emphasis on efficiency. ",
@@ -14,14 +15,14 @@
   ],
   "tags": [
     "Next.js",
-    "SaaS & CRUD",
+    "TypeScript",
     "Tailwind CSS",
     "Clerk",
     "Stripe",
     "Supabase",
     "Prisma ORM",
     "PostgreSQL",
-    "TypeScript"
+    "SaaS & CRUD"
   ],
   "banner": {
     "src": "/public/work/monk/monk.webp",

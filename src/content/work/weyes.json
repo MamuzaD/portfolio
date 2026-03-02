@@ -1,5 +1,6 @@
 {
   "title": "Weyes",
+  "status": "archived",
   "caption": "Political Network Graph",
   "description": [
     "Built at Cal Hacks 12.0 in San Francisco with Andy Nguyen, Athanasios Tassiadamis, and Yash Mulimani, we balanced Golden Gate views with competing and spotty WiFi. I led the React + D3.js frontend (Vite, Tailwind, shadcn/ui) and contributed to the FastAPI backend.",

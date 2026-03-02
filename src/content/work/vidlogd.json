@@ -1,5 +1,6 @@
 {
   "title": "Vidlogd",
+  "status": "featured",
   "caption": "Terminal YouTube Logger",
   "description": [
     "Vidlogd is my first Go project, a CLI application for logging and managing YouTube videos. Inspired by terminal workflows (Neovim, Tmux) and the concept of 'Letterboxd for YouTube', it uses the Bubble Tea TUI framework.",
@@ -12,7 +13,7 @@
     { "icon": "github", "name": "github", "url": "https://github.com/MamuzaD/vidlogd" },
     { "icon": "tags", "name": "releases", "url": "https://github.com/MamuzaD/vidlogd/releases" }
   ],
-  "tags": ["Go", "CLI", "Bubble Tea TUI"],
+  "tags": ["Go", "Bubble Tea", "TUI", "YouTube API"],
   "banner": {
     "src": "/work/vidlogd/banner.mp4",
     "alt": "vidlogd banner",

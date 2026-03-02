@@ -6,25 +6,32 @@ import { getCollection, type CollectionEntry } from "astro:content"
 
 type Work = CollectionEntry<"work">
 
-const projects = (await getCollection("work")).sort(
+const allProjects = (await getCollection("work")).sort(
   (a: Work, b: Work) => b.data.duration.start.valueOf() - a.data.duration.start.valueOf()
 )
 
-const columns3: Work[][] = [[], [], []]
-const columns2: Work[][] = [[], []]
+const active = allProjects.filter((p) => p.data.status !== "archived")
+const archived = allProjects.filter((p) => p.data.status === "archived")
 
-projects.forEach((project: Work, index: number) => {
-  columns3[index % 3].push(project)
-  columns2[index % 2].push(project)
-})
+function makeColumns(items: Work[], count: number): Work[][] {
+  const cols: Work[][] = Array.from({ length: count }, () => [])
+  items.forEach((item, idx) => cols[idx % count].push(item))
+  return cols
+}
+
+const activeCols3 = makeColumns(active, 3)
+const activeCols2 = makeColumns(active, 2)
+
+const archivedCols3 = makeColumns(archived, 3)
+const archivedCols2 = makeColumns(archived, 2)
 ---
 
 <Layout title={texts.work.title} description={texts.work.description}>
   <main class="min-h-[calc(90vh)] pt-32">
-    <!-- 3 columns for lg -->
+    <!-- Active (featured + wip) -->
     <div class="hidden gap-4 px-8 lg:grid lg:grid-cols-3">
       {
-        columns3.map((column) => (
+        activeCols3.map((column) => (
           <div class="flex shrink-0 flex-col gap-6">
             {column.map((project) => (
               <ProjectCard project={project} />
@@ -34,10 +41,9 @@ projects.forEach((project: Work, index: number) => {
       }
     </div>
 
-    <!-- 2 columns for sm -->
     <div class="hidden gap-4 px-8 sm:grid sm:grid-cols-2 lg:hidden">
       {
-        columns2.map((column) => (
+        activeCols2.map((column) => (
           <div class="flex shrink-0 flex-col gap-6">
             {column.map((project) => (
               <ProjectCard project={project} />
@@ -47,9 +53,53 @@ projects.forEach((project: Work, index: number) => {
       }
     </div>
 
-    <!-- Mobile fallback (1 column) -->
     <div class="flex flex-col gap-12 sm:hidden">
-      {projects.map((project, i) => <ProjectCard project={project} />)}
+      {active.map((project) => <ProjectCard project={project} />)}
     </div>
+
+    {
+      archived.length > 0 && (
+        <section class="mt-16 md:px-8">
+          <details class="group rounded-lg p-4">
+            <summary class="relative z-50 flex cursor-pointer gap-2 font-mono text-2xl font-medium">
+              <span class="hover-underline-animation transition-transform duration-300 ease-in-out group-open:rotate-90">{`>`}</span>
+              <span class="hover-underline-animation">archived</span>
+            </summary>
+
+            <div class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-in-out group-open:grid-rows-[1fr] motion-reduce:transition-none">
+              <div class="overflow-hidden">
+                <div class="mt-6">
+                  <div class="hidden gap-4 lg:grid lg:grid-cols-3">
+                    {archivedCols3.map((column) => (
+                      <div class="flex shrink-0 flex-col gap-6">
+                        {column.map((project) => (
+                          <ProjectCard project={project} />
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+
+                  <div class="hidden gap-4 sm:grid sm:grid-cols-2 lg:hidden">
+                    {archivedCols2.map((column) => (
+                      <div class="flex shrink-0 flex-col gap-6">
+                        {column.map((project) => (
+                          <ProjectCard project={project} />
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+
+                  <div class="flex flex-col gap-12 sm:hidden">
+                    {archived.map((project) => (
+                      <ProjectCard project={project} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </details>
+        </section>
+      )
+    }
   </main>
 </Layout>

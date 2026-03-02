@@ -1,5 +1,6 @@
 {
   "title": "Fate",
+  "status": "archived",
   "caption": "Recommendation Engine",
   "description": [
     "Fate is a recommendation engine web app built using Next.js and integrated with various platforms. The goal is to provide personalized recommendations based on the user’s interests and preferences.",

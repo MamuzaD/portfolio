@@ -1,5 +1,6 @@
 {
   "title": "AI & Data Science Club",
+  "status": "featured",
   "caption": "Club Website",
   "description": [
     "Developed the AI & Data Science Club website using React and Tailwind CSS, showcasing club events, projects, and resources. Integrated Google Analytics for tracking user engagement.",
@@ -18,7 +19,7 @@
     "alt": "AIClub Card",
     "type": "image"
   },
-  "tags": ["React", "Tailwind CSS", "Vite", "TypeScript", "Google Analytics"],
+  "tags": ["Next.js", "React", "Tailwind CSS", "TypeScript", "Google Analytics"],
   "links": [
     { "icon": "github", "name": "github", "url": "https://github.com/aiunlv/website" },
     { "icon": "link", "name": "live", "url": "https://aiclub.cs.unlv.edu" }

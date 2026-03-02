@@ -1,5 +1,6 @@
 {
   "title": "Jerald Bot",
+  "status": "archived",
   "caption": "Discord Chat Bot",
   "description": [
     "Developed Jerald Bot, a Discord chatbot designed to answer plant-related questions, as an introduction to APIs. The project involved using Discord’s API to build the chatbot and integrating OpenAI's API to generate relevant responses and Giphy's API for GIFs. Inspired by my girlfriend, I incorporated plant-themed functionality to make the bot interactive.",

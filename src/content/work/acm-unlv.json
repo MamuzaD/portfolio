@@ -1,5 +1,6 @@
 {
   "title": "ACM UNLV",
+  "status": "featured",
   "caption": "Club Website",
   "description": [
     "Worked alongside Thien Nguyen, the President of ACM UNLV, to build the club's website using Next.js, shadcn/ui, and Tailwind CSS. Contributed to the development of a sleek, user-friendly design that showcases club events, resources, and initiatives. ",

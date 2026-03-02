@@ -27,6 +27,7 @@ const work = defineCollection({
     z.object({
       // basic
       title: z.string(),
+      status: z.enum(["wip", "featured", "archived"]),
       caption: z.string(),
       description: z.array(z.string()),
       duration: durationSchema,

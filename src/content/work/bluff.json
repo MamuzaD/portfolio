@@ -1,0 +1,38 @@
+{
+  "title": "Bluff",
+  "status": "wip",
+  "caption": "Daily Social Deduction Betting Game",
+  "description": [
+    "Bluff is a nightly social deduction game where friends respond to a daily prompt with one photo and one claim—and everyone decides: truth or bluff? Inspired by the gap between what people say happened in Vegas and what actually happened, it turns that contrast into a lightweight, repeatable social game.",
+    "Each round, players post one image + captioned claim, secretly tag it as Truth or Bluff, and friends vote while wagering chips. After the reveal, the app settles everything automatically: voters earn chips for correct reads, and posters profit when their bluffs fool the room.",
+    "Built for RebelHacks with TanStack Start and Convex. TanStack Start powers the app UI, and Convex provides the real-time backend (queries/mutations, schema, and scheduled jobs) that runs daily round creation and reveal settlement."
+  ],
+  "seoDescription": "Bluff is a daily social betting game where friends post one photo and one claim, then vote: truth or bluff? Wager chips, reveal results, track stats, and climb the leaderboard.",
+  "ogImg": "https://danielmamuza.com/work/bluff/landing.jpg",
+  "duration": { "start": "2026-02-22" },
+  "links": [
+    {
+      "icon": "link",
+      "name": "live demo",
+      "url": "https://bluff.sh"
+    }
+  ],
+  "tags": ["TypeScript", "TanStack Start", "Convex", "React", "Tailwind CSS", "shadcn/ui", "Clerk", "Vercel"],
+  "banner": {
+    "src": "/work/bluff/demo.mp4",
+    "alt": "Bluff Banner",
+    "type": "video"
+  },
+  "card": {
+    "src": "/work/bluff/demo.mp4",
+    "alt": "Bluff Card",
+    "type": "video"
+  },
+  "media": [
+    {
+      "src": "/public/work/bluff/landing.jpg",
+      "alt": "Bluff Landing Page",
+      "type": "image"
+    }
+  ]
+}

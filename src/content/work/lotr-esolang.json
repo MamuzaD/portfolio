@@ -1,5 +1,6 @@
 {
   "title": "Lord of the Rings Esolang",
+  "status": "archived",
   "caption": "Interpreted Language",
   "description": [
     "Developed an esoteric programming language in TypeScript, including a lexer, AST, parser, and evaluator, inspired by a Lord of the Rings phase during winter 2024. ",

@@ -1,5 +1,6 @@
 {
   "title": "The Lonely Wizard",
+  "status": "archived",
   "caption": "2D Unity Game",
   "description": [
     "After taking an Intro to C++ programming course at UNLV, I decided to transfer my knowledge to C# for designing a 2D rogue-like shooter game over winter break. Through this project, I learned key game development concepts like the gameplay loop, animation triggers, player controls, and inheritance.",
