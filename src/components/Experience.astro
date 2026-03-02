@@ -1,25 +1,27 @@
 ---
 import ExperienceCard from "@/components/ExperienceCard.astro"
 import { experiences } from "@/content/experiences"
+
+const left = experiences.map((experience, index) => ({ experience, index })).filter((x) => x.index % 2 === 0)
+
+const right = experiences.map((experience, index) => ({ experience, index })).filter((x) => x.index % 2 === 1)
 ---
 
 <section class="z-50 w-full max-w-2xl">
   <div class="mx-auto flex w-full flex-col md:flex-row md:gap-16">
     <div class="flex w-full flex-col gap-10 md:w-1/2 md:gap-16">
       {
-        experiences
-          .slice(0, Math.ceil(experiences.length / 2))
-          .map((experience, index) => <ExperienceCard {experience} {index} size={experiences.length} />)
+        left.map(({ experience, index }) => (
+          <ExperienceCard experience={experience} index={index} size={experiences.length} />
+        ))
       }
     </div>
 
     <div class="flex w-full flex-col gap-10 pt-6 md:w-1/2 md:gap-16 md:pt-16">
       {
-        experiences
-          .slice(Math.ceil(experiences.length / 2))
-          .map((experience, index) => (
-            <ExperienceCard {experience} index={Math.ceil(experiences.length / 2) + index} size={experiences.length} />
-          ))
+        right.map(({ experience, index }) => (
+          <ExperienceCard experience={experience} index={index} size={experiences.length} />
+        ))
       }
     </div>
   </div>
