@@ -3,22 +3,31 @@
   "status": "wip",
   "caption": "Large Type in Your Terminal",
   "description": [
-    "large-tty is a small Bubble Tea TUI I made for fun that turns whatever you type into big ASCII art (figlet-style). It’s basically large-type.com, but for your terminal.",
-    "It has a handful of fonts and a simple auto-fit fallback so the output doesn’t explode your terminal size.",
-    "Built in Go with Bubble Tea + Bubbles for the TUI, Lipgloss for styling, and go-figure for rendering. Looking into making it to a SSH app."
+    "large-tty is a small project that turns whatever you type into big ASCII art, like large-type.com, but built for the terminal and the web.",
+    "It started as a Bubble Tea TUI and now also runs over SSH, so you can connect and use it directly from your terminal with ssh, or access it through the web w/ HTTPS. The terminal app is built in Go with Bubble Tea, Bubbles, Lip Gloss, Wish, and go-figure. The web app is built with React, TanStack Start, TanStack Router, and Tailwind CSS."
   ],
-  "seoDescription": "large-tty is a Go Bubble Tea app that renders large ASCII text in your terminal with multiple fonts and auto-fit sizing. SSH support is coming soon.",
-  "ogImg": "https://danielmamuza.com/work/large-tty/demo.jpg",
+  "seoDescription": "large-tty is a Go and React app that renders large ASCII text in your terminal, over SSH, and on the web with multiple fonts and auto-fit sizing.",
+  "ogImg": "https://large-tty.com/og/landing.jpg",
   "duration": { "start": "2026-02-26" },
   "links": [
     {
       "icon": "github",
       "name": "github",
       "url": "https://github.com/MamuzaD/large-tty"
+    },
+    {
+      "icon": "link",
+      "name": "live",
+      "url": "https://large-tty.com"
+    },
+    {
+      "icon": "link",
+      "name": "ssh",
+      "url": "ssh://large-tty.com"
     }
   ],
 
-  "tags": ["Go", "Bubble Tea", "Wish", "SSH", "TUI"],
+  "tags": ["Go", "TypeScript", "Bubble Tea", "React", "Wish", "SSH", "Tanstack", "Tailwind", "TUI"],
   "banner": {
     "src": "/work/large-tty/demo.mp4",
     "alt": "large-tty demo video",
