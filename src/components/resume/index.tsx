@@ -1,10 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useRef, useState } from "react"
+import { Document, Page, pdfjs } from "react-pdf"
+import "react-pdf/dist/Page/AnnotationLayer.css"
+import "react-pdf/dist/Page/TextLayer.css"
 
 import MobileSearch from "./MobileSearch"
 import PDFViewer from "./PDFViewer"
 import SearchPanel from "./SearchPanel"
 
-let Document: any, Page: any, pdfjs: any
+pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`
 
 export type SearchResult = {
   text: string
@@ -20,40 +23,13 @@ export default function ResumeViewer() {
   const [scale, setScale] = useState(1.0)
   const [isLoading, setIsLoading] = useState(true)
   const [searchText, setSearchText] = useState("")
-  const [isClient, setIsClient] = useState(false)
-  const [pdfLoaded, setPdfLoaded] = useState(false)
   const [searchResults, setSearchResults] = useState<SearchResult[]>([])
   const [currentSearchIndex, setCurrentSearchIndex] = useState(-1)
   const [pdfDocument, setPdfDocument] = useState<any>(null)
   const pageRef = useRef<HTMLDivElement | null>(null)
   const pdfContainerRef = useRef<HTMLDivElement>(null)
 
-  // text cache for search
   const pdfTextCache = useRef<string | null>(null)
-
-  useEffect(() => {
-    const initializePdf = async () => {
-      try {
-        const reactPdf = await import("react-pdf")
-        Document = reactPdf.Document
-        Page = reactPdf.Page
-        pdfjs = reactPdf.pdfjs
-
-        await import("react-pdf/dist/Page/AnnotationLayer.css")
-        await import("react-pdf/dist/Page/TextLayer.css")
-
-        pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`
-
-        setIsClient(true)
-        setPdfLoaded(true)
-      } catch (err) {
-        console.error("Failed to load PDF.js:", err)
-        setIsLoading(false)
-      }
-    }
-
-    initializePdf()
-  }, [])
 
   const onDocumentLoadSuccess = (pdf: any) => {
     setPdfDocument(pdf)
@@ -87,7 +63,6 @@ export default function ResumeViewer() {
     const results: any[] = []
 
     try {
-      // cache text content for search
       if (!pdfTextCache.current) {
         const page = await pdfDocument.getPage(1)
         const textContent = await page.getTextContent()
@@ -305,7 +280,7 @@ export default function ResumeViewer() {
         <PDFViewer
           Document={Document}
           Page={Page}
-          loading={!isClient || !pdfLoaded || isLoading}
+          loading={isLoading}
           scale={scale}
           onDocumentLoadSuccess={onDocumentLoadSuccess}
           onDocumentLoadError={onDocumentLoadError}
