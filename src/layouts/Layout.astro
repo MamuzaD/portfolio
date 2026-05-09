@@ -193,14 +193,28 @@ const canonical = currentPath === "/" ? siteURL : `${siteURL}${currentPath}`
     )
   }
 
-  const initClicker = () => {
-    const clickElements = document.querySelectorAll("button, a")
-
-    clickElements.forEach((element) => {
-      if (!element.classList.contains("no-sound")) element.addEventListener("click", playRandomSound)
-    })
+  const attachSound = (el) => {
+    if (el.classList.contains("no-sound") || el.dataset.sound) return
+    el.dataset.sound = "1"
+    el.addEventListener("click", playRandomSound)
   }
 
-  document.addEventListener("astro:page-load", initClicker)
-  initClicker()
+  const initSounds = () => {
+    document.querySelectorAll("button, a").forEach(attachSound)
+  }
+
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((m) => {
+      m.addedNodes.forEach((node) => {
+        if (node.nodeType !== 1) return
+        if (node.matches("button, a")) attachSound(node)
+        node.querySelectorAll && node.querySelectorAll("button, a").forEach(attachSound)
+      })
+    })
+  })
+
+  observer.observe(document.body, { childList: true, subtree: true })
+
+  document.addEventListener("astro:page-load", initSounds)
+  initSounds()
 </script>

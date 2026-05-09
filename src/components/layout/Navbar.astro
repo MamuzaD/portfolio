@@ -1,8 +1,7 @@
 ---
 import ProfilePic from "@/components/layout/ProfilePic.astro"
 import { LinkPreview } from "@/components/ui/link-preview"
-import { ModeToggle } from "@/components/ui/mode-toggle"
-import { MuteToggle } from "@/components/ui/mute-toggle"
+import { SettingsMenu } from "@/components/ui/settings-menu"
 import ScrollProgress from "@/components/ui/scroll-progress"
 import { WordRotate } from "@/components/ui/word-rotate"
 import { socials } from "@/content/socials"
@@ -60,8 +59,7 @@ const titles = [
       ))
     }
     <div class="flex items-center gap-4">
-      <MuteToggle client:load />
-      <ModeToggle client:load />
+      <SettingsMenu client:load />
     </div>
   </div>
   <!-- mobile -->
@@ -97,8 +95,7 @@ const titles = [
       }
     </div>
     <div class="flex items-center gap-4">
-      <MuteToggle client:load />
-      <ModeToggle client:load />
+      <SettingsMenu client:load />
     </div>
   </div>
 </nav>
