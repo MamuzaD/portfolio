@@ -27,7 +27,7 @@ export function SettingsMenu() {
     if (storedTheme) {
       setThemeState(storedTheme)
     } else {
-      setThemeState(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "theme-light")
+      setThemeState("system")
     }
   }, [])
 
