@@ -3,7 +3,6 @@ import ProfilePic from "@/components/layout/ProfilePic.astro"
 import { LinkPreview } from "@/components/ui/link-preview"
 import { SettingsMenu } from "@/components/ui/settings-menu"
 import ScrollProgress from "@/components/ui/scroll-progress"
-import { WordRotate } from "@/components/ui/word-rotate"
 import { socials } from "@/content/socials"
 import { Icon } from "astro-icon/components"
 
@@ -25,14 +24,16 @@ const titles = [
     <ProfilePic height="300px" width="300px" small />
     <div class="mt-2 flex flex-col">
       <a href="/" class="hover-underline-animation inline-block w-fit" data-astro-prefetch> Daniel Mamuza </a>
-      <WordRotate
-        words={titles}
-        duration={6000}
-        className="min-w-[150px] text-xs font-normal text-neutral-500"
-        client:load
-        transition:persist
-        transition:name="wordRotate"
-      />
+      <div class="overflow-hidden">
+        <span
+          id="word-rotate"
+          class="block min-w-[150px] text-xs font-normal text-neutral-500"
+          data-words={JSON.stringify(titles)}
+          data-duration="6000"
+        >
+          {titles[0]}
+        </span>
+      </div>
     </div>
   </div>
   <div class="-ml-12 hidden items-center justify-center gap-4 md:flex">
@@ -108,6 +109,47 @@ const titles = [
 </script>
 
 <script>
+  function initWordRotate() {
+    const el = document.getElementById("word-rotate") as HTMLElement | null
+    if (!el) return
+
+    const words: string[] = JSON.parse(el.dataset.words!)
+    const duration = parseInt(el.dataset.duration!)
+
+    // persist index and timer across navigations on window
+    const w = window as any
+    if (w.__wordRotateTimer) clearInterval(w.__wordRotateTimer)
+    let index: number = w.__wordRotateIndex ?? 0
+
+    el.textContent = words[index]
+    el.style.opacity = "1"
+    el.style.transform = "translateY(0)"
+    el.style.transition = "opacity 0.45s ease-out, transform 0.45s ease-out"
+
+    w.__wordRotateTimer = setInterval(() => {
+      el.style.opacity = "0"
+      el.style.transform = "translateY(50px)"
+
+      setTimeout(() => {
+        index = (index + 1) % words.length
+        w.__wordRotateIndex = index
+        el.textContent = words[index]
+        el.style.transition = "none"
+        el.style.transform = "translateY(-50px)"
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => {
+            el.style.transition = "opacity 0.45s ease-out, transform 0.45s ease-out"
+            el.style.opacity = "1"
+            el.style.transform = "translateY(0)"
+          })
+        )
+      }, 450)
+    }, duration)
+  }
+
+  initWordRotate()
+  document.addEventListener("astro:page-load", initWordRotate)
+
   class MenuButton extends HTMLElement {
     constructor() {
       super()
