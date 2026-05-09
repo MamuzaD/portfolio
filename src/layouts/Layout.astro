@@ -74,13 +74,8 @@ const canonical = currentPath === "/" ? siteURL : `${siteURL}${currentPath}`
     <!-- blocking script to set dark mode before paint -->
     <script is:inline>
       ;(function () {
-        const getThemePreference = () => {
-          if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-            return localStorage.getItem("theme")
-          }
-          return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "theme-light"
-        }
-        const isDark = getThemePreference() === "dark"
+        const stored = typeof localStorage !== "undefined" ? localStorage.getItem("theme") : null
+        const isDark = stored === "dark" || (stored !== "theme-light" && window.matchMedia("(prefers-color-scheme: dark)").matches)
         document.documentElement.classList[isDark ? "add" : "remove"]("dark")
       })()
     </script>
@@ -135,25 +130,18 @@ const canonical = currentPath === "/" ? siteURL : `${siteURL}${currentPath}`
 
 <script is:inline>
   function setDarkMode(document) {
-    const getThemePreference = () => {
-      if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-        return localStorage.getItem("theme")
-      }
-      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "theme-light"
-    }
-    const isDark = getThemePreference() === "dark"
+    const stored = localStorage.getItem("theme")
+    const isDark = stored === "dark" || (stored !== "theme-light" && window.matchMedia("(prefers-color-scheme: dark)").matches)
     document.documentElement.classList[isDark ? "add" : "remove"]("dark")
 
-    if (typeof localStorage !== "undefined") {
-      const observer = new MutationObserver(() => {
-        const isDark = document.documentElement.classList.contains("dark")
-        localStorage.setItem("theme", isDark ? "dark" : "theme-light")
-      })
-      observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ["class"],
-      })
-    }
+    if (window.__themeObserver) window.__themeObserver.disconnect()
+    const observer = new MutationObserver(() => {
+      if (localStorage.getItem("theme") === "system") return
+      const isDark = document.documentElement.classList.contains("dark")
+      localStorage.setItem("theme", isDark ? "dark" : "theme-light")
+    })
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] })
+    window.__themeObserver = observer
   }
 
   // Initial load is handled by blocking script in <head>
