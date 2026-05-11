@@ -7,6 +7,7 @@ import Navbar from "@/components/layout/Navbar.astro"
 import ParticlesBG from "@/components/layout/Particles"
 import PostHog from "@/components/PostHog.astro"
 import { SEO } from "astro-seo"
+import ShaderOverlay from "@/components/layout/ShaderOverlay"
 
 interface Props {
   title: string
@@ -105,6 +106,8 @@ const canonical = currentPath === "/" ? siteURL : `${siteURL}${currentPath}`
     <div class="mx-6 md:mx-0">
       <slot />
     </div>
+
+    <ShaderOverlay client:load />
     <Footer />
   </body>
 </html>
