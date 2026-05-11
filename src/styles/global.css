@@ -49,6 +49,9 @@
 
   /* Transition Duration */
   --duration-1500: 1500ms;
+
+  /* Display font */
+  --font-display: "Syne", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
@@ -193,7 +196,7 @@
 
 @layer base {
   ::selection {
-    background-color: #ebebeb;
+    background-color: rgba(205, 205, 205, 0.5);
     color: #338a37;
   }
 
