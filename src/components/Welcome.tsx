@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react"
 
+import GiraffeEgg from "@/components/GiraffeEgg"
 import { LinkPreview } from "@/components/ui/link-preview"
 
 export default function Welcome() {
@@ -15,7 +16,7 @@ export default function Welcome() {
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 120, damping: 12, duration: 500, delay: 0.35 }}
         >
-          hey, i'm
+          hey, i&apos;m
         </motion.span>
         <motion.span
           className="text-primary inline-flex items-center gap-4 text-6xl md:text-8xl"
@@ -31,21 +32,7 @@ export default function Welcome() {
           }}
         >
           <span className="z-1">daniel</span>
-          <motion.span
-            initial={{ x: "140%", y: "4%", opacity: 0, rotate: 10, scaleX: 0.8 }}
-            whileInView={{ x: 0, y: 0, opacity: 1, rotate: 0 }}
-            viewport={{ once: true }}
-            transition={{
-              delay: 1.82,
-              duration: 1.1,
-              ease: [0.22, 1, 0.36, 1],
-              rotate: { delay: 1.9, duration: 0.16 },
-              opacity: { delay: 1.87, duration: 0.16 },
-            }}
-            className="text-foreground pointer-events-none -scale-x-100 text-5xl md:text-7xl"
-          >
-            🦒
-          </motion.span>
+          <GiraffeEgg />
         </motion.span>
       </h1>
 
