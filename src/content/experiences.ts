@@ -9,20 +9,20 @@ export type experience = {
 
 export const experiences: experience[] = [
   {
-    name: "PayPal",
-    src: "/experiences/paypal.png",
-    href: "https://paypal.com",
-    role: "Fullstack Software Engineer Intern",
-    range: "Summer 2026",
-    colors: ["#00457C", "#0079C1"],
-  },
-  {
     name: "Intellimind",
     src: "/experiences/intellimind.png",
     href: "https://intellimind.com",
     role: "Software Engineer Intern",
     range: "Nov 2024 - now",
     colors: ["#017BA2", "#015975"],
+  },
+  {
+    name: "PayPal",
+    src: "/experiences/paypal.png",
+    href: "https://paypal.com",
+    role: "Fullstack Software Engineer Intern",
+    range: "Summer 2026",
+    colors: ["#00457C", "#0079C1"],
   },
   {
     name: "UNLV",
