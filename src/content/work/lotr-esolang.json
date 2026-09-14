@@ -9,16 +9,8 @@
   "seoDescription": "Lord of the Rings Esolang is an esoteric language interpreter built with TypeScript and Deno. It supports a REPL mode and transcribes '.lotr' files into executable code.",
   "ogImg": "https://danielmamuza.com/work/lotr-esolang/lotr-esolang.webp",
   "duration": { "start": "2024-02-14T00:00:00Z" },
-  "banner": {
-    "src": "/public/work/lotr-esolang/lotr-esolang.webp",
-    "alt": "Esolang Banner",
-    "type": "image"
-  },
-  "card": {
-    "src": "/public/work/lotr-esolang/lotr-esolang.webp",
-    "alt": "Esolang Card",
-    "type": "image"
-  },
+  "banner": { "src": "/public/work/lotr-esolang/lotr-esolang.webp", "alt": "Esolang Banner", "type": "image" },
+  "card": { "src": "/public/work/lotr-esolang/lotr-esolang.webp", "alt": "Esolang Card", "type": "image" },
   "tags": ["TypeScript", "Interpreter Design", "Parser", "Lexer", "Evaluater"],
   "links": [{ "icon": "github", "name": "github", "url": "https://github.com/MamuzaD/Lord-of-The-Rings-Esolang" }]
 }

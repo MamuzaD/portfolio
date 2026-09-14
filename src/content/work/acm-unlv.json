@@ -9,16 +9,8 @@
   "seoDescription": "Developed ACM UNLV's website with Next.js, shadcn/ui, and Tailwind CSS, featuring dynamic pages and an animated Figma-designed banner.",
   "ogImg": "https://danielmamuza.com/work/acm/acm.jpg",
   "duration": { "start": "2024-07-28", "end": "2024-09-15" },
-  "banner": {
-    "src": "/public/work/acm/acm.jpg",
-    "alt": "ACM Banner",
-    "type": "image"
-  },
-  "card": {
-    "src": "/public/work/acm/acm.jpg",
-    "alt": "ACM Card",
-    "type": "image"
-  },
+  "banner": { "src": "/public/work/acm/acm.jpg", "alt": "ACM Banner", "type": "image" },
+  "card": { "src": "/public/work/acm/acm.jpg", "alt": "ACM Card", "type": "image" },
   "tags": ["Next.js", "shadcn/ui", "Tailwind CSS", "Figma"],
   "links": [
     { "icon": "github", "name": "github", "url": "https://github.com/MamuzaD/acmunlv" },

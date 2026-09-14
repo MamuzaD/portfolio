@@ -9,16 +9,8 @@
   "seoDescription": "Fate is a personalized recommendation engine app built with Next.js, shadcn/ui, and Tailwind CSS, offering tailored recommendations from platforms like Netflix and Steam.",
   "ogImg": "https://danielmamuza.com/work/fate/fate.png",
   "duration": { "start": "2025-03-06", "end": "Present" },
-  "banner": {
-    "src": "/public/work/fate/fate.png",
-    "alt": "Fate Banner",
-    "type": "image"
-  },
-  "card": {
-    "src": "/public/work/fate/fate.png",
-    "alt": "Fate Card",
-    "type": "image"
-  },
+  "banner": { "src": "/public/work/fate/fate.png", "alt": "Fate Banner", "type": "image" },
+  "card": { "src": "/public/work/fate/fate.png", "alt": "Fate Card", "type": "image" },
   "tags": ["Next.js", "shadcn/ui", "Tailwind CSS", "Redis", "Resend", "Machine Learning"],
   "links": [{ "icon": "link", "name": "live", "url": "https://fateapp.dev" }],
   "media": [

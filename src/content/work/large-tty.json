@@ -10,34 +10,13 @@
   "ogImg": "https://large-tty.com/og/landing.jpg",
   "duration": { "start": "2026-02-26" },
   "links": [
-    {
-      "icon": "github",
-      "name": "github",
-      "url": "https://github.com/MamuzaD/large-tty"
-    },
-    {
-      "icon": "link",
-      "name": "live",
-      "url": "https://large-tty.com"
-    },
-    {
-      "icon": "link",
-      "name": "ssh",
-      "url": "ssh://large-tty.com"
-    }
+    { "icon": "github", "name": "github", "url": "https://github.com/MamuzaD/large-tty" },
+    { "icon": "link", "name": "live", "url": "https://large-tty.com" },
+    { "icon": "link", "name": "ssh", "url": "ssh://large-tty.com" }
   ],
-
   "tags": ["Go", "TypeScript", "Bubble Tea", "React", "Wish", "SSH", "Tanstack", "Tailwind", "TUI"],
-  "banner": {
-    "src": "/work/large-tty/demo.mp4",
-    "alt": "large-tty demo video",
-    "type": "video"
-  },
-  "card": {
-    "src": "/work/large-tty/demo.mp4",
-    "alt": "large-tty preview",
-    "type": "video"
-  },
+  "banner": { "src": "/work/large-tty/demo.mp4", "alt": "large-tty demo video", "type": "video" },
+  "card": { "src": "/work/large-tty/demo.mp4", "alt": "large-tty preview", "type": "video" },
   "media": [
     {
       "src": "/work/large-tty/demo.mp4",

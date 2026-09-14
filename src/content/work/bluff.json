@@ -11,28 +11,11 @@
   "ogImg": "https://danielmamuza.com/work/bluff/landing.jpg",
   "duration": { "start": "2026-02-22" },
   "links": [
-    {
-      "icon": "link",
-      "name": "live",
-      "url": "https://bluff.sh"
-    }
+    { "icon": "github", "name": "github", "url": "https://github.com/MamuzaD/bluff" },
+    { "icon": "link", "name": "live", "url": "https://bluff.sh" }
   ],
   "tags": ["TypeScript", "TanStack Start", "Convex", "React", "Tailwind CSS", "shadcn/ui", "Clerk", "Vercel"],
-  "banner": {
-    "src": "/work/bluff/demo.mp4",
-    "alt": "Bluff Banner",
-    "type": "video"
-  },
-  "card": {
-    "src": "/work/bluff/demo.mp4",
-    "alt": "Bluff Card",
-    "type": "video"
-  },
-  "media": [
-    {
-      "src": "/public/work/bluff/landing.jpg",
-      "alt": "Bluff Landing Page",
-      "type": "image"
-    }
-  ]
+  "banner": { "src": "/work/bluff/demo.mp4", "alt": "Bluff Banner", "type": "video" },
+  "card": { "src": "/work/bluff/demo.mp4", "alt": "Bluff Card", "type": "video" },
+  "media": [{ "src": "/public/work/bluff/landing.jpg", "alt": "Bluff Landing Page", "type": "image" }]
 }

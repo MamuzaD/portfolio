@@ -24,31 +24,11 @@
     "PostgreSQL",
     "SaaS & CRUD"
   ],
-  "banner": {
-    "src": "/public/work/monk/monk.webp",
-    "alt": "Monk Banner",
-    "type": "image"
-  },
-  "card": {
-    "src": "/public/work/monk/monk.webp",
-    "alt": "Monk Card",
-    "type": "image"
-  },
+  "banner": { "src": "/public/work/monk/monk.webp", "alt": "Monk Banner", "type": "image" },
+  "card": { "src": "/public/work/monk/monk.webp", "alt": "Monk Card", "type": "image" },
   "media": [
-    {
-      "src": "/public/work/monk/hero.jpg",
-      "alt": "Hero image",
-      "type": "image"
-    },
-    {
-      "src": "/public/work/monk/dashboard.jpg",
-      "alt": "Board animated image",
-      "type": "image"
-    },
-    {
-      "src": "/public/work/monk/notes.jpg",
-      "alt": "Notes animated image",
-      "type": "image"
-    }
+    { "src": "/public/work/monk/hero.jpg", "alt": "Hero image", "type": "image" },
+    { "src": "/public/work/monk/dashboard.jpg", "alt": "Board animated image", "type": "image" },
+    { "src": "/public/work/monk/notes.jpg", "alt": "Notes animated image", "type": "image" }
   ]
 }

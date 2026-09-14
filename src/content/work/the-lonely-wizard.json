@@ -9,16 +9,8 @@
   "seoDescription": "The Lonely Wizard is a 2D top-down rogue-like shooter game created with C# and Unity. It features engaging game mechanics, enemy AI, and a leveling system for a dynamic gameplay experience.",
   "ogImg": "https://danielmamuza.com/work/the-lonely-wizard/card.jpg",
   "duration": { "start": "2024-01-10", "end": "2024-02-01" },
-  "banner": {
-    "src": "/public/work/the-lonely-wizard/banner.jpg",
-    "alt": "The Lonely Wizard Banner",
-    "type": "image"
-  },
-  "card": {
-    "src": "/public/work/the-lonely-wizard/card.jpg",
-    "alt": "The Lonely Wizard Card",
-    "type": "image"
-  },
+  "banner": { "src": "/public/work/the-lonely-wizard/banner.jpg", "alt": "The Lonely Wizard Banner", "type": "image" },
+  "card": { "src": "/public/work/the-lonely-wizard/card.jpg", "alt": "The Lonely Wizard Card", "type": "image" },
   "tags": ["Unity", "C#", "Game Development"],
   "links": [{ "icon": "github", "name": "github", "url": "https://github.com/MamuzaD/thelonelywizard" }]
 }
