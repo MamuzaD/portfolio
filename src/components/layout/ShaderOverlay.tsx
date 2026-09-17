@@ -75,7 +75,7 @@ function ShaderCanvas() {
             WebkitMaskImage: "radial-gradient(ellipse 60% 65% at 50% 40%, black 25%, transparent 90%)",
           }}
           colorBack={isDark ? "#0c0d0c" : "#e9eae3"}
-          colorFront={isDark ? "#338a3725" : "#338a3780"}
+          colorFront={isDark ? "#338a3730" : "#338a3780"}
           shape="warp"
           type="4x4"
           size={2.5}

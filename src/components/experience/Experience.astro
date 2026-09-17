@@ -1,0 +1,78 @@
+---
+import ExperienceCard from "./ExperienceCard.astro"
+import { experiences } from "@/content/experiences"
+---
+
+<section data-experience class="z-50 w-full max-w-2xl">
+  <div class="mx-auto grid w-full grid-cols-1 gap-10 md:grid-cols-2 md:gap-16">
+    {experiences.map((experience, index) => (
+      <div class:list={[index % 2 !== 0 && "md:translate-y-16"]}>
+        <ExperienceCard experience={experience} index={index} />
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  import { animate, inView } from "motion"
+
+  const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  const entrance = {
+    perspective: 1200,
+    y: 48,
+    scale: 0.98,
+    rotateX: -40,
+  } as const
+
+  let activeExperience: HTMLElement | null = null
+  let stopObservers: Array<() => void> = []
+
+  function initializeExperienceCards() {
+    const experience = document.querySelector<HTMLElement>("[data-experience]")
+    if (experience === activeExperience) return
+
+    stopObservers.forEach((stop) => stop())
+    stopObservers = []
+    activeExperience = experience
+
+    if (!experience) return
+
+    const cards = experience.querySelectorAll<HTMLElement>("[data-experience-card]")
+
+    cards.forEach((card) => {
+      const index = Number(card.dataset.index ?? 0)
+      const enterRotateY = Number(card.dataset.enterRotateY ?? 0)
+
+      if (prefersReducedMotion()) {
+        return
+      }
+
+      card.style.opacity = "0"
+      card.style.transform = `perspective(${entrance.perspective}px) translateY(${entrance.y}px) scale(${entrance.scale}) rotateX(${entrance.rotateX}deg) rotateY(${enterRotateY}deg)`
+
+      stopObservers.push(
+        inView(
+          card,
+          () => {
+            animate(
+              card,
+              {
+                opacity: [0, 1],
+                y: [entrance.y, 0],
+                scale: [entrance.scale, 1],
+                rotateX: [entrance.rotateX, 0],
+                rotateY: [enterRotateY, 0],
+                transformPerspective: entrance.perspective,
+              },
+              { type: "tween", ease: "easeOut", duration: 0.4, delay: index * 0.05 }
+            )
+          },
+          { margin: "0px 0px -10% 0px" }
+        )
+      )
+    })
+  }
+
+  initializeExperienceCards()
+  document.addEventListener("astro:page-load", initializeExperienceCards)
+</script>

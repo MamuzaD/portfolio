@@ -1,0 +1,52 @@
+---
+import { type experience } from "@/content/experiences"
+import { Image } from "astro:assets"
+
+interface Props {
+  experience: experience
+  index: number
+}
+
+const { experience, index } = Astro.props
+const isLeftColumn = index % 2 === 0
+
+function hexToRgba(hex: string): string {
+  const alpha = 0.5
+  // Remove hash if present
+  hex = hex.replace(/^#/, "")
+  // Parse r, g, b
+  let bigint = parseInt(hex, 16)
+  let r = (bigint >> 16) & 255
+  let g = (bigint >> 8) & 255
+  let b = bigint & 255
+  return `${r}, ${g}, ${b}, ${alpha}`
+}
+---
+
+<div data-experience-card data-index={index} data-enter-rotate-y={isLeftColumn ? 40 : -40} class="group w-full">
+  <div
+    class={`flex h-80 max-h-80 w-full flex-col place-items-center rounded-[2.5rem] bg-muted/70 backdrop-blur pt-7 transition-transform duration-300 ease-out ${isLeftColumn ? "md:motion-safe:group-hover:rotate-3" : "md:motion-safe:group-hover:-rotate-3"} shadow-experiencard-card-light dark:shadow-experiencard-card-dark`}
+  >
+    <div class="w-full px-8 pb-2">
+      <a href={experience.href} target="_blank" rel="noopener noreferrer">
+        <div
+          class="flex h-36 w-full items-center justify-center rounded-3xl bg-red-950"
+          style={{
+            background: `linear-gradient(45deg, ${experience.colors[0]}, ${experience.colors[1]})`,
+            boxShadow: `0 0 30px 5px rgba(${hexToRgba(experience.colors[0])}), 0 0 30px 5px rgba(${hexToRgba(experience.colors[1])})`,
+          }}
+        >
+          <Image height={80} width={80} src={experience.src} alt={`${experience.name} logo`} />
+        </div>
+      </a>
+
+      <div class="flex h-32 flex-col justify-between">
+        <div class="flex w-full flex-col">
+          <h3 class="mt-4 text-lg font-bold">{experience.name}</h3>
+          <p class="text-md flex-1 font-semibold text-neutral-800 dark:text-neutral-200">{experience.role}</p>
+        </div>
+        <p class="text-md self-end font-light">{experience.range}</p>
+      </div>
+    </div>
+  </div>
+</div>
