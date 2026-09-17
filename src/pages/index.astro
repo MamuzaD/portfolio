@@ -4,7 +4,6 @@ import Layout from "@/layouts/Layout.astro"
 import About from "@/components/about/About.astro"
 import Contact from "@/components/contact/Contact"
 import Experience from "@/components/Experience.astro"
-import Skills from "@/components/Skills"
 import Welcome from "@/components/Welcome.astro"
 import RecentWork from "@/components/work/RecentWork.astro"
 import texts from "@/content/texts"
@@ -16,7 +15,6 @@ import texts from "@/content/texts"
     <About />
     <Experience />
     <RecentWork />
-    <Skills client:idle />
     <Contact client:load />
   </div>
 </Layout>

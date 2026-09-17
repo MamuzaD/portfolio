@@ -1,0 +1,29 @@
+---
+import AwsIcon from "@/icons/skills/aws.svg"
+import GoIcon from "@/icons/skills/go.svg"
+import PythonIcon from "@/icons/skills/python.svg"
+import ReactIcon from "@/icons/skills/react.svg"
+import TypeScriptIcon from "@/icons/skills/typescript.svg"
+
+const topSkills = [
+  { name: "TypeScript", Icon: TypeScriptIcon },
+  { name: "Python", Icon: PythonIcon },
+  { name: "React", Icon: ReactIcon },
+  { name: "AWS", Icon: AwsIcon },
+  { name: "Go", Icon: GoIcon },
+] as const
+---
+
+<div class="bg-muted-foreground/10 dark:bg-muted/60 z-10 col-span-2 flex w-full flex-col flex-wrap items-center justify-start gap-4 rounded-lg py-4 backdrop-blur-lg md:py-2">
+  <span class="font-medium">most used technologies</span>
+  <div class="flex flex-wrap gap-4 md:mt-4">
+    {topSkills.map(({ name, Icon }) => (
+      <div class="mx-auto flex flex-col items-center justify-center gap-1 transition-transform hover:scale-110 focus:scale-90">
+        <span class="h-10 w-10 transition-transform duration-500 hover:scale-110 active:scale-60 active:duration-[10ms] md:h-12 md:w-12">
+          <Icon class="size-full" />
+        </span>
+        <span class="text-center text-xs">{name}</span>
+      </div>
+    ))}
+  </div>
+</div>
