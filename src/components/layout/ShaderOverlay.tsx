@@ -2,11 +2,19 @@ import { Dithering } from "@paper-design/shaders-react"
 import { motion, useReducedMotion } from "motion/react"
 import { useEffect, useRef, useState } from "react"
 
+import { hasWebGL, useVisualMode } from "@/lib/lite-mode"
+
+// Gate here so the WebGL probe and the scroll/theme observers never run in lite mode.
+// hasWebGL() is memoized and this island is client:only, so calling it during render is safe.
 export default function ShaderOverlay() {
+  const mode = useVisualMode()
+  if (mode === "lite" || !hasWebGL()) return null
+  return <ShaderCanvas />
+}
+
+function ShaderCanvas() {
   const shouldReduceMotion = useReducedMotion()
-  const [isDark, setIsDark] = useState(() =>
-    typeof document !== "undefined" ? document.documentElement.classList.contains("dark") : false
-  )
+  const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains("dark"))
   const [isScrolling, setIsScrolling] = useState(false)
   const scrollTimeoutRef = useRef<number | null>(null)
   const [randVal] = useState(() => Math.random() * 2 - 1)
@@ -26,7 +34,10 @@ export default function ShaderOverlay() {
       scrollTimeoutRef.current = window.setTimeout(() => setIsScrolling(false), 200)
     }
     window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
+    return () => {
+      if (scrollTimeoutRef.current) window.clearTimeout(scrollTimeoutRef.current)
+      window.removeEventListener("scroll", onScroll)
+    }
   }, [])
 
   const paused = shouldReduceMotion || isScrolling
@@ -73,6 +84,7 @@ export default function ShaderOverlay() {
           rotation={45}
           offsetX={randVal * 0.2}
           minPixelRatio={1}
+          maxPixelCount={1920 * 1080}
         />
       </div>
     </motion.div>

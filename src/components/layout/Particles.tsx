@@ -1,30 +1,42 @@
-// if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
 import { type Container, type ISourceOptions } from "@tsparticles/engine"
 import Particles, { initParticlesEngine } from "@tsparticles/react"
 import { loadSlim } from "@tsparticles/slim"
 import { useEffect, useMemo, useRef, useState } from "react"
 
+import { useVisualMode } from "@/lib/lite-mode"
 import { currentProfile, getIcons } from "@/lib/store"
 
+let particlesEngineInitPromise: Promise<void> | null = null
+
+function initializeParticlesEngine() {
+  particlesEngineInitPromise ??= initParticlesEngine(async (engine) => {
+    await loadSlim(engine)
+  }).catch((error: unknown) => {
+    particlesEngineInitPromise = null
+    throw error
+  })
+
+  return particlesEngineInitPromise
+}
+
+// Gate on visual mode here so none of the canvas hooks run in lite mode.
 const ParticlesBG = () => {
+  const mode = useVisualMode()
+  return mode === "full" ? <ParticlesCanvas /> : null
+}
+
+const ParticlesCanvas = () => {
   const [init, setInit] = useState(false)
   const [particleIcons, setParticleIcons] = useState<string[]>([])
   const soundRef = useRef<HTMLAudioElement | null>(null)
   const isPlayingRef = useRef(false)
 
-  // this should be run only once per application lifetime
   useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
-      // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-      // starting from v2 you can add only the features you need reducing the bundle size
-      //await loadAll(engine);
-      //await loadFull(engine);
-      await loadSlim(engine)
-      //await loadBasic(engine);
-    }).then(() => {
-      setInit(true)
-    })
+    initializeParticlesEngine()
+      .then(() => setInit(true))
+      .catch(() => {
+        // engine chunk failed to load; particles stay hidden and the next mount retries
+      })
   }, [])
 
   useEffect(() => {
@@ -155,7 +167,7 @@ const ParticlesBG = () => {
     return <Particles id="tsparticles" particlesLoaded={particlesLoaded} options={options} className="absolute" />
   }
 
-  return <></>
+  return null
 }
 
 export default ParticlesBG

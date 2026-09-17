@@ -1,8 +1,9 @@
 "use client"
 
-import { Ellipsis, MonitorIcon, MoonIcon, SunIcon, Volume2, VolumeX } from "lucide-react"
+import { Ellipsis, MonitorIcon, MoonIcon, SparklesIcon, SunIcon, Volume2, VolumeX, ZapIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 
+import { useVisualMode, visualMode } from "@/lib/lite-mode"
 import { cn } from "@/lib/utils"
 
 import { Button } from "@/components/ui/button"
@@ -26,6 +27,7 @@ export function SettingsMenu() {
     const storedTheme = localStorage.getItem("theme") as "theme-light" | "dark" | "system" | null
     return storedTheme ?? "system"
   })
+  const mode = useVisualMode()
 
   useEffect(() => {
     localStorage.setItem("soundMuted", isMuted.toString())
@@ -49,7 +51,7 @@ export function SettingsMenu() {
           <Ellipsis className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" sideOffset={5} className="z-[200] w-40 rounded-2xl p-2 backdrop-blur-sm">
+      <DropdownMenuContent align="end" sideOffset={5} className="z-[200] w-52 rounded-2xl p-2 backdrop-blur-sm">
         <DropdownMenuLabel className="text-center">Settings</DropdownMenuLabel>
 
         <DropdownMenuSeparator />
@@ -150,6 +152,50 @@ export function SettingsMenu() {
               aria-pressed={theme === "system"}
             >
               <MonitorIcon className="h-4 w-4" />
+            </Button>
+          </fieldset>
+        </DropdownMenuGroup>
+
+        <DropdownMenuSeparator className="my-2" />
+
+        <DropdownMenuGroup>
+          <DropdownMenuLabel className="text-muted-foreground pb-1 text-xs font-medium tracking-wide uppercase">
+            Visuals
+          </DropdownMenuLabel>
+          <fieldset className="bg-muted/60 m-0 flex gap-1 rounded-xl border-0 p-0.5" aria-label="Visuals">
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              title="Full visuals"
+              className={cn(
+                "h-7 flex-1 gap-1 rounded-lg px-1.5 text-xs font-medium",
+                mode === "full"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+              onClick={() => visualMode.set("full")}
+              aria-pressed={mode === "full"}
+            >
+              <SparklesIcon className="h-3.5 w-3.5 shrink-0" />
+              Full
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              title="Lite mode (disables animated background)"
+              className={cn(
+                "h-7 flex-1 gap-1 rounded-lg px-1.5 text-xs font-medium",
+                mode === "lite"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+              onClick={() => visualMode.set("lite")}
+              aria-pressed={mode === "lite"}
+            >
+              <ZapIcon className="h-3.5 w-3.5 shrink-0" />
+              Lite
             </Button>
           </fieldset>
         </DropdownMenuGroup>

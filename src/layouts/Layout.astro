@@ -102,13 +102,13 @@ const canonical = currentPath === "/" ? siteURL : `${siteURL}${currentPath}`
     <PostHog />
   </head>
   <body>
-    <ParticlesBG client:load />
+    <ParticlesBG client:only="react" />
     <Navbar />
     <div class="mx-6 md:mx-0">
       <slot />
     </div>
 
-    <ShaderOverlay client:load />
+    <ShaderOverlay client:only="react" />
     <Footer />
   </body>
 </html>
