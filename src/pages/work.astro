@@ -11,7 +11,7 @@ const allProjects = (await getCollection("work")).sort(
 )
 
 const active = allProjects.filter((p) => p.data.status !== "archived")
-const archived = allProjects.filter((p) => p.data.status === "archived")
+// const archived = allProjects.filter((p) => p.data.status === "archived")
 
 function makeColumns(items: Work[], count: number): Work[][] {
   const cols: Work[][] = Array.from({ length: count }, () => [])
@@ -22,8 +22,8 @@ function makeColumns(items: Work[], count: number): Work[][] {
 const activeCols3 = makeColumns(active, 3)
 const activeCols2 = makeColumns(active, 2)
 
-const archivedCols3 = makeColumns(archived, 3)
-const archivedCols2 = makeColumns(archived, 2)
+// const archivedCols3 = makeColumns(archived, 3)
+// const archivedCols2 = makeColumns(archived, 2)
 ---
 
 <Layout title={texts.work.title} description={texts.work.description}>
@@ -55,6 +55,7 @@ const archivedCols2 = makeColumns(archived, 2)
       ))}
     </div>
 
+    {/*
     {archived.length > 0 && (
       <section class="mt-16 md:px-8">
         <details class="group rounded-lg p-4">
@@ -97,5 +98,6 @@ const archivedCols2 = makeColumns(archived, 2)
         </details>
       </section>
     )}
+    */}
   </main>
 </Layout>
