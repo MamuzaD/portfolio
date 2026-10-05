@@ -15,12 +15,25 @@
     { "icon": "link", "name": "ssh", "url": "ssh://large-tty.com" }
   ],
   "tags": ["Go", "TypeScript", "Bubble Tea", "React", "Wish", "SSH", "Tanstack", "Tailwind", "TUI"],
-  "banner": { "src": "/work/large-tty/demo.mp4", "alt": "large-tty demo video", "type": "video" },
-  "card": { "src": "/work/large-tty/demo.mp4", "alt": "large-tty preview", "type": "video" },
+  "banner": {
+    "src": "/work/large-tty/cursor-loop.mp4",
+    "alt": "large-tty terminal with a blinking cursor",
+    "type": "video"
+  },
+  "card": {
+    "src": "/work/large-tty/cursor-loop.mp4",
+    "alt": "large-tty terminal with a blinking cursor",
+    "type": "video"
+  },
   "media": [
     {
       "src": "/work/large-tty/demo.mp4",
       "alt": "Demo: typing text and seeing large ASCII output in the TUI",
+      "type": "video"
+    },
+    {
+      "src": "/work/large-tty/website-random-play.mp4",
+      "alt": "large-tty.com showing hello world while random play changes fonts",
       "type": "video"
     }
   ]
