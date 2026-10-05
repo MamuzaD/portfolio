@@ -2,13 +2,12 @@
 import ProjectCard from "@/components/work/ProjectCard.astro"
 import texts from "@/content/texts"
 import Layout from "@/layouts/Layout.astro"
+import { byRecency } from "@/lib/utils"
 import { getCollection, type CollectionEntry } from "astro:content"
 
 type Work = CollectionEntry<"work">
 
-const allProjects = (await getCollection("work")).sort(
-  (a: Work, b: Work) => b.data.duration.start.valueOf() - a.data.duration.start.valueOf()
-)
+const allProjects = (await getCollection("work")).sort(byRecency)
 
 const active = allProjects.filter((p) => p.data.status !== "archived")
 // const archived = allProjects.filter((p) => p.data.status === "archived")

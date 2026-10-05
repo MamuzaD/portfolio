@@ -1,12 +1,13 @@
 ---
 import HoverWork from "@/components/work/HoverWork"
+import { byRecency } from "@/lib/utils"
 import { type CollectionEntry, getCollection } from "astro:content"
 
 type Work = CollectionEntry<"work">
 
 const projects = (await getCollection("work"))
   .filter((p: Work) => p.data.status !== "archived")
-  .sort((a: Work, b: Work) => b.data.duration.start.valueOf() - a.data.duration.start.valueOf())
+  .sort(byRecency)
   .slice(0, 4)
 ---
 
