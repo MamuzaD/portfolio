@@ -1,0 +1,52 @@
+{
+  "title": "Auscult",
+  "status": "featured",
+  "caption": "Heart & Lung Sound Classification",
+  "description": [
+    "Auscult classifies heart and lung sounds from 15-second digital stethoscope recordings of a clinical training manikin. It transforms the 535-recording HLS-CMDS dataset into fixed-length feature tables using MFCCs, deltas, RMS, zero-crossing rate, and spectral features, then evaluates heart-only, lung-only, and mixed cardiopulmonary tasks.",
+    "For this team project, I built the shared training framework and implemented the decision tree, random forest, logistic regression, and linear SVM pipelines. I also expanded audio feature extraction, added batch experiment tooling, and tightened evaluation with grouped cross-validation and file-level aggregation. The final comparison covered audio-only and metadata-assisted variants; the strongest lung-only model reached a 0.994 macro F1 score. When heart and lung sounds were mixed in one recording, the best macro F1 dropped to 0.42 for heart labels and 0.73 for lung labels."
+  ],
+  "seoDescription": "Machine-learning pipeline that extracts auscultation audio features and compares baseline classifiers for heart rhythm and lung disorder classification.",
+  "ogImg": "https://danielmamuza.com/work/auscult/card.webp",
+  "duration": { "start": "2026-03-02", "end": "2026-05-13" },
+  "links": [
+    {
+      "icon": "github",
+      "name": "github",
+      "url": "https://github.com/MamuzaD/auscult-ml"
+    },
+    {
+      "icon": "link",
+      "name": "dataset",
+      "url": "https://archive.ics.uci.edu/dataset/1202/hls-cmds:+heart+and+lung+sounds+dataset+recorded+from+a+clinical+manikin+using+digital+stethoscope"
+    }
+  ],
+  "tags": ["Python", "scikit-learn", "librosa", "pandas", "NumPy", "Matplotlib", "Machine Learning"],
+  "banner": {
+    "src": "/public/work/auscult/card.webp",
+    "alt": "A normal heart recording's waveform running through the breathing envelope of a wheezing lung recording, both from the HLS-CMDS dataset",
+    "type": "image"
+  },
+  "card": {
+    "src": "/public/work/auscult/card.webp",
+    "alt": "A normal heart recording's waveform running through the breathing envelope of a wheezing lung recording, both from the HLS-CMDS dataset",
+    "type": "image"
+  },
+  "media": [
+    {
+      "src": "/public/work/auscult/sounds.webp",
+      "alt": "Spectrograms of four real recordings: normal heart and atrial fibrillation, normal lung and wheezing",
+      "type": "image"
+    },
+    {
+      "src": "/public/work/auscult/results.webp",
+      "alt": "Macro F1 per model, recorded alone vs mixed: linear SVM drops from 0.989 to 0.731 on lung labels and from 0.886 to 0.424 on heart labels",
+      "type": "image"
+    },
+    {
+      "src": "/public/work/auscult/errors.webp",
+      "alt": "Random forest heart confusion matrix: 178 of 195 correct; the biggest confusion is between AV block and atrial fibrillation",
+      "type": "image"
+    }
+  ]
+}
