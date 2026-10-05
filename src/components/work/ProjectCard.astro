@@ -4,16 +4,17 @@ import type { CollectionEntry } from "astro:content"
 
 interface Props {
   project: CollectionEntry<"work">
+  mediaQuery: string
 }
 
-const { project } = Astro.props
+const { project, mediaQuery } = Astro.props
 const { data, id } = project
 ---
 
 <a href={`/work/${id}`} class="w-full" data-astro-prefetch transition:persist>
   {data.card.type === "video" ? (
     <video
-      src={data.card.src}
+      data-work-card-video
       class="animate-fadeIn mx-auto h-auto max-h-[50vh] w-auto rounded-lg opacity-100 transition-opacity duration-300 hover:opacity-70"
       autoplay
       muted
@@ -21,7 +22,9 @@ const { data, id } = project
       playsinline
       preload="metadata"
       transition:name={id}
-    />
+    >
+      <source src={data.card.src} type="video/mp4" media={mediaQuery} />
+    </video>
   ) : (
     <Image
       src={data.card.src}

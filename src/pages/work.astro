@@ -33,7 +33,7 @@ const activeCols2 = makeColumns(active, 2)
       {activeCols3.map((column) => (
         <div class="flex shrink-0 flex-col gap-6">
           {column.map((project) => (
-            <ProjectCard project={project} />
+            <ProjectCard project={project} mediaQuery="(min-width: 1024px)" />
           ))}
         </div>
       ))}
@@ -43,7 +43,7 @@ const activeCols2 = makeColumns(active, 2)
       {activeCols2.map((column) => (
         <div class="flex shrink-0 flex-col gap-6">
           {column.map((project) => (
-            <ProjectCard project={project} />
+            <ProjectCard project={project} mediaQuery="(min-width: 640px) and (max-width: 1023px)" />
           ))}
         </div>
       ))}
@@ -51,7 +51,7 @@ const activeCols2 = makeColumns(active, 2)
 
     <div class="flex flex-col gap-12 sm:hidden">
       {active.map((project) => (
-        <ProjectCard project={project} />
+        <ProjectCard project={project} mediaQuery="(max-width: 639px)" />
       ))}
     </div>
 
@@ -101,3 +101,15 @@ const activeCols2 = makeColumns(active, 2)
     */}
   </main>
 </Layout>
+
+<script>
+  const layout = () => (window.innerWidth >= 1024 ? "desktop" : window.innerWidth >= 640 ? "tablet" : "mobile")
+  let currentLayout = layout()
+
+  window.addEventListener("resize", () => {
+    const nextLayout = layout()
+    if (nextLayout === currentLayout) return
+    currentLayout = nextLayout
+    document.querySelectorAll<HTMLVideoElement>("[data-work-card-video]").forEach((video) => video.load())
+  })
+</script>
