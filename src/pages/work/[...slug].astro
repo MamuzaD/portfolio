@@ -3,6 +3,7 @@ export const prerender = true
 
 import { type CollectionEntry, getCollection } from "astro:content"
 
+import PhoneFrame from "@/components/work/PhoneFrame.astro"
 import Layout from "@/layouts/Layout.astro"
 import { Icon } from "astro-icon/components"
 import { Image } from "astro:assets"
@@ -22,6 +23,11 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props
 const { data: project } = entry
+
+// Phone-screen recordings have no baked frame; PhoneFrame draws the phone around them
+type Media = Work["data"]["banner"]
+const isPhone = (media: Media): media is Extract<Media, { type: "video" }> & { frame: "phone" } =>
+  media.type === "video" && media.frame === "phone"
 ---
 
 <Layout title={project.title} description={project.seoDescription} OGimg={project.ogImg}>
@@ -41,7 +47,11 @@ const { data: project } = entry
 
       {/* Banner Image */}
       <div class="mb-16 flex justify-center overflow-hidden">
-        {project.banner.type === "video" ? (
+        {isPhone(project.banner) ? (
+          <div class="w-[min(100%,calc(60vh*0.484))]" transition:name={entry.id} transition:animate="initial">
+            <PhoneFrame src={project.banner.src} />
+          </div>
+        ) : project.banner.type === "video" ? (
           <video
             src={project.banner.src}
             class="h-full max-h-[50vh] w-auto rounded-2xl border"
@@ -144,8 +154,15 @@ const { data: project } = entry
 
         <div class="col-start-1 col-end-13 mt-16 space-y-8 md:col-start-5 md:space-y-16">
           {project.media?.map((media) => (
-            <div class="bg-primary-foreground/90 h-auto w-full overflow-hidden rounded-3xl border p-4 backdrop-blur md:p-10">
-              {media.type === "video" ? (
+            <div
+              class:list={[
+                "bg-primary-foreground/90 h-auto w-full overflow-hidden rounded-3xl border backdrop-blur",
+                isPhone(media) ? "px-4 py-8 md:p-12" : "p-4 md:p-10",
+              ]}
+            >
+              {isPhone(media) ? (
+                <PhoneFrame src={media.src} class="mx-auto w-[min(100%,calc(70vh*0.484))]" />
+              ) : media.type === "video" ? (
                 <video
                   src={media.src}
                   class="shadow-mac-md hover:shadow-mac-lg mx-auto max-h-[70vh] w-auto rounded-lg transition-shadow duration-300"

@@ -1,0 +1,81 @@
+---
+// Phone mockup for bare phone-screen recordings, shaped like Magic UI's iPhone.
+// Always graphite so it reads as a real phone on light and dark pages.
+interface Props {
+  src: string
+  class?: string
+}
+
+const { src, class: className } = Astro.props
+
+// Screen sized to the recordings (660×1434), in frame units
+const screenW = 390
+const screenH = 844
+const screenR = 56
+const bezel = 13 // graphite edge + black bezel, per side
+const edge = 3 // graphite part of the bezel
+const nub = 2.5 // how far the side buttons stick out
+
+const bodyW = screenW + 2 * bezel
+const bodyH = screenH + 2 * bezel
+const W = bodyW + 2 * nub
+const H = bodyH
+
+const rect = (x: number, y: number, w: number, h: number, r: number) =>
+  `M${x + r} ${y}H${x + w - r}A${r} ${r} 0 0 1 ${x + w} ${y + r}V${y + h - r}A${r} ${r} 0 0 1 ${x + w - r} ${y + h}` +
+  `H${x + r}A${r} ${r} 0 0 1 ${x} ${y + h - r}V${y + r}A${r} ${r} 0 0 1 ${x + r} ${y}Z`
+
+const screenX = nub + bezel
+const screenY = bezel
+// The cutout is inset 1.5 units from the screen so the bezel overlaps the video edge and no seam shows
+const cutout = rect(screenX + 1.5, screenY + 1.5, screenW - 3, screenH - 3, screenR - 1.5)
+const outer = rect(nub, 0, bodyW, bodyH, screenR + bezel) + cutout
+const inner = rect(nub + edge, edge, bodyW - 2 * edge, bodyH - 2 * edge, screenR + bezel - edge) + cutout
+
+// Action button, volume up/down on the left; power on the right (positions as fractions of the height)
+const button = (left: boolean, top: number, bottom: number) =>
+  rect(left ? 0 : W - nub - 1, top * H, nub + 1, (bottom - top) * H, 1)
+const buttons = [
+  button(true, 0.193, 0.231),
+  button(true, 0.264, 0.34),
+  button(true, 0.36, 0.437),
+  button(false, 0.316, 0.437),
+]
+
+// Drawn over the recording's own Dynamic Island, slightly larger so it fully covers it and stays crisp
+const islandW = 114
+const islandH = 35
+const islandX = W / 2 - islandW / 2
+const islandY = screenY + 9
+const lens = { cx: islandX + islandW - islandH / 2, cy: islandY + islandH / 2 }
+
+const pct = (value: number, of: number) => `${(value / of) * 100}%`
+const screenStyle = [
+  `left:${pct(screenX, W)}`,
+  `top:${pct(screenY, H)}`,
+  `width:${pct(screenW, W)}`,
+  `height:${pct(screenH, H)}`,
+  `border-radius:${pct(screenR, screenW)}/${pct(screenR, screenH)}`,
+].join(";")
+---
+
+<div class:list={["relative", className]} style={`aspect-ratio:${W}/${H}`}>
+  <div class="absolute overflow-hidden bg-black" style={screenStyle}>
+    <video src={src} class="block size-full object-cover" autoplay muted loop playsinline preload="metadata"></video>
+  </div>
+  <svg
+    viewBox={`0 0 ${W} ${H}`}
+    fill-rule="evenodd"
+    class="pointer-events-none absolute inset-0 size-full"
+    aria-hidden="true"
+  >
+    {buttons.map((d) => (
+      <path d={d} fill="#4A4A4D" />
+    ))}
+    <path d={outer} fill="#4A4A4D" />
+    <path d={inner} fill="#111113" />
+    <path d={rect(islandX, islandY, islandW, islandH, islandH / 2)} fill="#000" />
+    <circle cx={lens.cx} cy={lens.cy} r="6.5" fill="#0d0d12" />
+    <circle cx={lens.cx} cy={lens.cy} r="3" fill="#1b1b26" />
+  </svg>
+</div>

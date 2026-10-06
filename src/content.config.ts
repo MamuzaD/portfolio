@@ -12,6 +12,8 @@ const imageSchema = (image: ImageFunction) =>
 const videoSchema = z.object({
   type: z.literal("video"),
   src: z.string(),
+  // "phone": the video is a bare phone screen; the page draws rounded corners and a bezel around it
+  frame: z.literal("phone").optional(),
 })
 
 const mediaSchema = (image: ImageFunction) => z.union([imageSchema(image), videoSchema])
