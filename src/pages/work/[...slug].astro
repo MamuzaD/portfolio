@@ -54,7 +54,7 @@ const isPhone = (media: Media): media is Extract<Media, { type: "video" }> & { f
         ) : project.banner.type === "video" ? (
           <video
             src={project.banner.src}
-            class="h-full max-h-[50vh] w-auto rounded-2xl border"
+            class="h-full max-h-[50vh] max-w-full w-auto rounded-2xl border"
             autoplay
             muted
             loop
