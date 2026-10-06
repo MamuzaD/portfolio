@@ -1,0 +1,66 @@
+{
+  "title": "Fomo",
+  "status": "featured",
+  "caption": "Map-first Local Events Network",
+  "description": [
+    "Fomo is a social map for local events. Browse what's happening nearby, see which events your friends plan to attend, RSVP, and share photos or videos from the night. It shipped on the App Store and the web, and won 1st place in Computer Science at UNLV's Spring 2026 Senior Design Competition.",
+    "On an 11-person team, I worked across the Expo app and the Convex backend: native navigation and theming, custom Clerk authentication, map search and voice discovery, interest onboarding, friend requests, moderation and account safety, App Store review requirements, and a server-side media serialization pass that removed redundant realtime subscriptions."
+  ],
+  "seoDescription": "Fomo is a cross-platform local events network built with Expo, Next.js, Convex, Clerk, and Mapbox for map-first discovery and social event sharing.",
+  "ogImg": "https://github.com/user-attachments/assets/3bd05278-f636-4bdd-9f11-4e2c3d52f619",
+  "duration": { "start": "2026-02-03", "end": "2026-05-15" },
+  "links": [
+    {
+      "icon": "github",
+      "name": "github",
+      "url": "https://github.com/Fomo-Find-Out-More-Often/fomo"
+    },
+    {
+      "icon": "apple",
+      "name": "app store",
+      "url": "https://apps.apple.com/us/app/fomo-find-out-more-often/id6765584105"
+    },
+    {
+      "icon": "link",
+      "name": "live",
+      "url": "https://fomo-app.dev/links"
+    }
+  ],
+  "tags": ["TypeScript", "Expo", "React Native", "Next.js", "Convex", "Clerk", "Mapbox", "Turborepo"],
+  "banner": {
+    "src": "/work/fomo/map-event.mp4",
+    "frame": "phone",
+    "alt": "Fomo on awards night: opening the Senior Design Awards Ceremony from the map and scrolling the feed",
+    "type": "video"
+  },
+  "card": {
+    "src": "/work/fomo/card.mp4",
+    "alt": "Fomo logo",
+    "type": "video"
+  },
+  "media": [
+    {
+      "src": "/work/fomo/comments.mp4",
+      "frame": "phone",
+      "alt": "Opening the competition and reading the comments on a post",
+      "type": "video"
+    },
+    {
+      "src": "/work/fomo/rsvp.mp4",
+      "frame": "phone",
+      "alt": "Finding the awards ceremony in search and RSVPing",
+      "type": "video"
+    },
+    {
+      "src": "/work/fomo/create-post.mp4",
+      "frame": "phone",
+      "alt": "Picking a photo from the awards night and posting it to the event",
+      "type": "video"
+    },
+    {
+      "src": "/public/work/fomo/poster.jpg",
+      "alt": "Fomo senior design poster",
+      "type": "image"
+    }
+  ]
+}
