@@ -1,0 +1,42 @@
+{
+  "title": "Lectr",
+  "status": "featured",
+  "caption": "Local Lecture Transcription CLI",
+  "description": [
+    "Lectr turns synced Apple Voice Memos into organized, searchable lecture transcripts without sending recordings to a server. A schedule-aware watcher routes each memo into its course folder, local mlx-whisper transcription produces part files, and Lectr combines them into one dated transcript per lecture.",
+    "I built Lectr as a single Go binary with an interactive Bubble Tea interface and one configuration file. It includes guided setup, dry runs, course/date/recording filters, shell completions, themed terminal output, and a launchd watcher with status and diagnostics. The local-first design keeps audio private while using Apple silicon acceleration to make the workflow practical day to day."
+  ],
+  "seoDescription": "Lectr is a local-first macOS CLI that routes Apple Voice Memos by course and transcribes lectures privately with mlx-whisper.",
+  "ogImg": "https://danielmamuza.com/work/lectr/card.png",
+  "duration": { "start": "2026-08-24", "end": "Present" },
+  "links": [
+    {
+      "icon": "github",
+      "name": "github",
+      "url": "https://github.com/MamuzaD/lectr"
+    },
+    {
+      "icon": "tags",
+      "name": "latest release",
+      "url": "https://github.com/MamuzaD/lectr/releases/latest"
+    }
+  ],
+  "tags": ["Go", "Bubble Tea", "Lip Gloss", "mlx-whisper", "Apple Silicon", "launchd", "CLI"],
+  "banner": {
+    "src": "/work/lectr/demo.mp4",
+    "alt": "Lectr terminal interface showing lecture transcription status",
+    "type": "video"
+  },
+  "card": {
+    "src": "/work/lectr/card.mp4",
+    "alt": "Lectr transcribing a CS422 lecture from April 22, 2026: the progress bar fills to 100%, then the parts combine into 2026-04-22.md",
+    "type": "video"
+  },
+  "media": [
+    {
+      "src": "/work/lectr/demo.mp4",
+      "alt": "Demo of configuring and running the Lectr terminal workflow",
+      "type": "video"
+    }
+  ]
+}
