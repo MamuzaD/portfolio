@@ -7,7 +7,7 @@
     "On an 11-person team, I worked across the Expo app and the Convex backend: native navigation and theming, custom Clerk authentication, map search and voice discovery, interest onboarding, friend requests, moderation and account safety, App Store review requirements, and a server-side media serialization pass that removed redundant realtime subscriptions."
   ],
   "seoDescription": "Fomo is a cross-platform local events network built with Expo, Next.js, Convex, Clerk, and Mapbox for map-first discovery and social event sharing.",
-  "ogImg": "https://github.com/user-attachments/assets/3bd05278-f636-4bdd-9f11-4e2c3d52f619",
+  "ogImg": "https://danielmamuza.com/work/fomo/og.jpg",
   "duration": { "start": "2026-02-03", "end": "2026-05-15" },
   "links": [
     {

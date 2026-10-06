@@ -15,10 +15,12 @@ interface Props {
 
 export async function getStaticPaths() {
   const work = await getCollection("work")
-  return work.map((entry: Work) => ({
-    params: { slug: entry.id },
-    props: { entry },
-  }))
+  return work
+    .filter((entry: Work) => entry.data.status !== "archived")
+    .map((entry: Work) => ({
+      params: { slug: entry.id },
+      props: { entry },
+    }))
 }
 
 const { entry } = Astro.props

@@ -40,7 +40,6 @@ const recents: Recent[] = [
   },
   {
     content: "competed & created Weyes at Cal Hacks 12.0",
-    links: [{ where: "Weyes", href: "/work/weyes" }],
     date: new Date("2025-10-29"),
   },
   {
@@ -65,12 +64,6 @@ const recents: Recent[] = [
   },
   {
     content: "began work on Fate",
-    links: [
-      {
-        where: "Fate",
-        href: "/work/fate",
-      },
-    ],
     date: new Date("2025-03-26"),
   },
   {

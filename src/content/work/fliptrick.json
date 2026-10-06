@@ -7,7 +7,7 @@
     "The game offers 'Endless Mode' for continuous play and 'Timed Mode' for a high-score race. It features move and score history tracking, a score decay mechanism for inactivity, and an in-app tutorial. Built with Swift, UIKit, and CoreMotion, FlipTrick was developed as the final project for CodePath's Intro to iOS Course, focusing on creating a quick, active, and engaging game."
   ],
   "seoDescription": "Flip Trick is a motion-oriented iOS arcade game built with Swift, UIKit, and CoreMotion. Features include real-time scoring, combo system, multiple game modes, and score history.",
-  "ogImg": "https://danielmamuza.com/work/fliptrick/fliptrick_og.webp",
+  "ogImg": "https://danielmamuza.com/work/fliptrick/og.jpg",
   "duration": { "start": "2025-04-22", "end": "2025-05-25" },
   "links": [{ "icon": "github", "name": "github", "url": "https://github.com/MamuzaD/fliptrick" }],
   "tags": ["iOS", "Swift", "UIKit", "CoreMotion"],

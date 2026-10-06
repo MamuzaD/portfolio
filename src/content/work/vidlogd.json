@@ -7,15 +7,15 @@
     "The app integrates with the YouTube Data API to prefetch video details, allowing users to rate and review. It features a data view and analytics dashboard with statistics on video logs, ratings, rewatch percentages, and charts for trends and channel insights."
   ],
   "seoDescription": "Vidlogd is a terminal-based YouTube video logger built with Go. Features include video logging, ratings, reviews, data management, and an analytics dashboard with interactive charts and channel statistics.",
-  "ogImg": "https://danielmamuza.com/work/vidlogd/vidlogd_og.webp",
+  "ogImg": "https://danielmamuza.com/work/vidlogd/og.jpg",
   "duration": { "start": "2025-06-17" },
   "links": [
     { "icon": "github", "name": "github", "url": "https://github.com/MamuzaD/vidlogd" },
     { "icon": "tags", "name": "releases", "url": "https://github.com/MamuzaD/vidlogd/releases" }
   ],
   "tags": ["Go", "Bubble Tea", "TUI", "YouTube API"],
-  "banner": { "src": "/work/vidlogd/banner.mp4", "alt": "vidlogd banner", "type": "video" },
-  "card": { "src": "/work/vidlogd/banner.mp4", "alt": "vidlogd banner", "type": "video" },
+  "banner": { "src": "/work/vidlogd/feature.mp4", "alt": "vidlogd banner", "type": "video" },
+  "card": { "src": "/work/vidlogd/feature.mp4", "alt": "vidlogd banner", "type": "video" },
   "media": [
     { "src": "/public/work/vidlogd/form.webp", "alt": "vidlogd form", "type": "image" },
     { "src": "/public/work/vidlogd/ratings.webp", "alt": "vidlogd ratings", "type": "image" },
