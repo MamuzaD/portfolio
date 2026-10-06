@@ -10,6 +10,11 @@ type Recent = {
 
 const recents: Recent[] = [
   {
+    content: "built lectr in a few days for fall sem",
+    links: [{ where: "lectr", href: "/work/lectr", internal: true }],
+    date: new Date("2026-08-27"),
+  },
+  {
     content: "won 1st place in CS at UNLV's Senior Design Competition with Fomo",
     links: [
       {
@@ -21,8 +26,8 @@ const recents: Recent[] = [
     date: new Date("2026-05-06"),
   },
   {
-    content: "incoming @ PayPal, summer 2026",
-    date: new Date("2026-03-01"),
+    content: "interned @ PayPal, summer 2026",
+    date: new Date("2026-08-15"),
   },
   {
     content: "developed large-tty",

@@ -184,7 +184,7 @@ export function SettingsMenu() {
               type="button"
               variant="ghost"
               size="sm"
-              title="Lite mode (disables animated background)"
+              title="Lite mode (still background, no particles)"
               className={cn(
                 "h-7 flex-1 gap-1 rounded-lg px-1.5 text-xs font-medium",
                 mode === "lite"
