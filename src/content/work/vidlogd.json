@@ -11,7 +11,7 @@
   "duration": { "start": "2025-06-17" },
   "links": [
     { "icon": "github", "name": "github", "url": "https://github.com/MamuzaD/vidlogd" },
-    { "icon": "tags", "name": "releases", "url": "https://github.com/MamuzaD/vidlogd/releases" }
+    { "icon": "tags", "name": "latest release", "url": "https://github.com/MamuzaD/vidlogd/releases/latest" }
   ],
   "tags": ["Go", "Bubble Tea", "TUI", "YouTube API"],
   "banner": { "src": "/work/vidlogd/feature.mp4", "alt": "vidlogd banner", "type": "video" },

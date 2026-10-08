@@ -1,6 +1,6 @@
 {
   "title": "large-tty",
-  "status": "wip",
+  "status": "featured",
   "caption": "Large Type in Your Terminal",
   "description": [
     "large-tty is a small project that turns whatever you type into big ASCII art, like large-type.com, but built for the terminal and the web.",

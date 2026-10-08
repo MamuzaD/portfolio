@@ -35,7 +35,7 @@ const recents: Recent[] = [
     date: new Date("2026-02-26"),
   },
   {
-    content: "created & created Bluff at Rebel Hacks",
+    content: "created Bluff at Rebel Hacks",
     links: [{ where: "Bluff", href: "/work/bluff" }],
     date: new Date("2026-02-22"),
   },
