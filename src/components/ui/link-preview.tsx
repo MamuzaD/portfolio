@@ -21,7 +21,11 @@ type LinkPreviewProps = {
   height?: number
   quality?: number
   layout?: string
-} & ({ isStatic: true; imageSrc: string } | { isStatic?: false; imageSrc?: never })
+} & (
+  | { preview: React.ReactNode; isStatic?: never; imageSrc?: never }
+  | { preview?: never; isStatic: true; imageSrc: string }
+  | { preview?: never; isStatic?: false; imageSrc?: never }
+)
 
 export const LinkPreview = ({
   children,
@@ -37,9 +41,10 @@ export const LinkPreview = ({
   align = "center",
   alignOffset = 0,
   target = "_self",
+  preview,
 }: LinkPreviewProps) => {
-  let src
-  if (!isStatic) {
+  let src = imageSrc
+  if (!preview && !isStatic) {
     const params = encode({
       url,
       screenshot: true,
@@ -52,8 +57,6 @@ export const LinkPreview = ({
       "viewport.height": height * 3,
     })
     src = `https://api.microlink.io/?${params}`
-  } else {
-    src = imageSrc
   }
 
   const [isOpen, setOpen] = React.useState(false)
@@ -79,7 +82,7 @@ export const LinkPreview = ({
 
   return (
     <>
-      {isMounted ? (
+      {isMounted && !preview ? (
         <div className="hidden">
           <img src={src} width={width} height={height} alt="" />
         </div>
@@ -131,12 +134,16 @@ export const LinkPreview = ({
                   },
                 }}
                 exit={{ opacity: 0, y: 20, scale: 0.6 }}
-                className="rounded-xl shadow-xl"
+                className={cn("shadow-xl", preview ? "rounded-[20px]" : "rounded-xl")}
                 style={{
                   x: translateX,
                 }}
               >
-                {noUrl || !url ? (
+                {preview ? (
+                  <a href={url} target={target} className="block">
+                    {preview}
+                  </a>
+                ) : noUrl || !url ? (
                   <div
                     className="bg-background/80 block rounded-xl border-2 p-0.5 backdrop-blur-lg"
                     style={{ fontSize: 0 }}

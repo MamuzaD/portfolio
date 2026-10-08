@@ -1,8 +1,8 @@
-type social = {
+export type social = {
   name: string
   href: string
   icon: string
-  src: string
+  card: "github" | "linkedin" | "resume"
 }
 
 type reachout = {
@@ -13,22 +13,22 @@ type reachout = {
 
 export const socials: social[] = [
   {
-    name: "Resume",
-    icon: "mdi--file-document-outline",
-    href: "/resume",
-    src: "/socials/resume.jpg",
+    name: "GitHub",
+    icon: "mdi--github",
+    href: "https://github.com/mamuzad",
+    card: "github",
   },
   {
     name: "LinkedIn",
     icon: "mdi--linkedin",
     href: "https://linkedin.com/in/daniel-mamuza",
-    src: "/socials/linkedin.jpg",
+    card: "linkedin",
   },
   {
-    name: "GitHub",
-    icon: "mdi--github",
-    href: "https://github.com/mamuzad",
-    src: "/socials/github.jpg",
+    name: "Resume",
+    icon: "mdi--file-document-outline",
+    href: "/resume",
+    card: "resume",
   },
 ]
 

@@ -1,6 +1,6 @@
 ---
 import ProfilePic from "@/components/layout/ProfilePic.astro"
-import { LinkPreview } from "@/components/ui/link-preview"
+import { SocialLink } from "@/components/socials/SocialLink"
 import ScrollProgress from "@/components/ui/ScrollProgress.astro"
 import { SettingsMenu } from "@/components/ui/settings-menu"
 import { socials } from "@/content/socials"
@@ -50,19 +50,12 @@ const titles = [
   </div>
   <div class="hidden place-items-center gap-2 md:flex md:gap-6">
     {socials.map((social, index) => (
-      <LinkPreview
-        imageSrc={social.src}
-        url={social.href}
-        target={social.name === "Resume" ? "" : "_blank"}
-        isStatic
-        client:load
-        aria-label={social.name}
-      >
+      <SocialLink social={social} client:load aria-label={social.name}>
         <Icon
           name={social.icon}
           class={`hover:text-primary transition-all hover:scale-110 md:h-7 md:w-7 ${index % 2 === 0 ? "hover:rotate-12" : "hover:-rotate-12"}`}
         />
-      </LinkPreview>
+      </SocialLink>
     ))}
     <div class="flex items-center gap-4">
       <SettingsMenu client:load />
