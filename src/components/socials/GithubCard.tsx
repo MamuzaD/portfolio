@@ -1,6 +1,13 @@
+import { Moon, Sun, Sunrise, Sunset } from "lucide-react"
 import { motion, useReducedMotion } from "motion/react"
-import React from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 
+import {
+  COMMIT_CACHE_SECONDS,
+  commitWindowLabel,
+  commitWindowPresentation,
+  type WeeklyCommitActivity,
+} from "@/lib/github-commit-window"
 import { cn } from "@/lib/utils"
 
 import { CardFrame } from "@/components/socials/CardFrame"
@@ -11,6 +18,7 @@ const WEEKS = 20
 const CELL = 11
 const GAP = 2.4
 const STEP = CELL + GAP
+const windowIcons = { moon: Moon, sunrise: Sunrise, sun: Sun, sunset: Sunset }
 // keep the tooltip this far inside the viewport when an edge column would push it off-screen
 const EDGE = 8
 const PAYPAL_INTERNSHIP = { start: "2026-05-26", end: "2026-08-14" }
@@ -29,6 +37,29 @@ const follow = { type: "spring", stiffness: 520, damping: 42, mass: 0.55 } as co
 
 let cached: GithubContributions | null = null
 let request: Promise<GithubContributions | null> | null = null
+let weeklyCache: WeeklyCommitActivity | null = null
+let weeklyFetchedAt = 0
+let weeklyRequest: Promise<WeeklyCommitActivity | null> | null = null
+
+function loadWeeklyActivity() {
+  if (weeklyCache && weeklyFetchedAt + COMMIT_CACHE_SECONDS * 1000 > Date.now()) {
+    return Promise.resolve(weeklyCache)
+  }
+  weeklyRequest ??= fetch("/api/github-commit-window")
+    .then((res) => (res.ok ? (res.json() as Promise<WeeklyCommitActivity>) : null))
+    .catch(() => null)
+    .then((data) => {
+      if (data) {
+        weeklyCache = data
+        weeklyFetchedAt = Date.now()
+      }
+      return weeklyCache
+    })
+    .finally(() => {
+      weeklyRequest = null
+    })
+  return weeklyRequest
+}
 
 function load() {
   request ??= fetch("/api/github-contributions")
@@ -43,7 +74,10 @@ function load() {
 }
 
 // the card only mounts once the hover opens, so warm the data as soon as the navbar island loads
-if (typeof window !== "undefined") void load()
+if (typeof window !== "undefined") {
+  void load()
+  void loadWeeklyActivity()
+}
 
 // same shape as the real grid: full weeks, then a partial column up to today
 function emptyWeeks() {
@@ -77,20 +111,21 @@ function calendarMonths(start: string) {
 type Tip = { x: number; y: number; label: string; cell: string; internship: boolean }
 
 export const GithubCard = () => {
-  const [data, setData] = React.useState(cached)
-  const [tip, setTip] = React.useState<Tip | null>(null)
-  const [visible, setVisible] = React.useState(false)
+  const [data, setData] = useState(cached)
+  const [weekly, setWeekly] = useState(weeklyCache)
+  const [tip, setTip] = useState<Tip | null>(null)
+  const [visible, setVisible] = useState(false)
   // the first cell after entering the grid places the tooltip instantly; later cells glide
-  const [instant, setInstant] = React.useState(true)
-  const grid = React.useRef<HTMLDivElement>(null)
-  const header = React.useRef<HTMLDivElement>(null)
-  const frame = React.useRef<HTMLDivElement>(null)
-  const pill = React.useRef<HTMLDivElement>(null)
-  const [placement, setPlacement] = React.useState({ nudge: 0, below: false })
+  const [instant, setInstant] = useState(true)
+  const grid = useRef<HTMLDivElement>(null)
+  const header = useRef<HTMLDivElement>(null)
+  const frame = useRef<HTMLDivElement>(null)
+  const pill = useRef<HTMLDivElement>(null)
+  const [placement, setPlacement] = useState({ nudge: 0, below: false })
   const reduceMotion = useReducedMotion()
 
   // Allow the pill to extend past the card while keeping it inside the viewport.
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (!tip || !frame.current || !pill.current || !header.current) return
     const center = frame.current.getBoundingClientRect().left + tip.x
     const half = pill.current.offsetWidth / 2
@@ -103,7 +138,7 @@ export const GithubCard = () => {
     })
   }, [tip])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (data) return
     let active = true
     void load().then((result) => active && result && setData(result))
@@ -112,7 +147,14 @@ export const GithubCard = () => {
     }
   }, [data])
 
-  const year = data?.year ?? new Date().getFullYear()
+  useEffect(() => {
+    let active = true
+    void loadWeeklyActivity().then((result) => active && result && setWeekly(result))
+    return () => {
+      active = false
+    }
+  }, [])
+
   const weeks = data?.weeks.map((week) => week.map(([, level]) => level)) ?? emptyWeeks()
 
   const show = (w: number, d: number) => {
@@ -130,12 +172,15 @@ export const GithubCard = () => {
   }
 
   const still = reduceMotion || instant
+  const commitWindow = weekly?.window
+  const presentation = commitWindow ? commitWindowPresentation(commitWindow.startHour) : null
+  const WindowIcon = presentation ? windowIcons[presentation.icon] : null
 
   return (
     // the tooltip sits outside CardFrame so its overflow-hidden can't clip edge columns
     <div ref={frame} className="relative">
-      <CardFrame label="github.com/mamuzad" className="px-[15.5px] py-5">
-        <div ref={header} className="flex h-5 items-center gap-2 text-[13px] leading-none tracking-[0.005em]">
+      <CardFrame label="github.com/mamuzad" className="px-[15.5px] pt-3 pb-1.5">
+        <div ref={header} className="flex h-5 items-center gap-2 px-0.5 text-[13px] leading-none tracking-[0.005em]">
           <svg
             viewBox="0 0 16 16"
             className="size-[18px] shrink-0 text-neutral-600 dark:text-[#b0abab]"
@@ -154,11 +199,11 @@ export const GithubCard = () => {
             ) : (
               <span className="bg-primary/10 inline-block h-[9px] w-[34px] animate-pulse rounded-full align-baseline dark:bg-[#202021]" />
             )}{" "}
-            contributions in {year}
+            contributions in the last year
           </p>
         </div>
 
-        <div className="mx-auto mt-3 w-fit" aria-hidden="true">
+        <div className="mx-auto mt-1 w-fit" aria-hidden="true">
           <div
             ref={grid}
             className="grid w-fit auto-cols-[11px] grid-flow-col grid-rows-[repeat(7,11px)] gap-[2.4px]"
@@ -179,7 +224,7 @@ export const GithubCard = () => {
               ))
             )}
           </div>
-          <div className="relative mt-2 h-3 font-mono text-[9px] leading-3 text-neutral-600 dark:text-neutral-400">
+          <div className="relative mt-0.5 h-2.5 font-mono text-[9px] leading-2.5 text-neutral-600 dark:text-neutral-400">
             {data
               ? calendarMonths(data.start).map(({ week, name }) => (
                   <span
@@ -192,6 +237,32 @@ export const GithubCard = () => {
                 ))
               : null}
           </div>
+        </div>
+        <div
+          className="mt-1.5 flex h-[26px] items-center gap-2.5 px-0.5"
+          title={
+            commitWindow
+              ? `${commitWindow.commitCount} of ${commitWindow.totalCommits} public commits · past 7 days`
+              : undefined
+          }
+        >
+          {commitWindow && presentation && WindowIcon ? (
+            <>
+              <WindowIcon
+                className="size-3.5 shrink-0 text-neutral-500 dark:text-neutral-400"
+                strokeWidth={1.5}
+                aria-hidden="true"
+              />
+              <div className="min-w-0">
+                <p className="text-[12px] leading-[14px] font-medium text-neutral-800 dark:text-neutral-200">
+                  {presentation.message}
+                </p>
+                <p className="font-mono text-[9px] leading-3 text-neutral-600 dark:text-neutral-400">
+                  peak commit time · <span className="tabular-nums">{commitWindowLabel(commitWindow.startHour)}</span>
+                </p>
+              </div>
+            </>
+          ) : null}
         </div>
       </CardFrame>
 

@@ -20,7 +20,6 @@ if (typeof window !== "undefined") {
   }
 }
 
-// Fills CardFrame's 300×180 body: 64 banner + 36 avatar/pill row + 20 name + 36 headline + 8 gaps + 16 bottom.
 export const LinkedinCard = () => (
   <CardFrame label="linkedin.com/in/daniel-mamuza">
     <img
@@ -33,7 +32,7 @@ export const LinkedinCard = () => (
       className="block h-16 w-full object-cover object-[center_80%]"
     />
 
-    <div className="px-4">
+    <div className="px-[18px]">
       <div className="flex items-start justify-between">
         <img
           src={profile.avatar}
@@ -49,8 +48,8 @@ export const LinkedinCard = () => (
         </span>
       </div>
 
-      <p className="mt-1.5 text-base leading-5 font-semibold">{profile.name}</p>
-      <p className="mt-0.5 line-clamp-2 text-[13px] leading-[18px] font-normal text-neutral-600 dark:text-white/60">
+      <p className="mt-2 text-base leading-5 font-semibold">{profile.name}</p>
+      <p className="mt-1 line-clamp-2 text-[13px] leading-[18px] font-normal text-neutral-600 dark:text-white/60">
         {/* Wrap after a " | ", never inside a segment. */}
         {profile.headline.split(" | ").map((part, i, parts) => (
           <Fragment key={part}>

@@ -6,12 +6,11 @@ export const prerender = false
 
 const USERNAME = "mamuzad"
 const WEEKS = 20
-const CACHE_KEY = `github-contributions:v3:${WEEKS}w`
+const CACHE_KEY = `github-contributions:${WEEKS}w`
 const CACHE_SECONDS = 60 * 60
 
 export type GithubContributions = {
   total: number
-  year: number
   /** Date of the first cell (a Sunday), YYYY-MM-DD. Cell dates follow from it. */
   start: string
   /** Oldest week first, each week Sunday-first; the last week stops at today. Each day is [count, level 0-4]. */
@@ -29,11 +28,8 @@ async function fetchText(url: string) {
 }
 
 // github's own calendar fragment, no token needed
-async function fromGithub(year: number) {
-  const [lastYearHtml, yearHtml] = await Promise.all([
-    fetchText(`https://github.com/users/${USERNAME}/contributions`),
-    fetchText(`https://github.com/users/${USERNAME}/contributions?from=${year}-01-01&to=${year}-12-31`),
-  ])
+async function fromGithub() {
+  const lastYearHtml = await fetchText(`https://github.com/users/${USERNAME}/contributions`)
 
   // counts only live in each cell's tooltip: "4 contributions on May 1st." / "No contributions on ..."
   const counts = new Map<string, number>()
@@ -49,21 +45,21 @@ async function fromGithub(year: number) {
     if (date && level) days.push({ date, level: Number(level), count: (id && counts.get(id)) || 0 })
   }
 
-  const heading = yearHtml.replace(/\s+/g, " ").match(/([\d,]+) contributions? in (\d{4})/)
+  const heading = lastYearHtml.replace(/\s+/g, " ").match(/([\d,]+) contributions? in the last year/)
   if (!days.length || !counts.size || !heading) throw new Error("Unexpected GitHub contributions markup")
 
   return { days, total: Number(heading[1].replace(/,/g, "")) }
 }
 
 // community mirror of the same data, used if github's markup changes
-async function fromMirror(year: number) {
-  const get = async (y: string) => {
-    const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${USERNAME}?y=${y}`)
-    if (!res.ok) throw new Error(`Mirror responded ${res.status}`)
-    return (await res.json()) as { total: Record<string, number>; contributions: Day[] }
+async function fromMirror() {
+  const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${USERNAME}?y=last`)
+  if (!res.ok) throw new Error(`Mirror responded ${res.status}`)
+  const lastYear = (await res.json()) as { total: { lastYear: number }; contributions: Day[] }
+  if (!Number.isFinite(lastYear.total.lastYear) || !lastYear.contributions.length) {
+    throw new Error("Unexpected contributions mirror data")
   }
-  const [lastYear, thisYear] = await Promise.all([get("last"), get(String(year))])
-  return { days: lastYear.contributions, total: thisYear.total[year] ?? 0 }
+  return { days: lastYear.contributions, total: lastYear.total.lastYear }
 }
 
 function toWeeks(days: Day[]) {
@@ -87,13 +83,11 @@ function toWeeks(days: Day[]) {
 }
 
 async function getContributions(): Promise<GithubContributions> {
-  // daniel's calendar year, not the server's UTC one
-  const year = Number(new Intl.DateTimeFormat("en-US", { timeZone: "America/Los_Angeles", year: "numeric" }).format())
-  const { days, total } = await fromGithub(year).catch((error) => {
+  const { days, total } = await fromGithub().catch((error) => {
     console.warn("GitHub contributions: falling back to mirror:", error)
-    return fromMirror(year)
+    return fromMirror()
   })
-  return { total, year, ...toWeeks(days) }
+  return { total, ...toWeeks(days) }
 }
 
 export const GET: APIRoute = async () => {
