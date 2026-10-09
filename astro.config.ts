@@ -31,8 +31,8 @@ export default defineConfig({
     imageService: true,
   }),
   image: {
-    remotePatterns: [{ protocol: "https" }],
-    domains: ["api.microlink.io"],
+    domains: [],
+    remotePatterns: [],
   },
   vite: {
     define: {

@@ -1,6 +1,6 @@
 import { waitUntil } from "@vercel/functions"
 
-import { cacheData, getCachedData } from "./redis"
+import { acquireCacheCooldown, cacheData, getCachedData } from "./redis"
 
 export type FilmDetails = {
   title: string | null
@@ -13,6 +13,13 @@ const LETTERBOXD_PROFILE_URL = "https://letterboxd.com/da_ni/"
 const SCRAPE_USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 const SCRAPE_ACCEPT_LANGUAGE = "en-US,en;q=0.9"
+const CACHE_KEY = "film:latest"
+const FRESHNESS_MS = 15 * 60 * 1000
+const REFRESH_COOLDOWN_SECONDS = 60
+
+type CachedFilmDetails = FilmDetails & { refreshedAt?: number }
+let nextRefreshAt = 0
+let pendingRefresh: Promise<FilmDetails | null> | null = null
 
 function extractTag(xml: string, tagName: string): string | null {
   const match = xml.match(new RegExp(`<${tagName}>([\\s\\S]*?)<\\/${tagName}>`, "i"))
@@ -62,10 +69,11 @@ export async function scrapeFilmDetails(): Promise<FilmDetails | null> {
     referer: LETTERBOXD_PROFILE_URL,
   }
 
+  const signal = AbortSignal.timeout(15000)
   for (let attempt = 1; attempt <= 2; attempt++) {
     const response = await fetch(LETTERBOXD_RSS_URL, {
       headers,
-      signal: AbortSignal.timeout(30000),
+      signal,
     })
 
     if (response.ok) {
@@ -85,52 +93,45 @@ export async function scrapeFilmDetails(): Promise<FilmDetails | null> {
   return null
 }
 
-function dataHasChanged(cached: FilmDetails, fresh: FilmDetails): boolean {
-  return cached.title !== fresh.title || cached.imageUrl !== fresh.imageUrl || cached.stars !== fresh.stars
+function filmDetails(cached: CachedFilmDetails): FilmDetails {
+  return { title: cached.title, imageUrl: cached.imageUrl, stars: cached.stars }
+}
+
+function refreshFilmDetails(): Promise<FilmDetails | null> {
+  if (pendingRefresh) return pendingRefresh
+  if (Date.now() < nextRefreshAt) return Promise.resolve(null)
+
+  nextRefreshAt = Date.now() + REFRESH_COOLDOWN_SECONDS * 1000
+  pendingRefresh = (async () => {
+    if (!(await acquireCacheCooldown("film:refresh-cooldown", REFRESH_COOLDOWN_SECONDS))) return null
+
+    const freshData = await scrapeFilmDetails()
+    if (!freshData?.imageUrl) return null
+
+    await cacheData(CACHE_KEY, { ...freshData, refreshedAt: Date.now() })
+    return freshData
+  })()
+    .catch((error) => {
+      console.warn("Film refresh failed:", error)
+      return null
+    })
+    .finally(() => {
+      pendingRefresh = null
+    })
+
+  return pendingRefresh
 }
 
 export async function getFilmDetails(): Promise<FilmDetails | null> {
-  const cacheKey = "film:latest"
-  const cachedData = await getCachedData<FilmDetails>(cacheKey)
+  const cachedData = await getCachedData<CachedFilmDetails>(CACHE_KEY)
 
-  const scrapePromise = scrapeFilmDetails()
+  if (cachedData?.imageUrl) {
+    const age = Date.now() - (cachedData.refreshedAt ?? 0)
+    if (cachedData.refreshedAt && age >= 0 && age < FRESHNESS_MS) return filmDetails(cachedData)
 
-  if (cachedData) {
-    console.log("Returning cached data immediately, scraping in background")
-
-    // background update
-    waitUntil(
-      scrapePromise
-        .then(async (freshData) => {
-          if (freshData) {
-            if (!freshData.imageUrl) {
-              console.warn("Fresh data has no poster URL; skipping cache update")
-              return
-            }
-            if (dataHasChanged(cachedData, freshData)) {
-              console.log("Fresh data differs from cache, updating")
-              await cacheData(cacheKey, freshData)
-            } else {
-              console.log("Fresh data matches cache, no update needed")
-            }
-          }
-        })
-        .catch((error) => {
-          console.error("Background scrape failed:", error)
-        })
-    )
-
-    return cachedData
+    waitUntil(refreshFilmDetails())
+    return filmDetails(cachedData)
   }
 
-  // no cache available, wait for fresh scrape
-  console.log("No cached data, waiting for fresh scrape")
-  const freshData = await scrapePromise
-
-  if (freshData?.imageUrl) {
-    console.log("Caching fresh film details")
-    await cacheData(cacheKey, freshData)
-  }
-
-  return freshData
+  return refreshFilmDetails()
 }

@@ -75,7 +75,14 @@ async function getActivity(): Promise<WeeklyCommitActivity> {
   return pending
 }
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async ({ url }) => {
+  if (url.search.length > 0) {
+    return new Response("Query parameters are not supported", {
+      status: 400,
+      headers: { "Cache-Control": "no-store" },
+    })
+  }
+
   try {
     return new Response(JSON.stringify(await getActivity()), {
       headers: {

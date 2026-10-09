@@ -22,7 +22,7 @@ type Day = { date: string; count: number; level: number }
 const headers = { "User-Agent": "danielmamuza.com", Accept: "text/html" }
 
 async function fetchText(url: string) {
-  const res = await fetch(url, { headers })
+  const res = await fetch(url, { headers, signal: AbortSignal.timeout(8000) })
   if (!res.ok) throw new Error(`${url} responded ${res.status}`)
   return res.text()
 }
@@ -53,7 +53,9 @@ async function fromGithub() {
 
 // community mirror of the same data, used if github's markup changes
 async function fromMirror() {
-  const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${USERNAME}?y=last`)
+  const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${USERNAME}?y=last`, {
+    signal: AbortSignal.timeout(8000),
+  })
   if (!res.ok) throw new Error(`Mirror responded ${res.status}`)
   const lastYear = (await res.json()) as { total: { lastYear: number }; contributions: Day[] }
   if (!Number.isFinite(lastYear.total.lastYear) || !lastYear.contributions.length) {
@@ -90,7 +92,14 @@ async function getContributions(): Promise<GithubContributions> {
   return { total, ...toWeeks(days) }
 }
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async ({ url }) => {
+  if (url.search.length > 0) {
+    return new Response("Query parameters are not supported", {
+      status: 400,
+      headers: { "Cache-Control": "no-store" },
+    })
+  }
+
   try {
     let data = await getCachedData<GithubContributions>(CACHE_KEY)
     if (!data) {

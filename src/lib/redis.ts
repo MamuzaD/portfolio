@@ -15,6 +15,8 @@ export function getRedisClient(): Redis | null {
       redis = new Redis({
         url: import.meta.env.KV_REST_API_URL,
         token: import.meta.env.KV_REST_API_TOKEN,
+        signal: () => AbortSignal.timeout(2000),
+        retry: false,
       })
       console.log("Redis: Connected")
     } catch (error) {
@@ -23,6 +25,20 @@ export function getRedisClient(): Redis | null {
     }
   }
   return redis
+}
+
+export async function acquireCacheCooldown(key: string, seconds: number): Promise<boolean> {
+  const client = getRedisClient()
+  if (!client) {
+    return !import.meta.env.KV_REST_API_URL && !import.meta.env.KV_REST_API_TOKEN
+  }
+
+  try {
+    return (await client.set(namespacedKey(key), "1", { nx: true, ex: seconds })) === "OK"
+  } catch (error) {
+    console.warn("Redis: Cooldown unavailable; skipping refresh:", error)
+    return false
+  }
 }
 
 export async function cacheData(key: string, data: any, expirySeconds?: number): Promise<boolean> {

@@ -59,7 +59,7 @@ try {
     button.textContent = "retrying..."
 
     try {
-      const response = await fetch("/api/scrape?refresh=true")
+      const response = await fetch("/api/scrape")
       if (!response.ok) throw new Error("Failed to fetch film details")
       const filmDetails: FilmDetails = await response.json()
 
